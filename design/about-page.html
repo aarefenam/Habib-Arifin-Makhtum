@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About | Rabbi, Software Developer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root{--bg:#f3f5f8;--ink:#0c0f1a;--mute:#6f7686;--line:rgba(12,15,26,.09);--blue:#2f5bff;--tint:rgba(47,91,255,.09);color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+svg{display:block}.wrap{width:min(1100px,100% - 40px);margin:0 auto}
+a{color:inherit}a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.tag{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:14px;font-weight:500;color:var(--mute)}
+.tag i{width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.top{position:relative;padding:120px 0 70px;overflow:hidden}
+.top::before{content:"";position:absolute;inset:0;background:linear-gradient(var(--line) 1px,transparent 1px) 0 0/72px 72px,linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/72px 72px;-webkit-mask:radial-gradient(ellipse 70% 80% at 50% 30%,#000 20%,transparent 75%);mask:radial-gradient(ellipse 70% 80% at 50% 30%,#000 20%,transparent 75%)}
+.top::after{content:"";position:absolute;inset:-20% 10% auto;height:420px;background:radial-gradient(closest-side,rgba(47,91,255,.16),transparent);filter:blur(30px)}
+.top .wrap{position:relative;z-index:1}
+h1{font-size:clamp(52px,10.5vw,136px);line-height:.9;letter-spacing:-.065em;font-weight:600;margin:26px 0 0;max-width:9.5em}
+h1 span{display:block;margin-top:22px;font-size:clamp(22px,3vw,38px);line-height:1.1;letter-spacing:-.04em;color:#9aa0ad}
+.idx{display:flex;flex-wrap:wrap;gap:8px;margin-top:44px}
+.idx a{text-decoration:none;background:rgba(255,255,255,.7);border:1px solid var(--line);border-radius:999px;padding:9px 16px;font-size:14px;font-weight:600;transition:.2s}
+.idx a:hover{color:var(--blue);border-color:rgba(47,91,255,.4);background:#fff}
+.s{padding:56px 0;scroll-margin-top:20px}
+.sh{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+h2{font-size:clamp(26px,3.2vw,38px);letter-spacing:-.05em;font-weight:600;line-height:1}
+.g2{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-bottom:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:26px;padding:28px;box-shadow:0 26px 46px -32px rgba(12,15,26,.25)}
+.card h3{font-size:20px;letter-spacing:-.03em;font-weight:600;margin-bottom:14px}
+.card p,.body p{font-size:17px;line-height:1.62;color:var(--mute);letter-spacing:-.01em}.body p+p{margin-top:14px}
+.chart svg{width:100%;height:auto}.cap{margin-top:8px;font-size:13px;color:var(--mute)}
+.ln{fill:none;stroke:var(--blue);stroke-width:3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.8s .3s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.tl{list-style:none;padding:0;position:relative}.tl::before{content:"";position:absolute;left:6px;top:8px;bottom:8px;width:1.5px;background:var(--line)}
+.tl li{position:relative;padding:0 0 26px 34px}.tl li:last-child{padding-bottom:0}
+.tl li::before{content:"";position:absolute;left:0;top:5px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--blue)}
+.tl b{display:block;font-size:15px;color:var(--blue);font-weight:600}.tl span{font-size:17px;line-height:1.5;color:var(--ink)}
+.tl li.self::before{background:var(--blue)}.tl .lk{margin-top:12px;font-size:15px}
+.mini{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.mini i{display:inline-flex;align-items:center;gap:6px;font-style:normal;background:var(--tint);color:var(--blue);border-radius:999px;padding:5px 11px 5px 9px;font-size:13px;font-weight:600}.mini svg{width:14px;height:14px}
+.leg{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}.leg small{display:block;font-size:13px;font-weight:600;color:var(--mute);margin-bottom:10px}
+.leg .chips span{display:inline-flex;align-items:center;gap:8px;padding:7px 13px 7px 10px;font-size:14px}.leg svg{width:16px;height:16px;filter:grayscale(1);opacity:.7;transition:.2s}.leg .chips span:hover svg{filter:none;opacity:1}
+.ag{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:24px;background:radial-gradient(closest-side at 100% 0,rgba(47,91,255,.16),transparent 70%),#fff}
+.al{align-self:flex-start;background:var(--tint);color:var(--blue);border-radius:999px;padding:5px 13px;font-size:13px;font-weight:600}
+.ag .big{font-size:clamp(22px,2.4vw,29px);line-height:1.16;letter-spacing:-.045em;font-weight:600;color:var(--ink)}.ag .big span{color:var(--mute)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.flow .n{background:#f3f5f8;border:1px solid var(--line);border-radius:12px;padding:9px 13px;font-size:14px;font-weight:600}.flow i{font-style:normal;color:var(--blue);font-weight:600}.flow .ok{background:var(--blue);color:#fff;border-color:transparent}.ag .lk{margin-top:0}
+.loc{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;min-height:220px;background:radial-gradient(rgba(12,15,26,.14) 1px,transparent 1.5px) 0 0/20px 20px,#fff}
+.loc .big{font-size:clamp(34px,4.4vw,52px);letter-spacing:-.06em;font-weight:600;line-height:1}
+.loc .time{font:500 15px "JetBrains Mono",ui-monospace,monospace;color:var(--blue);margin-top:10px}
+.loc small{font-size:14px;color:var(--mute)}
+.steps{list-style:none;padding:0;counter-reset:s}.steps li{counter-increment:s;display:flex;gap:16px;padding:14px 0;border-top:1px solid var(--line);font-size:17px;line-height:1.5}.steps li:first-child{border:0;padding-top:0}
+.steps li::before{content:counter(s);flex:none;width:30px;height:30px;border-radius:50%;background:var(--tint);color:var(--blue);display:grid;place-items:center;font:600 14px "Instrument Sans"}
+.note{margin-top:16px;background:var(--tint);border-radius:18px;padding:18px 20px;font-size:16px;line-height:1.5;font-weight:500}
+.lk{display:inline-flex;align-items:center;gap:8px;margin-top:18px;color:var(--blue);font-weight:600;text-decoration:none}.lk:hover{text-decoration:underline}
+.acc{background:#fff;border:1px solid var(--line);border-radius:22px;margin-bottom:12px;box-shadow:0 20px 40px -32px rgba(12,15,26,.25)}
+summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:20px 24px;font-size:19px;font-weight:600;letter-spacing:-.03em}
+summary::-webkit-details-marker{display:none}summary small{margin-left:auto;font-size:13px;font-weight:500;color:var(--mute);letter-spacing:0}
+.pm{flex:none;position:relative;width:32px;height:32px;border-radius:50%;background:var(--tint);transition:.25s}
+.pm::before,.pm::after{content:"";position:absolute;left:9px;top:15px;width:14px;height:2px;border-radius:1px;background:var(--blue)}.pm::after{transform:rotate(90deg)}
+details[open]>summary .pm{transform:rotate(45deg);background:var(--blue)}details[open]>summary .pm::before,details[open]>summary .pm::after{background:#fff}
+.body{padding:0 24px 26px;max-width:46em}.body a{color:var(--blue);font-weight:500}
+code{font:500 14px "JetBrains Mono",monospace;background:var(--tint);border-radius:6px;padding:2px 7px;color:var(--blue)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chips span{background:#f3f5f8;border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:15px;font-weight:500}
+.body h4{font-size:14px;font-weight:600;color:var(--mute);margin:20px 0 10px}.body h4:first-child{margin-top:0}
+.apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;max-width:none}
+.app{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:18px;padding:14px;text-decoration:none;color:inherit;background:#fafbfd;transition:.2s}
+.app:hover{border-color:rgba(47,91,255,.45);background:#fff;transform:translateY(-2px)}
+.app .lg{flex:none;width:46px;height:46px;border-radius:13px;border:1.5px dashed rgba(12,15,26,.2);display:grid;place-items:center;background:#fff}.lg svg{width:24px;height:24px}
+.lg .mo{font:500 14px "JetBrains Mono",monospace;color:var(--blue)}
+.app b{display:block;font-size:16px;letter-spacing:-.02em}.app small{font-size:13px;color:var(--mute)}.app .ar{margin-left:auto;color:var(--blue);font-size:18px}
+.bel{list-style:none;padding:0}.bel li{padding:18px 0;border-top:1px solid var(--line);font-size:clamp(22px,2.6vw,30px);letter-spacing:-.045em;font-weight:600;line-height:1.1}.bel li:first-child{border:0;padding-top:0}.bel li:last-child{padding-bottom:0}
+.rule{position:relative;overflow:hidden;color:#fff;border:0;background:linear-gradient(135deg,#2f5bff,#5a82ff);box-shadow:0 30px 50px -26px rgba(47,91,255,.6);display:flex;flex-direction:column;justify-content:flex-end;min-height:260px}
+.rule::before,.rule::after{content:"";position:absolute;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);right:-60px;top:-70px;width:260px;height:260px}.rule::after{width:420px;height:420px;right:-140px;top:-150px;border-color:rgba(255,255,255,.11)}
+.rule>*{position:relative}.rule .l{position:absolute;top:28px;left:28px;background:rgba(255,255,255,.18);border-radius:999px;padding:5px 13px;font-size:13px;font-weight:600}
+.rule q{display:block;quotes:none;font-size:clamp(26px,3.2vw,38px);line-height:1.04;letter-spacing:-.05em;font-weight:600}.rule p{margin-top:14px;color:rgba(255,255,255,.82);font-size:16px}
+.blog{position:relative;overflow:hidden;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;background:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px) 0 0/44px 44px,linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px) 0 0/44px 44px,#0c0f1a;color:#fff;border-radius:28px;padding:40px;text-decoration:none;margin-bottom:12px;transition:transform .25s}
+.blog:hover{transform:translateY(-3px)}.blog::before{content:"";position:absolute;right:-80px;top:-120px;width:380px;height:380px;background:radial-gradient(closest-side,rgba(47,91,255,.7),transparent);filter:blur(20px)}
+.blog>*{position:relative}.blog small{display:block;font-size:14px;color:#9aa3bd;margin-bottom:14px}.blog h3{font-size:clamp(26px,3.6vw,44px);line-height:1.02;letter-spacing:-.055em;font-weight:600;max-width:13em}
+.blog .go{flex:none;width:56px;height:56px;border-radius:50%;background:#fff;color:var(--blue);display:grid;place-items:center;font-size:24px}
+.qs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.qc{position:relative}.qc::before{content:"“";display:block;font-size:72px;line-height:.6;height:34px;color:var(--blue);font-weight:700}
+.qc p{font-size:19px;line-height:1.5;color:var(--ink);letter-spacing:-.02em}.qc cite{display:block;margin-top:18px;font-style:normal;font-size:14px;font-weight:600;color:var(--mute)}
+.end{text-align:center;padding:80px 0 100px}.end h2{font-size:clamp(34px,5.4vw,64px);letter-spacing:-.06em;line-height:.98}.end h2 span{display:block;color:#9aa0ad}
+.end .row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:32px}
+.btn{display:inline-flex;align-items:center;gap:10px;height:54px;padding:0 26px;border-radius:999px;font:600 17px "Instrument Sans",sans-serif;text-decoration:none;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:transform .2s}.btn:hover{transform:translateY(-2px)}
+.btn.p{background:var(--blue);border:0;color:#fff;box-shadow:0 14px 28px -10px rgba(47,91,255,.6)}
+@media(max-width:900px){.top{padding:84px 0 50px}.g2,.qs{grid-template-columns:1fr}.blog{padding:28px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ln{animation:none;stroke-dashoffset:0}*{transition:none!important}}
+</style></head>
+<body>
+<header class="top"><div class="wrap"><span class="tag"><i></i>About</span>
+<h1>Learn more about me<span>Stuff I love &amp; want to share.</span></h1>
+<nav class="idx" aria-label="On this page"><a href="#story">Story</a><a href="#work">How I work</a><a href="#beliefs">Beliefs</a><a href="#me">A bit of me</a><a href="#stories">Stories</a><a href="#inspo">Inspiration</a></nav></div></header>
+<main class="wrap">
+
+<section class="s" id="story"><div class="sh"><span class="tag"><i></i>01</span><h2>My story</h2></div>
+<div class="g2"><div class="card"><h3>My web dev journey</h3><p>In the pursuit of my passion for technology, I initially delved into the world of hacking, driven by a genuine interest in cybersecurity and ethical hacking. However, my journey took a transformative turn when I discovered the vast realm of web development. Guided by a web development roadmap and invaluable tips and tricks shared by fellow developers on Instagram, I embarked on this exciting path. My learning journey crystallized through tutorials on YouTube, notably from the channel Anisul Islam, and various other enriching sources. As I honed my skills, I transitioned into a MERN stack developer, embracing the power of JavaScript in crafting dynamic and robust web applications.</p><div class="leg"><small>Legacy · used in 2022–2023</small><div class="chips"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#3776AB" d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/></svg>Python</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#0c0f1a" d="M10.773 2.878c-.013 1.434.322 4.624.445 5.734l-8.558 3.83c-.56-.959-.98-2.304-1.237-3.38l-.06.027c-.205.09-.406.053-.494-.088l-.011-.018-.82-1.506c-.058-.105-.05-.252.024-.392a.78.78 0 0 1 .358-.331l9.824-4.207c.146-.064.299-.063.4.004.106.062.127.128.13.327Zm.68 7c.523 1.97.675 2.412.832 2.818l-7.263 3.7a19.35 19.35 0 0 1-1.81-2.83l8.24-3.689Zm12.432 8.786h.003c.283.402-.047.657-.153.698l-.947.37c.037.125.035.319-.217.414l-.736.287c-.229.09-.398-.059-.42-.2l-.025-.125c-4.427 1.784-7.94 1.685-10.696.647-1.981-.745-3.576-1.983-4.846-3.379l6.948-3.54c.721 1.431 1.586 2.454 2.509 3.178 2.086 1.638 4.415 1.712 5.793 1.563l-.047-.233c-.015-.077.007-.135.086-.165l.734-.288a.302.302 0 0 1 .342.086l.748-.288a.306.306 0 0 1 .341.086l.583.89Z"/></svg>Flask</span><span><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"><path fill="#0074BD" d="M47.617 98.12s-4.767 2.774 3.397 3.71c9.892 1.13 14.947.968 25.845-1.092 0 0 2.871 1.795 6.873 3.351-24.439 10.47-55.308-.607-36.115-5.969zm-2.988-13.665s-5.348 3.959 2.823 4.805c10.567 1.091 18.91 1.18 33.354-1.6 0 0 1.993 2.025 5.132 3.131-29.542 8.64-62.446.68-41.309-6.336z"/><path fill="#EA2D2E" d="M69.802 61.271c6.025 6.935-1.58 13.17-1.58 13.17s15.289-7.891 8.269-17.777c-6.559-9.215-11.587-13.792 15.635-29.58 0 .001-42.731 10.67-22.324 34.187z"/><path fill="#0074BD" d="M102.123 108.229s3.529 2.91-3.888 5.159c-14.102 4.272-58.706 5.56-71.094.171-4.451-1.938 3.899-4.625 6.526-5.192 2.739-.593 4.303-.485 4.303-.485-4.953-3.487-32.013 6.85-13.743 9.815 49.821 8.076 90.817-3.637 77.896-9.468zM49.912 70.294s-22.686 5.389-8.033 7.348c6.188.828 18.518.638 30.011-.326 9.39-.789 18.813-2.474 18.813-2.474s-3.308 1.419-5.704 3.053c-23.042 6.061-67.544 3.238-54.731-2.958 10.832-5.239 19.644-4.643 19.644-4.643zm40.697 22.747c23.421-12.167 12.591-23.86 5.032-22.285-1.848.385-2.677.72-2.677.72s.688-1.079 2-1.543c14.953-5.255 26.451 15.503-4.823 23.725 0-.002.359-.327.468-.617z"/><path fill="#EA2D2E" d="M76.491 1.587S89.459 14.563 64.188 34.51c-20.266 16.006-4.621 25.13-.007 35.559-11.831-10.673-20.509-20.07-14.688-28.815C58.041 28.42 81.722 22.195 76.491 1.587z"/><path fill="#0074BD" d="M52.214 126.021c22.476 1.437 57-.8 57.817-11.436 0 0-1.571 4.032-18.577 7.231-19.186 3.612-42.854 3.191-56.887.874 0 .001 2.875 2.381 17.647 3.331z"/></svg>Java</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#3DDC84" d="M18.4395 5.5586c-.675 1.1664-1.352 2.3318-2.0274 3.498-.0366-.0155-.0742-.0286-.1113-.043-1.8249-.6957-3.484-.8-4.42-.787-1.8551.0185-3.3544.4643-4.2597.8203-.084-.1494-1.7526-3.021-2.0215-3.4864a1.1451 1.1451 0 0 0-.1406-.1914c-.3312-.364-.9054-.4859-1.379-.203-.475.282-.7136.9361-.3886 1.5019 1.9466 3.3696-.0966-.2158 1.9473 3.3593.0172.031-.4946.2642-1.3926 1.0177C2.8987 12.176.452 14.772 0 18.9902h24c-.119-1.1108-.3686-2.099-.7461-3.0683-.7438-1.9118-1.8435-3.2928-2.7402-4.1836a12.1048 12.1048 0 0 0-2.1309-1.6875c.6594-1.122 1.312-2.2559 1.9649-3.3848.2077-.3615.1886-.7956-.0079-1.1191a1.1001 1.1001 0 0 0-.8515-.5332c-.5225-.0536-.9392.3128-1.0488.5449zm-.0391 8.461c.3944.5926.324 1.3306-.1563 1.6503-.4799.3197-1.188.0985-1.582-.4941-.3944-.5927-.324-1.3307.1563-1.6504.4727-.315 1.1812-.1086 1.582.4941zM7.207 13.5273c.4803.3197.5506 1.0577.1563 1.6504-.394.5926-1.1038.8138-1.584.4941-.48-.3197-.5503-1.0577-.1563-1.6504.4008-.6021 1.1087-.8106 1.584-.4941z"/></svg>Android</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4479A1" d="M16.405 5.501c-.115 0-.193.014-.274.033v.013h.014c.054.104.146.18.214.273.054.107.1.214.154.32l.014-.015c.094-.066.14-.172.14-.333-.04-.047-.046-.094-.08-.14-.04-.067-.126-.1-.18-.153zM5.77 18.695h-.927a50.854 50.854 0 00-.27-4.41h-.008l-1.41 4.41H2.45l-1.4-4.41h-.01a72.892 72.892 0 00-.195 4.41H0c.055-1.966.192-3.81.41-5.53h1.15l1.335 4.064h.008l1.347-4.064h1.095c.242 2.015.384 3.86.428 5.53zm4.017-4.08c-.378 2.045-.876 3.533-1.492 4.46-.482.716-1.01 1.073-1.583 1.073-.153 0-.34-.046-.566-.138v-.494c.11.017.24.026.386.026.268 0 .483-.075.647-.222.197-.18.295-.382.295-.605 0-.155-.077-.47-.23-.944L6.23 14.615h.91l.727 2.36c.164.536.233.91.205 1.123.4-1.064.678-2.227.835-3.483zm12.325 4.08h-2.63v-5.53h.885v4.85h1.745zm-3.32.135l-1.016-.5c.09-.076.177-.158.255-.25.433-.506.648-1.258.648-2.253 0-1.83-.718-2.746-2.155-2.746-.704 0-1.254.232-1.65.697-.43.508-.646 1.256-.646 2.245 0 .972.19 1.686.574 2.14.35.41.877.615 1.583.615.264 0 .506-.033.725-.098l1.325.772.36-.622zM15.5 17.588c-.225-.36-.337-.94-.337-1.736 0-1.393.424-2.09 1.27-2.09.443 0 .77.167.977.5.224.362.336.936.336 1.723 0 1.404-.424 2.108-1.27 2.108-.445 0-.77-.167-.978-.5zm-1.658-.425c0 .47-.172.856-.516 1.156-.344.3-.803.45-1.384.45-.543 0-1.064-.172-1.573-.515l.237-.476c.438.22.833.328 1.19.328.332 0 .593-.073.783-.22a.754.754 0 00.3-.615c0-.33-.23-.61-.648-.845-.388-.213-1.163-.657-1.163-.657-.422-.307-.632-.636-.632-1.177 0-.45.157-.81.47-1.085.315-.278.72-.415 1.22-.415.512 0 .98.136 1.4.41l-.213.476a2.726 2.726 0 00-1.064-.23c-.283 0-.502.068-.654.206a.685.685 0 00-.248.524c0 .328.234.61.666.85.393.215 1.187.67 1.187.67.433.305.648.63.648 1.168zm9.382-5.852c-.535-.014-.95.04-1.297.188-.1.04-.26.04-.274.167.055.053.063.14.11.214.08.134.218.313.346.407.14.11.28.216.427.31.26.16.555.255.81.416.145.094.293.213.44.313.073.05.12.14.214.172v-.02c-.046-.06-.06-.147-.105-.214-.067-.067-.134-.127-.2-.193a3.223 3.223 0 00-.695-.675c-.214-.146-.682-.35-.77-.595l-.013-.014c.146-.013.32-.066.46-.106.227-.06.435-.047.67-.106.106-.027.213-.06.32-.094v-.06c-.12-.12-.21-.283-.334-.395a8.867 8.867 0 00-1.104-.823c-.21-.134-.476-.22-.697-.334-.08-.04-.214-.06-.26-.127-.12-.146-.19-.34-.275-.514a17.69 17.69 0 01-.547-1.163c-.12-.262-.193-.523-.34-.763-.69-1.137-1.437-1.826-2.586-2.5-.247-.14-.543-.2-.856-.274-.167-.008-.334-.02-.5-.027-.11-.047-.216-.174-.31-.235-.38-.24-1.364-.76-1.644-.072-.18.434.267.862.422 1.082.115.153.26.328.34.5.047.116.06.235.107.356.106.294.207.622.347.897.073.14.153.287.247.413.054.073.146.107.167.227-.094.136-.1.334-.154.5-.24.757-.146 1.693.194 2.25.107.166.362.534.703.393.3-.12.234-.5.32-.835.02-.08.007-.133.048-.187v.015c.094.188.188.367.274.555.206.328.566.668.867.895.16.12.287.328.487.402v-.02h-.015c-.043-.058-.1-.086-.154-.133a3.445 3.445 0 01-.35-.4 8.76 8.76 0 01-.747-1.218c-.11-.21-.202-.436-.29-.643-.04-.08-.04-.2-.107-.24-.1.146-.247.273-.32.453-.127.288-.14.642-.188 1.01-.027.007-.014 0-.027.014-.214-.052-.287-.274-.367-.46-.2-.475-.233-1.238-.06-1.785.047-.14.247-.582.167-.716-.042-.127-.174-.2-.247-.303a2.478 2.478 0 01-.24-.427c-.16-.374-.24-.788-.414-1.162-.08-.173-.22-.354-.334-.513-.127-.18-.267-.307-.368-.52-.033-.073-.08-.194-.027-.274.014-.054.042-.075.094-.09.088-.072.335.022.422.062.247.1.455.194.662.334.094.066.195.193.315.226h.14c.214.047.455.014.655.073.355.114.675.28.962.46a5.953 5.953 0 012.085 2.286c.08.154.115.295.188.455.14.33.313.663.455.982.14.315.275.636.476.897.1.14.502.213.682.286.133.06.34.115.46.188.23.14.454.3.67.454.11.076.443.243.463.378z"/></svg>MySQL</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#7952B3" d="M11.77 11.24H9.956V8.202h2.152c1.17 0 1.834.522 1.834 1.466 0 1.008-.773 1.572-2.174 1.572zm.324 1.206H9.957v3.348h2.231c1.459 0 2.232-.585 2.232-1.685s-.795-1.663-2.326-1.663zM24 11.39v1.218c-1.128.108-1.817.944-2.226 2.268-.407 1.319-.463 2.937-.42 4.186.045 1.3-.968 2.5-2.337 2.5H4.985c-1.37 0-2.383-1.2-2.337-2.5.043-1.249-.013-2.867-.42-4.186-.41-1.324-1.1-2.16-2.228-2.268V11.39c1.128-.108 1.819-.944 2.227-2.268.408-1.319.464-2.937.42-4.186-.045-1.3.968-2.5 2.338-2.5h14.032c1.37 0 2.382 1.2 2.337 2.5-.043 1.249.013 2.867.42 4.186.409 1.324 1.098 2.16 2.226 2.268zm-7.927 2.817c0-1.354-.953-2.333-2.368-2.488v-.057c1.04-.169 1.856-1.135 1.856-2.213 0-1.537-1.213-2.538-3.062-2.538h-4.16v10.172h4.181c2.218 0 3.553-1.086 3.553-2.876z"/></svg>Bootstrap</span></div></div></div>
+<div class="card chart"><h3>Momentum</h3>
+<svg viewBox="0 0 520 290" role="img" aria-label="Momentum chart, rated 0 to 10 per year, 2022 to 2026"><defs><linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2f5bff" stop-opacity=".22"/><stop offset="1" stop-color="#2f5bff" stop-opacity="0"/></linearGradient></defs>
+<g stroke="rgba(12,15,26,.09)"><path d="M30 40H500M30 120H500M30 200H500" stroke-dasharray="3 5"/></g>
+<g font-size="11" fill="#6f7686" font-family="Instrument Sans"><text x="0" y="44">10</text><text x="6" y="124">5</text><text x="6" y="204">0</text></g>
+<path d="M60 160C108 160 108 100 160 100S212 160 260 160 312 120 365 120 418 60 470 60V200H60Z" fill="url(#a)"/>
+<path class="ln" pathLength="1" d="M60 160C108 160 108 100 160 100S212 160 260 160 312 120 365 120 418 60 470 60"/>
+<g fill="#fff" stroke="#2f5bff" stroke-width="3"><circle cx="60" cy="160" r="6"/><circle cx="160" cy="100" r="6"/><circle cx="260" cy="160" r="6"/><circle cx="365" cy="120" r="6"/><circle cx="470" cy="60" r="6"/></g>
+<g font-size="12" font-weight="600" fill="#0c0f1a" font-family="Instrument Sans" text-anchor="middle"><text x="60" y="226">2022</text><text x="160" y="226">2023</text><text x="260" y="226">2024</text><text x="365" y="226">2025</text><text x="470" y="226">2026</text></g>
+<g font-size="11" fill="#6f7686" font-family="Instrument Sans" text-anchor="middle"><text x="60" y="146">Started</text><text x="260" y="184" dy="26">Paralysis</text><text x="365" y="106">Laptop</text><text x="470" y="46">AI agents</text></g></svg>
+<p class="cap">Rated 0 to 10 per year (sample values, edit in code).</p></div></div>
+<div class="g2"><div class="card"><h3>Education</h3><ul class="tl"><li><b>2021</b><span>Completed HSC in the Science department with a GPA of 4.67.</span></li><li><b>2022–2026</b><span>Currently pursuing a B.Sc. (Honours) degree in the Department of Botany at National University, Bangladesh.</span></li><li class="self"><b>Feb – Apr 2026</b><span>Self-studied Computer Science foundations.</span><div class="mini"><i>
+<svg aria-hidden="true"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M12 20v2" />
+  <path d="M12 2v2" />
+  <path d="M17 20v2" />
+  <path d="M17 2v2" />
+  <path d="M2 12h2" />
+  <path d="M2 17h2" />
+  <path d="M2 7h2" />
+  <path d="M20 12h2" />
+  <path d="M20 17h2" />
+  <path d="M20 7h2" />
+  <path d="M7 20v2" />
+  <path d="M7 2v2" />
+  <rect x="4" y="4" width="16" height="16" rx="2" />
+  <rect x="8" y="8" width="8" height="8" rx="1" />
+</svg>
+OS</i><i>
+<svg aria-hidden="true"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect x="16" y="16" width="6" height="6" rx="1" />
+  <rect x="2" y="16" width="6" height="6" rx="1" />
+  <rect x="9" y="2" width="6" height="6" rx="1" />
+  <path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3" />
+  <path d="M12 12V8" />
+</svg>
+Networking</i><i>
+<svg aria-hidden="true"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <ellipse cx="12" cy="5" rx="9" ry="3" />
+  <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+  <path d="M3 12A9 3 0 0 0 21 12" />
+</svg>
+DBMS</i><i>
+<svg aria-hidden="true"
+ 
+  xmlns="http://www.w3.org/2000/svg"
+ 
+ 
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+  <path d="M3 3v5h5" />
+  <path d="M12 7v5l4 2" />
+</svg>
+Computer History</i></div><a class="lk" href="#notes">Read my notes →</a></li></ul></div>
+<div class="card loc"><small>Location</small><div><div class="big">Bangladesh</div><div class="time" id="t">--:--:--</div></div></div></div></section>
+
+<section class="s" id="work"><div class="sh"><span class="tag"><i></i>02</span><h2>How I work</h2></div>
+<div class="g2"><div class="card"><h3>My typical workflow for building apps</h3><ol class="steps"><li>Brain dump the idea</li><li>Feed it into AI and generate a prototype and design</li><li>Refine the design</li><li>Initialize the project</li><li>Plan the MVP</li><li>❤️ Put in agent instructions and a customized shadcn theme so agents can write modular, quality, full code with design consistency</li><li>Start building step by step, showing design screenshots to the agent</li></ol></div>
+<div class="card ag"><span class="al">How I build today</span><p class="big">By the way, I build with AI agents <span>(Herdr + OpenCode)</span> and review every change in VS Code.</p><div class="flow"><span class="n">Herdr + OpenCode</span><i>→</i><span class="n">Review in VS Code</span><i>→</i><span class="n ok">Ship</span></div><a class="lk" href="/#skills">You can find my skills here →</a></div></div>
+<details class="acc"><summary>Special tools that boost my productivity<small>13 tools</small><span class="pm"></span></summary><div class="body"><p style="margin-bottom:16px">As a developer on a Windows machine.</p><div class="chips"><span>Nushell</span><span>Zoxide</span><span>fzf</span><span>File Pilot</span><span>Ditto clipboard</span><span>AutoHotkey</span><span>Windhawk</span><span>Debloater</span><span>Alt+Tab replacer</span><span>Traffic Monitor</span><span>Net Speed Meter</span><span>TranslucentTB</span><span>Herdr + a custom script to manage git worktrees without typing commands</span></div></div></details></section>
+
+<section class="s" id="beliefs"><div class="sh"><span class="tag"><i></i>03</span><h2>Things I believe</h2></div>
+<div class="g2"><div class="card"><ul class="bel"><li>Done is better than perfect.</li><li>Ugly action beats perfectionism.</li><li>Success has a cost.</li></ul></div>
+<div class="card rule"><span class="l">My rule</span><q>Just make it exist first. You can always make it good later.</q><p>I'm a perfectionist, trying to escape it.</p></div></div></section>
+
+<section class="s" id="me"><div class="sh"><span class="tag"><i></i>04</span><h2>A bit of me</h2></div>
+<details class="acc" open><summary>🛸 Apps I use daily<small>5 apps</small><span class="pm"></span></summary><div class="body apps">
+<a class="app" href="#"><span class="lg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#E44332" d="M21 0H3C1.35 0 0 1.35 0 3v3.858s3.854 2.24 4.098 2.38c.31.18.694.177 1.004 0 .26-.147 8.02-4.608 8.136-4.675.279-.161.58-.107.748-.01.164.097.606.348.84.48.232.134.221.502.013.622l-9.712 5.59c-.346.2-.69.204-1.048.002C3.478 10.907.998 9.463 0 8.882v2.02l4.098 2.38c.31.18.694.177 1.004 0 .26-.147 8.02-4.609 8.136-4.676.279-.16.58-.106.748-.008.164.096.606.347.84.48.232.133.221.5.013.62-.208.121-9.288 5.346-9.712 5.59-.346.2-.69.205-1.048.002C3.478 14.951.998 13.506 0 12.926v2.02l4.098 2.38c.31.18.694.177 1.004 0 .26-.147 8.02-4.609 8.136-4.676.279-.16.58-.106.748-.009.164.097.606.348.84.48.232.133.221.502.013.622l-9.712 5.59c-.346.199-.69.204-1.048.001C3.478 18.994.998 17.55 0 16.97V21c0 1.65 1.35 3 3 3h18c1.65 0 3-1.35 3-3V3c0-1.65-1.35-3-3-3z"/></svg></span><span><b>Todoist</b><small>Task manager</small></span><span class="ar">↗</span></a>
+<a class="app" href="#"><span class="lg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#7C3AED" d="M19.355 18.538a68.967 68.959 0 0 0 1.858-2.954.81.81 0 0 0-.062-.9c-.516-.685-1.504-2.075-2.042-3.362-.553-1.321-.636-3.375-.64-4.377a1.707 1.707 0 0 0-.358-1.05l-3.198-4.064a3.744 3.744 0 0 1-.076.543c-.106.503-.307 1.004-.536 1.5-.134.29-.29.6-.446.914l-.31.626c-.516 1.068-.997 2.227-1.132 3.59-.124 1.26.046 2.73.815 4.481.128.011.257.025.386.044a6.363 6.363 0 0 1 3.326 1.505c.916.79 1.744 1.922 2.415 3.5zM8.199 22.569c.073.012.146.02.22.02.78.024 2.095.092 3.16.29.87.16 2.593.64 4.01 1.055 1.083.316 2.198-.548 2.355-1.664.114-.814.33-1.735.725-2.58l-.01.005c-.67-1.87-1.522-3.078-2.416-3.849a5.295 5.295 0 0 0-2.778-1.257c-1.54-.216-2.952.19-3.84.45.532 2.218.368 4.829-1.425 7.531zM5.533 9.938c-.023.1-.056.197-.098.29L2.82 16.059a1.602 1.602 0 0 0 .313 1.772l4.116 4.24c2.103-3.101 1.796-6.02.836-8.3-.728-1.73-1.832-3.081-2.55-3.831zM9.32 14.01c.615-.183 1.606-.465 2.745-.534-.683-1.725-.848-3.233-.716-4.577.154-1.552.7-2.847 1.235-3.95.113-.235.223-.454.328-.664.149-.297.288-.577.419-.86.217-.47.379-.885.46-1.27.08-.38.08-.72-.014-1.043-.095-.325-.297-.675-.68-1.06a1.6 1.6 0 0 0-1.475.36l-4.95 4.452a1.602 1.602 0 0 0-.513.952l-.427 2.83c.672.59 2.328 2.316 3.335 4.711.09.21.175.43.253.653z"/></svg></span><span><b>Obsidian</b><small>Notes app</small></span><span class="ar">↗</span></a>
+<a class="app" href="#"><span class="lg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#F76F53" d="M24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12zm-12 9.846c5.438 0 9.846-4.408 9.846-9.846S17.438 2.154 12 2.154 2.154 6.562 2.154 12 6.562 21.846 12 21.846zM20 12a8 8 0 1 1-16 0 8 8 0 0 1 16 0zm-8 6.462a6.462 6.462 0 1 0 0-12.924 6.462 6.462 0 0 0 0 12.924zm0-1.847a4.615 4.615 0 1 0 0-9.23 4.615 4.615 0 0 0 0 9.23zM15.692 12a3.692 3.692 0 1 1-7.384 0 3.692 3.692 0 0 1 7.384 0z"/></svg></span><span><b>Zen Browser</b><small>Web browser</small></span><span class="ar">↗</span></a>
+<a class="app" href="#"><span class="lg"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#FF1B2D" d="M8.051 5.238c-1.328 1.566-2.186 3.883-2.246 6.48v.564c.061 2.598.918 4.912 2.246 6.479 1.721 2.236 4.279 3.654 7.139 3.654 1.756 0 3.4-.537 4.807-1.471C17.879 22.846 15.074 24 12 24c-.192 0-.383-.004-.57-.014C5.064 23.689 0 18.436 0 12 0 5.371 5.373 0 12 0h.045c3.055.012 5.84 1.166 7.953 3.055-1.408-.93-3.051-1.471-4.81-1.471-2.858 0-5.417 1.42-7.14 3.654h.003zM24 12c0 3.556-1.545 6.748-4.002 8.945-3.078 1.5-5.946.451-6.896-.205 3.023-.664 5.307-4.32 5.307-8.74 0-4.422-2.283-8.075-5.307-8.74.949-.654 3.818-1.703 6.896-.205C22.455 5.25 24 8.445 24 12z"/></svg></span><span><b>Opera</b><small>Web browser</small></span><span class="ar">↗</span></a>
+<a class="app" href="#"><span class="lg"><span class="mo">Al</span></span><span><b>Alarmy</b><small>Alarm app</small></span><span class="ar">↗</span></a>
+<p style="grid-column:1/-1;margin-top:8px">I'm an Obsidian nerd. I switched from Notion to Obsidian in July 2024.</p></div></details>
+<details class="acc"><summary>🤓 Fun fact<span class="pm" style="margin-left:auto"></span></summary><div class="body"><p>I coded on Android from <code>March 2022 to February 2025</code> using <a href="https://modyolo.com/acode-powerful-code-editor.html">Acode</a>, a feature-rich code editor that provides a VS Code-like experience.</p><p>For my terminal needs, I rely on <a href="https://github.com/termux/termux-app">Termux</a>, and for console functionality, I use <a href="https://github.com/liriliri/eruda">eruda</a>. Notably, my first portfolio was crafted entirely on Android using Acode and Termux.</p></div></details>
+<details class="acc"><summary>Interesting way of Android app generation<span class="pm" style="margin-left:auto"></span></summary><div class="body"><p>Around 2018–2020, I was introduced to "ApkBuilder" and found a way to create apps with HTML, CSS, and JS. In 2022, I created a template and stored it on GitHub.</p><p>In 2026, after adapting to agentic development, I got an idea to improve that template and generate APKs with GitHub Actions, without an Android Studio setup. And boom, it works. After steering the agent multiple times, it finally improved the template and created the correct GitHub Action to generate the APK file.</p><p>Now I'm enjoying this template because I can create offline apps with it instead of making a PWA, since a PWA warms up the browser, while this template creates an internal WebView.</p><a class="lk" href="#">View the template on GitHub →</a></div></details></section>
+
+<section class="s" id="stories"><div class="sh"><span class="tag"><i></i>05</span><h2>Stories</h2></div>
+<a class="blog" href="/blog/productivity-paralysis"><div><small>Read on my blog</small><h3>When Productivity Became My Biggest Distraction</h3></div><span class="go">↗</span></a>
+<details class="acc"><summary>My secret morning wake-up strategy you might not know yet<span class="pm" style="margin-left:auto"></span></summary><div class="body"><p>In December 2024, I found the Alarmy app, which won't turn off the alarm until you scan a QR code. I printed a QR code and stuck it on the outside of our room door 😄</p><p>Now when the alarm starts ringing, I first wake up, then I walk a few meters, open the door, and scan the QR code. Only then does the alarm stop 😄</p></div></details></section>
+
+<section class="s" id="inspo"><div class="sh"><span class="tag"><i></i>06</span><h2>Inspiration</h2></div>
+<details class="acc"><summary>YouTube channels<small>10 channels</small><span class="pm"></span></summary><div class="body"><h4>Helped me learn web dev</h4><div class="chips"><span>Anisul Islam</span><span>Learn with Sumit</span><span>Code with Harry</span><span>Thapa Technical</span></div><h4>I follow and love now</h4><div class="chips"><span>Sonny Sangha</span><span>Code with Antonio</span><span>Chai aur Code</span><span>JavaScript Mastery</span><span>Codevolution</span><span>Web Dev Simplified</span></div></div></details>
+<div class="qs"><figure class="card qc"><p>Everything in your life is a reflection of your choices. To be better, make a different choice — not once, but consistently, even when it feels uncomfortable.</p><cite>Instagram</cite></figure>
+<figure class="card qc"><p>Motivation is fickle. It comes and goes. It is unreliable and when you are counting on motivation to get your goals accomplished — you will likely fall short. If you do not believe you are disciplined, it is because you have not decided to become disciplined. Yet. Discipline &gt; motivation.</p><cite>Jocko Willink</cite></figure></div></section>
+
+<section class="end"><h2>Let's build something<span>useful together.</span></h2><div class="row"><button class="btn p" type="button" data-open-drawer>Contact me</button><a class="btn" href="/#skills">See my skills</a></div></section>
+</main>
+<script>(function(){var el=document.getElementById("t"),f=new Intl.DateTimeFormat("en-GB",{timeZone:"Asia/Dhaka",weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false});function u(){el.textContent=f.format(new Date())}u();setInterval(u,1000)})();</script>
+</body></html>
