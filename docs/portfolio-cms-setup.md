@@ -6,7 +6,9 @@
 2. Buka SQL Editor dan jalankan migration berikut secara berurutan, masing-masing satu kali:
    - `supabase/migrations/0001_portfolio_foundation.sql`
    - `supabase/migrations/0002_content_editor.sql`
-3. Dari **Project Settings > API**, salin URL project dan `service_role` key.
+3. Dari **Project Settings > API**, salin **Project URL** dan `service_role` key.
+
+`SUPABASE_URL` harus berbentuk `https://<project-ref>.supabase.co`. Jangan gunakan connection string database yang diawali `postgresql://`, karena nilai itu hanya untuk koneksi database langsung dan tidak bisa dipakai oleh Supabase JavaScript client.
 
 `SUPABASE_SERVICE_ROLE_KEY` hanya digunakan server-side melalui `lib/supabase.ts`. Jangan pernah menaruhnya di variabel `NEXT_PUBLIC_*` atau browser.
 
