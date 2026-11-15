@@ -1,40 +1,5 @@
-import Image from "next/image"
-import { BookOpen, Rocket, Search, ShieldCheck } from "lucide-react"
-
-import {
-  ADDITIONAL,
-  CORE_SKILLS,
-  SKILLS_HEADER,
-  TOOLKIT,
-  type SkillItem,
-} from "@/constants/skills"
-import { cn } from "@/lib/utils"
 import { SectionHeader } from "@/components/shared/section-header"
-
-const EXTRA_ICONS = {
-  search: Search,
-  "shield-check": ShieldCheck,
-  rocket: Rocket,
-  "book-open": BookOpen,
-} as const
-
-function SkillIcon({ skill }: { skill: SkillItem }) {
-  if (!skill.logo) return null
-  return (
-    <Image
-      src={skill.logo}
-      alt=""
-      aria-hidden
-      width={20}
-      height={20}
-      loading="lazy"
-      className={cn(
-        "size-4 shrink-0 object-contain",
-        skill.darkInvert && "dark:invert"
-      )}
-    />
-  )
-}
+import type { HomePageContent, PortfolioSkill } from "@/types/cms"
 
 function SkillPill({ name, icon }: { name: string; icon: React.ReactNode }) {
   return (
@@ -72,7 +37,37 @@ function SkillGroup({
   )
 }
 
-export function Skills() {
+export function Skills({
+  content,
+  skills,
+}: {
+  content: HomePageContent["skills"]
+  skills: PortfolioSkill[]
+}) {
+  const groups = [
+    {
+      description: content.coreDescription,
+      items: skills.filter(
+        (skill) => skill.visible && skill.category === "core"
+      ),
+      title: content.coreTitle,
+    },
+    {
+      description: content.toolkitDescription,
+      items: skills.filter(
+        (skill) => skill.visible && skill.category === "toolkit"
+      ),
+      title: content.toolkitTitle,
+    },
+    {
+      description: content.additionalDescription,
+      items: skills.filter(
+        (skill) => skill.visible && skill.category === "additional"
+      ),
+      title: content.additionalTitle,
+    },
+  ]
+
   return (
     <section
       id="skills"
@@ -86,60 +81,37 @@ export function Skills() {
       />
       <div className="relative flex flex-col gap-8">
         <SectionHeader
-          badge={SKILLS_HEADER.badge}
-          titleBlack={SKILLS_HEADER.titleBlack}
-          titleGray={SKILLS_HEADER.titleGray}
-          sideNote={SKILLS_HEADER.sideNote}
+          badge={content.badge}
+          titleBlack={content.titleBlack}
+          titleGray={content.titleGray}
+          sideNote={content.sideNote}
           center={false}
           badgeCenter
         />
 
-        <SkillGroup
-          title="Core skills"
-          countLabel={`${CORE_SKILLS.length} tools`}
-          description="The stack I build products with."
-        >
-          {CORE_SKILLS.map((skill) => (
-            <SkillPill
-              key={skill.name}
-              name={skill.name}
-              icon={<SkillIcon skill={skill} />}
-            />
-          ))}
-        </SkillGroup>
-
-        <SkillGroup
-          title="Toolkit"
-          countLabel={`${TOOLKIT.length} tools`}
-          description="The tools I work in every day."
-        >
-          {TOOLKIT.map((skill) => (
-            <SkillPill
-              key={skill.name}
-              name={skill.name}
-              icon={<SkillIcon skill={skill} />}
-            />
-          ))}
-        </SkillGroup>
-
-        <SkillGroup
-          title="Additional"
-          countLabel={`${ADDITIONAL.length} skills`}
-          description="Beyond the code."
-        >
-          {ADDITIONAL.map((extra) => {
-            const Icon = EXTRA_ICONS[extra.icon]
-            return (
+        {groups.map((group) => (
+          <SkillGroup
+            key={group.title}
+            title={group.title}
+            countLabel={`${group.items.length} tools`}
+            description={group.description}
+          >
+            {group.items.map((skill) => (
               <SkillPill
-                key={extra.label}
-                name={extra.label}
+                key={skill.id}
+                name={skill.name}
                 icon={
-                  <Icon aria-hidden className="size-4 shrink-0 text-blue-600" />
+                  skill.iconKey ? (
+                    <span
+                      aria-hidden
+                      className="size-2 shrink-0 rounded-full bg-blue-600"
+                    />
+                  ) : null
                 }
               />
-            )
-          })}
-        </SkillGroup>
+            ))}
+          </SkillGroup>
+        ))}
       </div>
     </section>
   )

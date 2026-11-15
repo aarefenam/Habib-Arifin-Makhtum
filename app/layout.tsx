@@ -17,6 +17,7 @@ import { FloatingCommandButton } from "@/components/shared/floating-command-butt
 import { CommandPalette } from "@/components/shared/command-palette"
 import { Toaster } from "@/components/ui/toast"
 import { SITE, SITE_DESCRIPTION } from "@/constants/site"
+import { getPublicSiteSettings } from "@/lib/cms"
 import { cn } from "@/lib/utils"
 
 const switzer = localFont({
@@ -34,64 +35,64 @@ const switzer = localFont({
   display: "swap",
 })
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE.siteUrl),
-  title: {
-    default: `${SITE.name} | ${SITE.role}`,
-    template: `%s | ${SITE.name}`,
-  },
-  description: SITE_DESCRIPTION,
-  icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
-  },
-  keywords: [
-    "Habib Arifin Makhtum",
-    "full-stack developer",
-    "IT solver",
-    "ERP developer",
-    "web developer Indonesia",
-    "Next.js developer",
-    "integrasi API",
-    "Cloudflare R2",
-  ],
-  authors: [{ name: SITE.name }],
-  creator: SITE.name,
-  openGraph: {
-    type: "website",
-    locale: "id_ID",
-    url: SITE.siteUrl,
-    title: `${SITE.name} | ${SITE.role}`,
-    description: SITE_DESCRIPTION,
-    siteName: SITE.name,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${SITE.name} | ${SITE.role}`,
-    description: SITE_DESCRIPTION,
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  const site = await getPublicSiteSettings()
+
+  return {
+    metadataBase: new URL(SITE.siteUrl),
+    title: {
+      default: site.seoTitle || `${site.name} | ${site.role}`,
+      template: `%s | ${site.name}`,
+    },
+    description: site.seoDescription || SITE_DESCRIPTION,
+    icons: {
+      icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    },
+    keywords: [
+      site.name,
+      "full-stack developer",
+      "IT solver",
+      "ERP developer",
+      "web developer Indonesia",
+      "Next.js developer",
+      "integrasi API",
+      "Cloudflare R2",
+    ],
+    authors: [{ name: site.name }],
+    creator: site.name,
+    openGraph: {
+      type: "website",
+      locale: "id_ID",
+      url: SITE.siteUrl,
+      title: site.seoTitle || `${site.name} | ${site.role}`,
+      description: site.seoDescription || SITE_DESCRIPTION,
+      siteName: site.name,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: site.seoTitle || `${site.name} | ${site.role}`,
+      description: site.seoDescription || SITE_DESCRIPTION,
+    },
+  }
 }
 
-const personJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: SITE.name,
-  alternateName: [SITE.handle],
-  url: SITE.siteUrl,
-  jobTitle: SITE.role,
-  description: SITE_DESCRIPTION,
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Cairo",
-    addressCountry: "EG",
-  },
-  sameAs: [SITE.github, SITE.linkedin, SITE.instagram],
-}
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const site = await getPublicSiteSettings()
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    alternateName: [site.handle],
+    description: site.seoDescription,
+    jobTitle: site.role,
+    name: site.name,
+    sameAs: Object.values(site.socialLinks).filter(Boolean),
+    url: SITE.siteUrl,
+  }
+
   return (
     <html
       lang="id"
@@ -104,13 +105,13 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <ThemeProvider>
-          <Navbar />
+          <Navbar site={site} />
           <SmoothScroll>
             <PageShell>{children}</PageShell>
           </SmoothScroll>
-          <Footer />
+          <Footer site={site} />
           <BackToTop />
-          <GlobalContactDialog />
+          <GlobalContactDialog site={site} />
           <CommandPalette />
           <FloatingCommandButton />
           <FloatingFullscreenToggle />

@@ -9,16 +9,11 @@ import {
   Store,
 } from "lucide-react"
 
-import {
-  HERO_BADGE,
-  HERO_BUILD_ITEMS,
-  HERO_CHIPS,
-  HERO_COPY,
-} from "@/constants/hero"
 import { cn } from "@/lib/utils"
 import { HeroMessageButton } from "@/components/public/home/hero-message-button"
 import { HeroTerminal } from "@/components/public/home/hero-terminal"
 import { Marquee } from "@/components/ui/marquee"
+import type { HomePageContent } from "@/types/cms"
 
 const BUILD_ICONS = {
   globe: Globe,
@@ -37,7 +32,13 @@ const CHIP_STYLES = [
   "top-[36%] right-[7%] -rotate-3",
 ]
 
-export function Hero() {
+export function Hero({
+  content,
+  messageLabel,
+}: {
+  content: HomePageContent["hero"]
+  messageLabel: string
+}) {
   return (
     <section className="relative overflow-hidden">
       {/* Ruled hairlines - fades out above the marquee strip */}
@@ -50,39 +51,39 @@ export function Hero() {
       <div className="relative mx-auto flex max-w-4xl flex-col pb-20 text-center sm:px-6">
         {/* Availability badge */}
         <p className="mx-auto flex-center w-fit gap-2 rounded-full border border-border bg-background px-4 py-1.5 text-xs shadow-sm sm:text-sm">
-          <span className="font-bold">{HERO_BADGE.role}</span>
+          <span className="font-bold">{content.badgeRole}</span>
           <span aria-hidden className="size-2 rounded-full bg-green-500" />
           <span className="hidden text-muted-foreground xsm:block">
-            {HERO_BADGE.availability}
+            {content.availability}
           </span>
         </p>
 
         {/* Headline */}
         <h1 className="mt-6 text-[clamp(2rem,7vw,5.5rem)] leading-[1.02] font-bold tracking-tight">
-          {HERO_COPY.title}
+          {content.title}
           <br />
-          <span className="text-muted-foreground">{HERO_COPY.titleAccent}</span>
+          <span className="text-muted-foreground">{content.titleAccent}</span>
         </h1>
 
         {/* Sub copy */}
         <p className="mx-auto mt-6 max-w-[550px] text-lg">
-          <span className="font-semibold">{HERO_COPY.lead} </span>
-          <span className="text-muted-foreground">{HERO_COPY.detail}</span>
+          <span className="font-semibold">{content.lead} </span>
+          <span className="text-muted-foreground">{content.detail}</span>
         </p>
 
         {/* CTAs */}
         <div className="mt-8 flex-center flex-col justify-center gap-3 xsm:flex-row">
-          <HeroMessageButton />
+          <HeroMessageButton label={messageLabel} />
           <Link
             href="/about"
             className="rounded-xl border border-border bg-background px-6 py-3 font-semibold transition-colors hover:bg-muted"
           >
-            {HERO_COPY.projectsLabel}
+            {content.secondaryCtaLabel}
           </Link>
         </div>
 
         {/* Floating chips */}
-        {HERO_CHIPS.map((chip, index) => (
+        {content.chips.map((chip, index) => (
           <span
             key={chip}
             aria-hidden
@@ -114,8 +115,9 @@ export function Hero() {
               pauseOnHover
               className="py-4 [--duration:30s] [--gap:3rem]"
             >
-              {HERO_BUILD_ITEMS.map((item) => {
-                const Icon = BUILD_ICONS[item.icon]
+              {content.buildItems.map((item) => {
+                const Icon =
+                  BUILD_ICONS[item.icon as keyof typeof BUILD_ICONS] ?? Globe
 
                 return (
                   <span

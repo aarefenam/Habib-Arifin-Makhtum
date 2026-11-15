@@ -1,33 +1,90 @@
-import { SectionHeader } from "@/components/shared/section-header"
-import { PROJECTS_CTA, PROJECTS_HEADER } from "@/constants/projects"
+import Link from "next/link"
 
-export function Projects() {
+import { ArrowUpRight } from "lucide-react"
+
+import { SectionHeader } from "@/components/shared/section-header"
+import type {
+  HomePageContent,
+  PortfolioMediaAsset,
+  PortfolioProject,
+} from "@/types/cms"
+
+export function Projects({
+  content,
+  media,
+  projects,
+}: {
+  content: HomePageContent["projects"]
+  media: PortfolioMediaAsset[]
+  projects: PortfolioProject[]
+}) {
+  const publishedProjects = projects.filter(
+    (project) => project.status === "published"
+  )
+
   return (
     <section id="projects" aria-label="Projects" className="mt-6 sm:mt-10">
       <div className="flex flex-col gap-8">
         <SectionHeader
-          badge={PROJECTS_HEADER.badge}
-          titleBlack={PROJECTS_HEADER.titleBlack}
-          titleGray={PROJECTS_HEADER.titleGray}
-          sideNote={PROJECTS_HEADER.sideNote}
+          badge={content.headerBadge}
+          titleBlack={content.headerTitleBlack}
+          titleGray={content.headerTitleGray}
+          sideNote={content.headerSideNote}
           center={false}
           badgeCenter
         />
 
-        <div className="rounded-2xl border border-dashed border-border bg-card p-6 text-center sm:p-8">
-          <p className="font-semibold">Portfolio sedang diperbarui.</p>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Case study akan hadir setelah melalui proses kurasi dan dokumentasi.
-          </p>
-          <a
-            href={PROJECTS_CTA.href}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-5 inline-flex rounded-full border border-border px-5 py-2 text-sm font-semibold transition-colors hover:border-blue-600 hover:text-blue-600"
-          >
-            {PROJECTS_CTA.label}
-          </a>
-        </div>
+        {publishedProjects.length ? (
+          <div className="grid gap-4 md:grid-cols-2">
+            {publishedProjects.map((project) => {
+              const cover = project.coverKey
+                ? media.find((asset) => asset.storageKey === project.coverKey)
+                : undefined
+
+              return (
+                <Link
+                  key={project.id}
+                  href={`/projects/${project.slug}`}
+                  className="group overflow-hidden rounded-2xl border border-border bg-card transition-shadow hover:shadow-md"
+                >
+                  <div className="aspect-[16/9] bg-muted">
+                    {cover ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={cover.publicUrl}
+                        alt={cover.altText ?? project.title}
+                        className="size-full object-cover"
+                      />
+                    ) : (
+                      <div className="flex-center size-full justify-center text-sm font-medium text-muted-foreground">
+                        {project.projectType}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex-center justify-between gap-4 p-5">
+                    <div className="min-w-0">
+                      <h3 className="heading-6 truncate">{project.title}</h3>
+                      <p className="mt-1 line-clamp-2 text-sm leading-6 text-muted-foreground">
+                        {project.shortDescription}
+                      </p>
+                    </div>
+                    <ArrowUpRight
+                      aria-hidden
+                      className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-blue-600"
+                    />
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
+        ) : (
+          <div className="rounded-2xl border border-dashed border-border bg-card p-6 text-center sm:p-8">
+            <p className="font-semibold">{content.emptyTitle}</p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {content.emptyDescription}
+            </p>
+          </div>
+        )}
       </div>
     </section>
   )

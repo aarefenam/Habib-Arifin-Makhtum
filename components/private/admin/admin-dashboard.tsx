@@ -69,14 +69,14 @@ export function AdminDashboard({ session }: { session: AdminSession }) {
               const Icon = area.icon
 
               return (
-                <a
+                <Link
                   key={area.id}
-                  href={`#${area.id}`}
+                  href={area.href}
                   className="flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:bg-muted focus-visible:text-foreground"
                 >
                   <Icon aria-hidden className="size-4" />
                   {area.title}
-                </a>
+                </Link>
               )
             })}
           </div>
@@ -180,8 +180,8 @@ export function AdminDashboard({ session }: { session: AdminSession }) {
                     </Badge>
                   </div>
                   <p className="mt-1 max-w-xl text-sm leading-6 text-muted-foreground">
-                    Fondasi autentikasi sudah berjalan. Tahap berikutnya adalah
-                    mengaktifkan editor pada setiap koleksi konten.
+                    Editor CMS sudah siap untuk mengelola teks, koleksi konten,
+                    aset R2, dan pesan masuk dari satu workspace.
                   </p>
                 </div>
               </div>
@@ -199,7 +199,7 @@ export function AdminDashboard({ session }: { session: AdminSession }) {
                 </div>
                 <div>
                   <dt className="text-xs text-muted-foreground">Mode</dt>
-                  <dd className="mt-1 font-medium">Setup CMS</dd>
+                  <dd className="mt-1 font-medium">Editor aktif</dd>
                 </div>
               </dl>
             </div>
@@ -226,7 +226,7 @@ export function AdminDashboard({ session }: { session: AdminSession }) {
                 const Icon = area.icon
 
                 return (
-                  <article key={area.id} id={area.id} className="scroll-mt-24">
+                  <Link key={area.id} href={area.href} className="block h-full">
                     <Card className="h-full border border-border py-0 shadow-none transition-shadow hover:shadow-sm">
                       <CardHeader className="px-5 pt-5 sm:px-6 sm:pt-6">
                         <div className="flex items-start justify-between gap-4">
@@ -251,11 +251,11 @@ export function AdminDashboard({ session }: { session: AdminSession }) {
                             className="size-3.5 shrink-0 text-blue-600"
                           />
                           <span>{area.priority}</span>
-                          <span className="ml-auto">Editor segera hadir</span>
+                          <span className="ml-auto">Buka editor</span>
                         </div>
                       </CardContent>
                     </Card>
-                  </article>
+                  </Link>
                 )
               })}
             </div>

@@ -9,6 +9,7 @@ import {
 export const ADMIN_CONTENT_AREAS = [
   {
     description: "Identitas, bio, sosial media, dan SEO global.",
+    href: "/admin/content",
     id: "site-settings",
     icon: Settings2,
     priority: "Mulai dari sini",
@@ -16,6 +17,7 @@ export const ADMIN_CONTENT_AREAS = [
   },
   {
     description: "Case study, teknologi, link, dan urutan tampilan.",
+    href: "/admin/projects",
     id: "projects",
     icon: BriefcaseBusiness,
     priority: "Konten utama",
@@ -23,6 +25,7 @@ export const ADMIN_CONTENT_AREAS = [
   },
   {
     description: "Stack, layanan, riwayat, dan pertanyaan umum.",
+    href: "/admin/collections",
     id: "content",
     icon: Sparkles,
     priority: "Konten pendukung",
@@ -30,6 +33,7 @@ export const ADMIN_CONTENT_AREAS = [
   },
   {
     description: "Avatar, project cover, dan seluruh aset R2.",
+    href: "/admin/media",
     id: "media-library",
     icon: Images,
     priority: "Aset visual",
@@ -37,6 +41,7 @@ export const ADMIN_CONTENT_AREAS = [
   },
   {
     description: "Pesan dari formulir kontak website.",
+    href: "/admin/inbox",
     id: "inbox",
     icon: Inbox,
     priority: "Komunikasi masuk",

@@ -6,16 +6,8 @@ import { ArrowUpRight, Mail, MessageCircle, Phone, Send } from "lucide-react"
 import { SectionHeader } from "@/components/shared/section-header"
 import { SocialIcon } from "@/components/shared/social-icons"
 import { useContactStore } from "@/stores/contact-store"
-
-import {
-  CONTACT_CARD,
-  CONTACT_HEADER,
-  CONTACT_METHODS,
-  CONTACT_PROFILE,
-  CONTACT_SOCIALS_LABEL,
-} from "@/constants/contact"
-import { FOOTER_SOCIALS } from "@/constants/footer"
 import { ShineBorder } from "@/components/ui/shine-border"
+import type { HomePageContent, PortfolioSiteSettings } from "@/types/cms"
 
 const METHOD_ICONS = {
   mail: Mail,
@@ -24,17 +16,60 @@ const METHOD_ICONS = {
   phone: Phone,
 }
 
-export function Contact() {
+export function Contact({
+  content,
+  site,
+}: {
+  content: HomePageContent["contact"]
+  site: PortfolioSiteSettings
+}) {
   const open = useContactStore((s) => s.open)
+  const socialLinks = [
+    {
+      brand: "github" as const,
+      href: site.socialLinks.github,
+      label: "GitHub",
+    },
+    {
+      brand: "linkedin" as const,
+      href: site.socialLinks.linkedin,
+      label: "LinkedIn",
+    },
+    {
+      brand: "instagram" as const,
+      href: site.socialLinks.instagram,
+      label: "Instagram",
+    },
+  ].filter((social) => social.href)
+  const methods = [
+    {
+      href: `mailto:${site.email}`,
+      icon: "mail" as const,
+      label: "Email",
+      value: site.email,
+    },
+    {
+      href: site.whatsappUrl,
+      icon: "whatsapp" as const,
+      label: "WhatsApp",
+      value: site.phone,
+    },
+    {
+      href: `tel:${site.phone.replace(/\s/g, "")}`,
+      icon: "phone" as const,
+      label: "Telepon",
+      value: site.phone,
+    },
+  ].filter((method) => method.href && method.value)
 
   return (
     <section id="contact" aria-label="Contact" className="mt-6 sm:mt-10">
       <div className="flex flex-col gap-8">
         <SectionHeader
-          badge={CONTACT_HEADER.badge}
-          titleBlack={CONTACT_HEADER.titleBlack}
-          titleGray={CONTACT_HEADER.titleGray}
-          sideNote={CONTACT_HEADER.sideNote}
+          badge={content.headerBadge}
+          titleBlack={content.headerTitleBlack}
+          titleGray={content.headerTitleGray}
+          sideNote={content.headerSideNote}
           center={false}
           badgeCenter
         />
@@ -42,7 +77,7 @@ export function Contact() {
         <div className="grid gap-4 md:grid-cols-2">
           {/* Direct channels */}
           <div className="flex flex-col gap-3">
-            {CONTACT_METHODS.map((method) => {
+            {methods.map((method) => {
               const Icon = METHOD_ICONS[method.icon]
               return (
                 <a
@@ -79,10 +114,10 @@ export function Contact() {
             })}
 
             <p className="mt-2 text-xs text-muted-foreground">
-              {CONTACT_SOCIALS_LABEL}
+              Temukan saya di
             </p>
             <div className="flex flex-wrap gap-2">
-              {FOOTER_SOCIALS.map((social) => (
+              {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
@@ -111,17 +146,17 @@ export function Contact() {
               aria-hidden
               className="pointer-events-none absolute right-0 -bottom-10 translate-y-[12%] text-[9rem] leading-none font-bold tracking-tight whitespace-nowrap text-blue-600/15 select-none"
             >
-              {CONTACT_CARD.giantWord}
+              {content.giantWord}
             </span>
 
             <div className="relative">
               <p className="flex-center gap-2 font-mono text-xs font-medium tracking-[0.2em] text-white/60 uppercase">
                 <span aria-hidden className="size-2 rounded-full bg-blue-600" />
-                {CONTACT_HEADER.badge} · {CONTACT_CARD.eyebrow}
+                {content.headerBadge} · {content.eyebrow}
               </p>
               <h3 className="heading-3 mt-4 max-w-sm text-white">
-                {CONTACT_CARD.heading
-                  .split(CONTACT_CARD.headingAccent)
+                {content.cardHeading
+                  .split(content.cardHeadingAccent)
                   .reduce<React.ReactNode[]>(
                     (parts, part, i, arr) => [
                       ...parts,
@@ -129,7 +164,7 @@ export function Contact() {
                       ...(i < arr.length - 1
                         ? [
                             <span key={i} className="text-blue-500">
-                              {CONTACT_CARD.headingAccent}
+                              {content.cardHeadingAccent}
                             </span>,
                           ]
                         : []),
@@ -137,14 +172,14 @@ export function Contact() {
                     []
                   )}
               </h3>
-              <p className="mt-3 max-w-xs text-white/60">{CONTACT_CARD.sub}</p>
+              <p className="mt-3 max-w-xs text-white/60">{content.cardSub}</p>
 
               <button
                 type="button"
                 onClick={open}
                 className="group mt-6 inline-flex cursor-pointer items-center gap-3 rounded-full bg-blue-600 py-2 pr-2 pl-6 font-semibold text-white shadow-lg shadow-blue-600/30 transition-transform hover:scale-105"
               >
-                {CONTACT_CARD.ctaLabel}
+                {content.ctaLabel}
                 <span
                   aria-hidden
                   className="flex-center size-10 justify-center rounded-full bg-white text-blue-600"
@@ -158,14 +193,16 @@ export function Contact() {
                   aria-hidden
                   className="flex-center size-12 shrink-0 justify-center rounded-full bg-blue-600 text-lg font-bold text-white"
                 >
-                  {CONTACT_PROFILE.initial}
+                  {site.name
+                    .split(" ")
+                    .map((part) => part.slice(0, 1))
+                    .slice(0, 2)
+                    .join("")}
                 </span>
                 <span>
-                  <span className="block font-bold">
-                    {CONTACT_PROFILE.name}
-                  </span>
+                  <span className="block font-bold">{site.name}</span>
                   <span className="block font-mono text-sm text-white/60">
-                    {CONTACT_PROFILE.role} · {CONTACT_PROFILE.location}
+                    {site.role} · {site.location}
                   </span>
                 </span>
               </div>

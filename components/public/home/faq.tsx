@@ -11,9 +11,17 @@ import {
 import { CtaPill } from "@/components/shared/cta-pill"
 import { scrollToSection } from "@/lib/scroll"
 
-import { FAQS, FAQ_CTA, FAQ_HEADER } from "@/constants/faq"
+import type { HomePageContent, PortfolioFaq } from "@/types/cms"
 
-export function Faq() {
+export function Faq({
+  content,
+  faqs,
+}: {
+  content: HomePageContent["faq"]
+  faqs: PortfolioFaq[]
+}) {
+  const visibleFaqs = faqs.filter((faq) => faq.visible)
+
   return (
     <section id="faq" aria-label="FAQ" className="mt-6 sm:mt-10">
       <div className="grid gap-10 md:grid-cols-5">
@@ -21,33 +29,31 @@ export function Faq() {
         <div className="flex flex-col items-center text-center md:col-span-2 md:items-start md:text-left">
           <p className="flex-center w-fit gap-1.5 rounded-full border border-border bg-background px-3 py-1 text-xs font-semibold text-blue-600">
             <span aria-hidden className="size-1.5 rounded-full bg-blue-600" />
-            {FAQ_HEADER.badge}
+            {content.badge}
           </p>
           <h2 className="big-heading mt-4 font-bold">
-            {FAQ_HEADER.titleBlack}
+            {content.titleBlack}
             <br />
-            <span className="text-muted-foreground">
-              {FAQ_HEADER.titleGray}
-            </span>
+            <span className="text-muted-foreground">{content.titleGray}</span>
           </h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            {FAQ_HEADER.sideNote}
+            {content.sideNote}
           </p>
           <div className="mt-5">
             <CtaPill
-              label={FAQ_CTA.label}
+              label="Tanyakan langsung"
               variant="outline"
-              onClick={() => scrollToSection(FAQ_CTA.href)}
+              onClick={() => scrollToSection("#contact")}
             />
           </div>
         </div>
 
         {/* Right */}
         <Accordion className="border-t border-border md:col-span-3">
-          {FAQS.map((faq) => (
+          {visibleFaqs.map((faq) => (
             <AccordionItem
-              key={faq.question}
-              value={faq.question}
+              key={faq.id}
+              value={faq.id}
               className="border-b border-border"
             >
               <AccordionTrigger className="py-5 text-base font-bold hover:no-underline [&_svg[data-slot=accordion-trigger-icon]]:hidden">
@@ -64,6 +70,11 @@ export function Faq() {
               </AccordionContent>
             </AccordionItem>
           ))}
+          {visibleFaqs.length === 0 ? (
+            <p className="py-8 text-sm text-muted-foreground">
+              Belum ada pertanyaan yang dipublikasikan.
+            </p>
+          ) : null}
         </Accordion>
       </div>
     </section>

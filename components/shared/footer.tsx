@@ -4,24 +4,46 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 
-import { FOOTER_LEGAL, FOOTER_SOCIALS } from "@/constants/footer"
+import { FOOTER_LEGAL } from "@/constants/footer"
 import { NAV_LINKS } from "@/constants/navigation"
-import { hero_profile } from "@/lib/portfolio-data"
 import { scrollToSection } from "@/lib/scroll"
 import { SocialIcon } from "@/components/shared/social-icons"
+import type { PortfolioSiteSettings } from "@/types/cms"
 
-const featuredSocial =
-  FOOTER_SOCIALS.find((social) => social.followers) ?? FOOTER_SOCIALS[0]
-const iconSocials = FOOTER_SOCIALS.filter(
-  (social) => social.label !== featuredSocial.label
-)
-
-export function Footer() {
+export function Footer({ site }: { site: PortfolioSiteSettings }) {
   const year = new Date().getFullYear()
-  const firstName = hero_profile.name.split(" ")[0].toUpperCase()
+  const firstName = site.name.split(" ")[0].toUpperCase()
   const pathname = usePathname()
   const router = useRouter()
   const pendingTarget = React.useRef<string | null>(null)
+  const socials = [
+    {
+      brand: "github" as const,
+      handle: "GitHub",
+      href: site.socialLinks.github,
+      label: "GitHub",
+    },
+    {
+      brand: "linkedin" as const,
+      handle: "LinkedIn",
+      href: site.socialLinks.linkedin,
+      label: "LinkedIn",
+    },
+    {
+      brand: "instagram" as const,
+      handle: "Instagram",
+      href: site.socialLinks.instagram,
+      label: "Instagram",
+    },
+    {
+      brand: "whatsapp" as const,
+      handle: "WhatsApp",
+      href: site.whatsappUrl,
+      label: "WhatsApp",
+    },
+  ].filter((social) => social.href)
+  const featuredSocial = socials[0]
+  const iconSocials = socials.slice(1)
 
   function goToSection(target: string) {
     if (pathname === "/") {
@@ -64,16 +86,16 @@ export function Footer() {
           <div>
             <p className="text-sm text-white/50">Email</p>
             <a
-              href={`mailto:${hero_profile.email}`}
+              href={`mailto:${site.email}`}
               className="mt-2 inline-block text-lg font-semibold break-all hover:text-white/70"
             >
-              {hero_profile.email}
+              {site.email}
             </a>
           </div>
           <div>
             <p className="text-sm text-white/50">WhatsApp</p>
             <a
-              href={hero_profile.whatsapp}
+              href={site.whatsappUrl}
               target="_blank"
               rel="noreferrer"
               className="mt-2 inline-block text-lg font-semibold hover:text-white/70"
@@ -84,16 +106,18 @@ export function Footer() {
           <div>
             <p className="text-sm text-white/50">Social</p>
             <div className="mt-2 flex flex-wrap gap-2">
-              <a
-                href={featuredSocial.href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`${featuredSocial.label} - ${featuredSocial.handle}`}
-                className="flex h-9 items-center gap-1.5 rounded-full bg-white px-3.5 text-sm font-bold text-black"
-              >
-                <SocialIcon brand={featuredSocial.brand} className="size-4" />
-                <span>{featuredSocial.handle}</span>
-              </a>
+              {featuredSocial ? (
+                <a
+                  href={featuredSocial.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`${featuredSocial.label} - ${featuredSocial.handle}`}
+                  className="flex h-9 items-center gap-1.5 rounded-full bg-white px-3.5 text-sm font-bold text-black"
+                >
+                  <SocialIcon brand={featuredSocial.brand} className="size-4" />
+                  <span>{featuredSocial.handle}</span>
+                </a>
+              ) : null}
               {iconSocials.map((social) => (
                 <a
                   key={social.label}
@@ -147,7 +171,7 @@ export function Footer() {
             </ul>
           </div>
           <p className="text-sm text-white/70 md:self-end">
-            &copy; {year} {hero_profile.name}
+            &copy; {year} {site.name}
           </p>
         </div>
       </div>

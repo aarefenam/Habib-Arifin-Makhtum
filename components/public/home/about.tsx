@@ -1,14 +1,7 @@
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
 
-import {
-  ABOUT_EXPERIENCE,
-  ABOUT_HEADER,
-  ABOUT_NOW,
-  ABOUT_PROFILE,
-  ABOUT_WHO,
-  ABOUT_WORK,
-} from "@/constants/about"
+import type { HomePageContent, PortfolioSiteSettings } from "@/types/cms"
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
@@ -19,7 +12,21 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   )
 }
 
-export function About() {
+export function About({
+  content,
+  profileImageUrl,
+  site,
+}: {
+  content: HomePageContent["about"]
+  profileImageUrl?: string
+  site: PortfolioSiteSettings
+}) {
+  const initials = site.name
+    .split(" ")
+    .map((part) => part.slice(0, 1))
+    .slice(0, 2)
+    .join("")
+
   return (
     <section id="about" aria-label="About me" className="py-6">
       <div className="flex flex-col">
@@ -28,14 +35,12 @@ export function About() {
           {/* <Eyebrow>{ABOUT_HEADER.badge}</Eyebrow> */}
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <h2 className="big-heading font-bold">
-              {ABOUT_HEADER.titleBlack}
+              {content.titleBlack}
               <br />
-              <span className="text-muted-foreground">
-                {ABOUT_HEADER.titleGray}
-              </span>
+              <span className="text-muted-foreground">{content.titleGray}</span>
             </h2>
             <p className="max-w-xs text-sm text-muted-foreground">
-              {ABOUT_HEADER.sideNote}
+              {content.sideNote}
             </p>
           </div>
         </header>
@@ -44,37 +49,48 @@ export function About() {
 
         {/* Who I am */}
         <div className="grid items-center gap-8 md:grid-cols-2">
-          <div
-            aria-hidden
-            className="flex-center min-h-56 justify-center overflow-hidden rounded-2xl bg-blue-600/10 select-none"
-          >
-            <span className="text-[8rem] leading-none font-extrabold tracking-tight text-blue-600/30">
-              {ABOUT_PROFILE.initial}
-            </span>
+          <div className="flex-center min-h-56 justify-center overflow-hidden rounded-2xl bg-blue-600/10 select-none">
+            {profileImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={profileImageUrl}
+                alt={`Foto ${site.name}`}
+                className="size-full object-cover"
+              />
+            ) : (
+              <span className="text-[8rem] leading-none font-extrabold tracking-tight text-blue-600/30">
+                {initials}
+              </span>
+            )}
           </div>
 
           <div>
-            <Eyebrow>{ABOUT_WHO.badge}</Eyebrow>
-            <h3 className="heading-4 mt-4">{ABOUT_WHO.heading}</h3>
+            <Eyebrow>{content.whoBadge}</Eyebrow>
+            <h3 className="heading-4 mt-4">{content.whoHeading}</h3>
             <p className="mt-4 leading-6 tracking-wide text-muted-foreground">
-              {ABOUT_WHO.para1}
+              {content.whoBody}
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
-              {ABOUT_WHO.links.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="flex-center gap-2 text-sm font-semibold text-blue-600"
-                >
-                  {link.label}
-                  <span
-                    aria-hidden
-                    className="flex-center size-6 justify-center rounded-full bg-blue-600 text-white"
+              {[
+                { href: site.socialLinks.github, label: "GitHub" },
+                { href: site.socialLinks.linkedin, label: "LinkedIn" },
+              ]
+                .filter((link) => link.href)
+                .map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="flex-center gap-2 text-sm font-semibold text-blue-600"
                   >
-                    <ArrowUpRight aria-hidden className="size-3.5" />
-                  </span>
-                </Link>
-              ))}
+                    {link.label}
+                    <span
+                      aria-hidden
+                      className="flex-center size-6 justify-center rounded-full bg-blue-600 text-white"
+                    >
+                      <ArrowUpRight aria-hidden className="size-3.5" />
+                    </span>
+                  </Link>
+                ))}
             </div>
           </div>
         </div>
@@ -84,33 +100,35 @@ export function About() {
         {/* Stats row */}
         <div className="grid gap-8 md:grid-cols-3 md:gap-0 md:divide-x md:divide-border">
           <div className="md:pr-8">
-            <Eyebrow>{ABOUT_EXPERIENCE.badge}</Eyebrow>
+            <Eyebrow>{content.experienceBadge}</Eyebrow>
             <p className="mt-3 text-6xl font-extrabold tracking-tight text-blue-600">
-              {ABOUT_EXPERIENCE.value}
+              {content.experienceValue}
             </p>
             <p className="mt-3 text-sm">
-              <span className="font-semibold">{ABOUT_EXPERIENCE.text}</span>{" "}
+              <span className="font-semibold">{content.experienceText}</span>{" "}
               <span className="text-muted-foreground">
-                {ABOUT_EXPERIENCE.muted}
+                {content.experienceMuted}
               </span>
             </p>
           </div>
 
           <div className="md:px-8">
-            <Eyebrow>{ABOUT_WORK.badge}</Eyebrow>
+            <Eyebrow>{content.workBadge}</Eyebrow>
             <h3 className="heading-5 mt-3 text-balance">
-              {ABOUT_WORK.heading}
+              {content.workHeading}
             </h3>
             <p className="mt-3 text-sm text-muted-foreground">
-              {ABOUT_WORK.sub}
+              {content.workBody}
             </p>
           </div>
 
           <div className="md:pl-8">
-            <Eyebrow>{ABOUT_NOW.badge}</Eyebrow>
-            <h3 className="heading-5 mt-3 text-balance">{ABOUT_NOW.heading}</h3>
+            <Eyebrow>{content.nowBadge}</Eyebrow>
+            <h3 className="heading-5 mt-3 text-balance">
+              {content.nowHeading}
+            </h3>
             <p className="mt-3 text-sm text-muted-foreground">
-              {ABOUT_NOW.body}
+              {content.nowBody}
             </p>
           </div>
         </div>

@@ -6,8 +6,6 @@ import { ArrowUpRight, Loader2, Phone } from "lucide-react"
 
 import { sendContactMessage } from "@/actions/contact"
 import type { ContactActionState } from "@/actions/contact"
-import { NAVBAR_INITIALS } from "@/constants/navigation"
-import { hero_profile } from "@/lib/portfolio-data"
 import { SocialIcon } from "@/components/shared/social-icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -21,13 +19,16 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { Textarea } from "@/components/ui/textarea"
+import type { PortfolioSiteSettings } from "@/types/cms"
 
 export function ContactDialog({
   open,
   onOpenChange,
+  site,
 }: {
   open: boolean
   onOpenChange: (open: boolean) => void
+  site: PortfolioSiteSettings
 }) {
   const formRef = React.useRef<HTMLFormElement>(null)
   const initialState: ContactActionState = { success: false, message: "" }
@@ -35,6 +36,11 @@ export function ContactDialog({
     sendContactMessage,
     initialState
   )
+  const initials = site.name
+    .split(" ")
+    .map((part) => part.slice(0, 1))
+    .slice(0, 2)
+    .join("")
 
   React.useEffect(() => {
     if (!state.message) return
@@ -72,7 +78,7 @@ export function ContactDialog({
 
         {/* WhatsApp quick-talk card */}
         <a
-          href={hero_profile.whatsapp}
+          href={site.whatsappUrl}
           target="_blank"
           rel="noreferrer"
           className="group mt-6 block rounded-2xl border border-border bg-card p-4 shadow-md shadow-foreground/5 transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-600/40 hover:shadow-lg hover:shadow-emerald-600/10"
@@ -109,15 +115,15 @@ export function ContactDialog({
             aria-hidden
             className="flex-center size-10 justify-center rounded-full bg-blue-600 text-sm font-bold text-white"
           >
-            {NAVBAR_INITIALS}
+            {initials}
           </span>
           <div>
-            <p className="text-[15px] font-bold">{hero_profile.name}</p>
+            <p className="text-[15px] font-bold">{site.name}</p>
             <a
-              href={`mailto:${hero_profile.email}`}
+              href={`mailto:${site.email}`}
               className="text-sm font-semibold hover:text-blue-600 hover:underline"
             >
-              {hero_profile.email}
+              {site.email}
             </a>
           </div>
         </div>

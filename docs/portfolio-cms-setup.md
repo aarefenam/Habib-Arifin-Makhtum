@@ -3,7 +3,9 @@
 ## 1. Buat database Supabase
 
 1. Buat project Supabase baru.
-2. Buka SQL Editor dan jalankan `supabase/migrations/0001_portfolio_foundation.sql` satu kali.
+2. Buka SQL Editor dan jalankan migration berikut secara berurutan, masing-masing satu kali:
+   - `supabase/migrations/0001_portfolio_foundation.sql`
+   - `supabase/migrations/0002_content_editor.sql`
 3. Dari **Project Settings > API**, salin URL project dan `service_role` key.
 
 `SUPABASE_SERVICE_ROLE_KEY` hanya digunakan server-side melalui `lib/supabase.ts`. Jangan pernah menaruhnya di variabel `NEXT_PUBLIC_*` atau browser.
@@ -31,4 +33,12 @@ Buka `/admin/login` dan masuk menggunakan `ADMIN_USERNAME` serta `ADMIN_PASSWORD
 
 ## Tahap berikutnya
 
-Tambahkan editor CRUD untuk site settings, projects, skills, services, FAQ, inbox, dan presigned upload Cloudflare R2. Semua data dan file telah memiliki tempat penyimpanan dalam schema saat ini.
+ERP sudah menyediakan editor untuk Site settings, Projects, Content collections, Media library, dan Inbox:
+
+- **Site settings** mengubah profil, sosial media, SEO, serta teks Hero, About, Skills, Projects, FAQ, dan Contact.
+- **Projects** mengelola case study, teknologi, link, status publikasi, dan cover asset.
+- **Content collections** mengelola skill, layanan, FAQ, serta riwayat.
+- **Media library** mengunggah gambar ke Cloudflare R2 dan mencatatnya di Supabase.
+- **Inbox** mengelola status dan catatan internal untuk pesan kontak.
+
+Setelah menjalankan migration, masuk ke `/admin`, mulai dari **Site settings**, lalu simpan konten. Perubahan pada halaman publik langsung dibaca dari Supabase.

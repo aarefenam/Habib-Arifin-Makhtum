@@ -2,7 +2,7 @@
 
 import { useContactStore } from "@/stores/contact-store"
 
-export function HeroMessageButton() {
+export function HeroMessageButton({ label }: { label: string }) {
   const open = useContactStore((s) => s.open)
 
   return (
@@ -11,7 +11,7 @@ export function HeroMessageButton() {
       onClick={open}
       className="cursor-pointer rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white shadow-lg shadow-blue-600/30 transition-opacity hover:opacity-90"
     >
-      Message me
+      {label}
     </button>
   )
 }

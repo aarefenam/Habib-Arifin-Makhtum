@@ -4,16 +4,12 @@ import * as React from "react"
 import { usePathname, useRouter } from "next/navigation"
 import { X } from "lucide-react"
 
-import {
-  NAVBAR_INITIALS,
-  NAVBAR_NAME,
-  NAV_CONTACT,
-  NAV_LINKS,
-} from "@/constants/navigation"
+import { NAV_CONTACT, NAV_LINKS } from "@/constants/navigation"
 import { cn } from "@/lib/utils"
 import { scrollToSection, scrollToTop } from "@/lib/scroll"
+import type { PortfolioSiteSettings } from "@/types/cms"
 
-export function Navbar() {
+export function Navbar({ site }: { site: PortfolioSiteSettings }) {
   const [collapsed, setCollapsed] = React.useState(false)
   const [hovered, setHovered] = React.useState<string | null>(null)
   const [navHovered, setNavHovered] = React.useState(false)
@@ -27,6 +23,11 @@ export function Navbar() {
   const router = useRouter()
   const pendingTarget = React.useRef<string | null>(null)
   const pendingTop = React.useRef(false)
+  const initials = site.name
+    .split(" ")
+    .map((part) => part.slice(0, 1))
+    .slice(0, 2)
+    .join("")
 
   function goHome() {
     closeMobile()
@@ -156,10 +157,10 @@ export function Navbar() {
               aria-hidden
               className="flex-center size-8 justify-center rounded-full bg-blue-600 text-xs font-bold text-white"
             >
-              {NAVBAR_INITIALS}
+              {initials}
             </span>
             <span className="text-[15px] font-bold tracking-tight whitespace-nowrap">
-              {NAVBAR_NAME}
+              {site.shortName}
             </span>
           </button>
 
