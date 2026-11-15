@@ -6,6 +6,7 @@ import { DEFAULT_WEBSITE_CONTENT, DEFAULT_SITE_SETTINGS } from "@/constants/cms"
 import { FAQS } from "@/constants/faq"
 import { ADDITIONAL, CORE_SKILLS, TOOLKIT } from "@/constants/skills"
 import { isSupabaseConfigured } from "@/lib/env"
+import { getR2PublicUrl } from "@/lib/r2"
 import { getSupabaseAdmin } from "@/lib/supabase"
 import { mergeWebsiteContent } from "@/lib/website-content"
 import type {
@@ -229,9 +230,11 @@ function normalizeMedia(value: unknown): PortfolioMediaAsset[] {
   return value.map(asRecord).flatMap((item) => {
     const id = asNullableText(item.id)
     const storageKey = asNullableText(item.storage_key)
-    const publicUrl = asNullableText(item.public_url)
     const mimeType = asNullableText(item.mime_type)
-    if (!id || !storageKey || !publicUrl || !mimeType) return []
+    if (!id || !storageKey || !mimeType) return []
+
+    // Build the URL from the key so old rows with r2.dev URLs still work.
+    const publicUrl = getR2PublicUrl(storageKey)
 
     return [
       {
@@ -414,10 +417,10 @@ export async function getPublicSiteConfiguration() {
     if (content.header.logoKey) {
       const { data: logo } = await getSupabaseAdmin()
         .from("media_assets")
-        .select("public_url")
+        .select("storage_key")
         .eq("storage_key", content.header.logoKey)
         .maybeSingle()
-      logoUrl = logo?.public_url
+      logoUrl = logo ? getR2PublicUrl(logo.storage_key) : undefined
     }
     return { site, content, logoUrl }
   } catch {

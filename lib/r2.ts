@@ -2,6 +2,7 @@ import "server-only"
 
 import {
   DeleteObjectCommand,
+  GetObjectCommand,
   PutObjectCommand,
   S3Client,
 } from "@aws-sdk/client-s3"
@@ -25,9 +26,19 @@ export function getR2BucketName() {
   return getR2Env().R2_BUCKET
 }
 
+// Images are served through our own /media route (app/media/[...key]/route.ts)
+// because *.r2.dev is blocked by some Indonesian ISPs.
 export function getR2PublicUrl(objectKey: string) {
-  const baseUrl = getR2Env().R2_PUBLIC_URL.replace(/\/$/, "")
-  return `${baseUrl}/${objectKey}`
+  return `/media/${objectKey}`
+}
+
+export async function getR2Object(key: string) {
+  return getR2Client().send(
+    new GetObjectCommand({
+      Bucket: getR2BucketName(),
+      Key: key,
+    })
+  )
 }
 
 export async function uploadR2Object({
