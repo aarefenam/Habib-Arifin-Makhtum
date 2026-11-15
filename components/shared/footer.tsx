@@ -41,14 +41,18 @@ export function Footer() {
     }
   }, [pathname])
 
+  if (pathname.startsWith("/admin")) {
+    return null
+  }
+
   return (
     <footer className="overflow-hidden bg-black text-white">
       <div className="max-body mx-auto px-6 pt-16 md:pt-24">
         {/* Headline */}
         <h2 className="text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.05] font-bold tracking-tight">
-          Let&apos;s build
+          Mari membangun
           <br />
-          <span className="text-white/50">something useful together.</span>
+          <span className="text-white/50">sistem yang berguna bersama.</span>
           <span
             aria-hidden
             className="ml-4 inline-block size-[0.18em] rounded-full bg-white/70 align-baseline"
@@ -67,12 +71,14 @@ export function Footer() {
             </a>
           </div>
           <div>
-            <p className="text-sm text-white/50">Call Me</p>
+            <p className="text-sm text-white/50">WhatsApp</p>
             <a
-              href={`mailto:${hero_profile.email}`}
+              href={hero_profile.whatsapp}
+              target="_blank"
+              rel="noreferrer"
               className="mt-2 inline-block text-lg font-semibold hover:text-white/70"
             >
-              Book Now
+              Mulai percakapan
             </a>
           </div>
           <div>
@@ -82,12 +88,11 @@ export function Footer() {
                 href={featuredSocial.href}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={`${featuredSocial.label} - ${featuredSocial.handle}, ${featuredSocial.followers} followers`}
+                aria-label={`${featuredSocial.label} - ${featuredSocial.handle}`}
                 className="flex h-9 items-center gap-1.5 rounded-full bg-white px-3.5 text-sm font-bold text-black"
               >
                 <SocialIcon brand={featuredSocial.brand} className="size-4" />
-                <span className="tabular-nums">{featuredSocial.followers}</span>
-                <span className="sr-only">{featuredSocial.handle}</span>
+                <span>{featuredSocial.handle}</span>
               </a>
               {iconSocials.map((social) => (
                 <a

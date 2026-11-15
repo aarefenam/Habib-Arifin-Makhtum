@@ -46,17 +46,11 @@ export function About() {
         <div className="grid items-center gap-8 md:grid-cols-2">
           <div
             aria-hidden
-            className="flex-center max-h-fit justify-center overflow-hidden rounded-2xl bg-[#e9edff] select-none"
+            className="flex-center min-h-56 justify-center overflow-hidden rounded-2xl bg-blue-600/10 select-none"
           >
-            {/* <span className="text-[10rem] leading-none font-extrabold tracking-tight text-white">
+            <span className="text-[8rem] leading-none font-extrabold tracking-tight text-blue-600/30">
               {ABOUT_PROFILE.initial}
-            </span> */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              className="size-full rounded-2xl object-top"
-              src={ABOUT_PROFILE.image}
-              alt=""
-            />
+            </span>
           </div>
 
           <div>

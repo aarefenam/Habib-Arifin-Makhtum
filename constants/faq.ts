@@ -1,39 +1,39 @@
 export const FAQ_HEADER = {
   badge: "FAQ",
-  titleBlack: "Questions",
-  titleGray: "answered.",
-  sideNote: "Answers to common questions about my services and workflow.",
+  titleBlack: "Pertanyaan",
+  titleGray: "yang sering ditanyakan.",
+  sideNote: "Ringkasan layanan dan cara saya bekerja.",
 }
 
 export const FAQ_CTA = {
-  label: "Ask me directly",
+  label: "Tanyakan langsung",
   href: "#contact",
 }
 
 export const FAQS = [
   {
-    question: "What do you work with?",
+    question: "Layanan apa yang Anda kerjakan?",
     answer:
-      "Next.js, TypeScript and Node.js for full-stack web apps - from the database to the screen, including auth, hosting and deployment.",
+      "Saya membangun aplikasi web dan SPA, sistem ERP dan CMS dashboard, integrasi API, purwarupa cepat, serta setup infrastruktur server.",
   },
   {
-    question: "Are you available for work?",
+    question: "Apakah Anda menerima proyek freelance?",
     answer:
-      "Yes, I am open to internships, freelance projects and MERN/React/Next roles. Use the contact section to reach me.",
+      "Ya. Saya aktif menerima proyek freelance dan menjalankan agensi IT. Hubungi saya untuk mendiskusikan kebutuhan Anda.",
   },
   {
-    question: "How do you build projects?",
+    question: "Teknologi apa yang digunakan?",
     answer:
-      "I keep it simple: make it exist first, then make it good later. Small steps, working software, steady improvement over perfectionism.",
+      "Stack utama saya mencakup Next.js, React, Tailwind CSS, PostgreSQL via Supabase, MongoDB Atlas, Payload CMS, Docker, Linux VPS, dan Cloudflare R2.",
   },
   {
-    question: "Do you work with a CLI agent workflow?",
+    question: "Apakah Anda dapat mengintegrasikan sistem pihak ketiga?",
     answer:
-      "Yes. I work with Open-Code CLI and I manage parallel work with git worktrees and branches, so each feature gets its own isolated session without breaking the main checkout.",
+      "Ya. Saya menangani integrasi API, webhook WhatsApp, layanan B2B, dan koneksi perangkat IoT sesuai kebutuhan sistem.",
   },
   {
-    question: "Where can I see more of your work?",
+    question: "Di mana Anda berbasis?",
     answer:
-      "Check the projects section for selected work & projects page for more work and GitHub for everything else including experiments and side projects.",
+      "Saya berasal dari Bandung, Jawa Barat, Indonesia dan saat ini berdomisili di Kairo, Mesir. Kolaborasi jarak jauh tersedia.",
   },
 ] as const

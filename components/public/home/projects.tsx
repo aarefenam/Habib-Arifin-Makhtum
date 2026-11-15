@@ -1,12 +1,5 @@
 import { SectionHeader } from "@/components/shared/section-header"
-import { FeaturedProjectCard } from "@/components/shared/featured-project-card"
-import { CtaPill } from "@/components/shared/cta-pill"
-
-import {
-  FEATURED_PROJECTS,
-  PROJECTS_CTA,
-  PROJECTS_HEADER,
-} from "@/constants/projects"
+import { PROJECTS_CTA, PROJECTS_HEADER } from "@/constants/projects"
 
 export function Projects() {
   return (
@@ -21,14 +14,19 @@ export function Projects() {
           badgeCenter
         />
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {FEATURED_PROJECTS.slice(0, 4).map((project) => (
-            <FeaturedProjectCard key={project.name} project={project} />
-          ))}
-        </div>
-
-        <div className="flex justify-center">
-          <CtaPill href={PROJECTS_CTA.href} label={PROJECTS_CTA.label} />
+        <div className="rounded-2xl border border-dashed border-border bg-card p-6 text-center sm:p-8">
+          <p className="font-semibold">Portfolio sedang diperbarui.</p>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Case study akan hadir setelah melalui proses kurasi dan dokumentasi.
+          </p>
+          <a
+            href={PROJECTS_CTA.href}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-5 inline-flex rounded-full border border-border px-5 py-2 text-sm font-semibold transition-colors hover:border-blue-600 hover:text-blue-600"
+          >
+            {PROJECTS_CTA.label}
+          </a>
         </div>
       </div>
     </section>

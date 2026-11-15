@@ -16,7 +16,6 @@ import {
 } from "@/constants/contact"
 import { FOOTER_SOCIALS } from "@/constants/footer"
 import { ShineBorder } from "@/components/ui/shine-border"
-import Image from "next/image"
 
 const METHOD_ICONS = {
   mail: Mail,
@@ -155,23 +154,11 @@ export function Contact() {
               </button>
 
               <div className="mt-8 flex-center gap-3">
-                <span className="relative size-12 shrink-0 overflow-hidden rounded-full bg-indigo-200">
-                  {/* Centered fallback - visible while the avatar loads or if it fails */}
-                  <span
-                    aria-hidden
-                    className="absolute inset-0 flex items-center justify-center text-xl font-bold text-slate-900"
-                  >
-                    {CONTACT_PROFILE.initial}
-                  </span>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={CONTACT_PROFILE.avatar}
-                    alt=""
-                    width={48}
-                    height={48}
-                    className="absolute inset-0 size-full rounded-full object-cover"
-                    loading="lazy"
-                  />
+                <span
+                  aria-hidden
+                  className="flex-center size-12 shrink-0 justify-center rounded-full bg-blue-600 text-lg font-bold text-white"
+                >
+                  {CONTACT_PROFILE.initial}
                 </span>
                 <span>
                   <span className="block font-bold">

@@ -1,8 +1,9 @@
 export const SKILLS_HEADER = {
   badge: "Skills",
-  titleBlack: "The stack behind",
-  titleGray: "every app I ship.",
-  sideNote: "The languages, frameworks and tools behind my apps.",
+  titleBlack: "Teknologi di balik",
+  titleGray: "setiap solusi yang dibangun.",
+  sideNote:
+    "Stack untuk membangun, menjalankan, dan mengembangkan produk digital.",
 }
 
 export const CS_CARD = {
@@ -32,74 +33,31 @@ export type SkillItem = {
 
 export const CORE_SKILLS: SkillItem[] = [
   { name: "Next.js", tag: "Framework", logo: "/logos/nextdotjs.svg" },
-  { name: "TypeScript", tag: "Language", logo: "/logos/typescript.svg" },
-  { name: "MongoDB", tag: "Database", logo: "/logos/mongodb.svg" },
-  { name: "Node.js", tag: "Runtime", logo: "/logos/nodedotjs.svg" },
-  {
-    name: "Express",
-    tag: "Backend",
-    logo: "/logos/express.svg",
-    darkInvert: true,
-  },
-  { name: "JavaScript", tag: "Language", logo: "/logos/javascript.svg" },
-
   { name: "React", tag: "UI library", logo: "/logos/react.svg" },
-  { name: "React Native", tag: "Mobile apps", logo: "/logos/react.svg" },
-  {
-    name: "Expo",
-    tag: "Mobile apps",
-    logo: "/logos/expo.svg",
-    darkInvert: true,
-  },
-  { name: "Zustand", tag: "State management", logo: "/logos/zustand.svg" },
-  { name: "Clerk", tag: "Authentication", logo: "/logos/clerk.svg" },
-  { name: "WebSocket", tag: "Real-time", logo: "/logos/socketio.svg" },
-  { name: "Supabase", tag: "Backend platform", logo: "/logos/supabase.svg" },
   { name: "Tailwind CSS", tag: "Styling", logo: "/logos/tailwindcss.svg" },
+  { name: "JavaScript", tag: "Language", logo: "/logos/javascript.svg" },
+  { name: "PostgreSQL", tag: "Database" },
+  { name: "Supabase", tag: "Backend platform", logo: "/logos/supabase.svg" },
+  { name: "MongoDB Atlas", tag: "Database", logo: "/logos/mongodb.svg" },
+  { name: "Payload CMS", tag: "CMS" },
   {
-    name: "shadcn/ui",
-    tag: "UI components",
-    logo: "/logos/shadcnui.svg",
-    darkInvert: true,
+    name: "API Integration",
+    tag: "Systems",
   },
 ]
 
 export const TOOLKIT: SkillItem[] = [
-  { name: "VS Code", tag: "Editor", logo: "/logos/vscode.svg" },
-  { name: "Git", tag: "Version control", logo: "/logos/git.svg" },
-  {
-    name: "GitHub",
-    tag: "Code hosting",
-    logo: "/logos/github.svg",
-    darkInvert: true,
-  },
   {
     name: "Vercel",
-    tag: "Hosting",
+    tag: "Deployment",
     logo: "/logos/vercel.svg",
     darkInvert: true,
   },
-  { name: "Netlify", tag: "Hosting", logo: "/logos/netlify.svg" },
-  { name: "Docker", tag: "DevOps", logo: "/logos/docker.svg" },
-  { name: "Bun", tag: "Runtime & packages", logo: "/logos/bun.svg" },
-  {
-    name: "Herdr",
-    tag: "Terminal multiplexer",
-    logo: "/logos/herdr.svg",
-    darkInvert: true,
-  },
-  {
-    name: "OpenCode",
-    tag: "AI coding agent",
-    logo: "/logos/opencode.svg",
-    darkInvert: true,
-  },
-  {
-    name: "Pi",
-    tag: "Coding agent",
-    logo: "/logos/pi-agent.svg",
-    darkInvert: true,
-  },
+  { name: "Git", tag: "Version control", logo: "/logos/git.svg" },
+  { name: "Docker", tag: "Container", logo: "/logos/docker.svg" },
+  { name: "Linux VPS", tag: "Infrastructure" },
+  { name: "Cloudflare R2", tag: "Object storage" },
+  { name: "SSH", tag: "Server access" },
 ]
 
 export const LEGACY: SkillItem[] = [
@@ -117,8 +75,8 @@ export const LEGACY: SkillItem[] = [
 ]
 
 export const ADDITIONAL = [
-  { label: "SEO", icon: "search" },
-  { label: "Web security", icon: "shield-check" },
-  { label: "Prototyping", icon: "rocket" },
-  { label: "Self-learning", icon: "book-open" },
+  { label: "ERP Systems", icon: "search" },
+  { label: "UI Design", icon: "shield-check" },
+  { label: "Rapid prototyping", icon: "rocket" },
+  { label: "IoT integration", icon: "book-open" },
 ] as const

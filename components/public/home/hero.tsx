@@ -9,7 +9,12 @@ import {
   Store,
 } from "lucide-react"
 
-import { HERO_BADGE, HERO_BUILD_ITEMS, HERO_CHIPS } from "@/constants/hero"
+import {
+  HERO_BADGE,
+  HERO_BUILD_ITEMS,
+  HERO_CHIPS,
+  HERO_COPY,
+} from "@/constants/hero"
 import { cn } from "@/lib/utils"
 import { HeroMessageButton } from "@/components/public/home/hero-message-button"
 import { HeroTerminal } from "@/components/public/home/hero-terminal"
@@ -54,30 +59,25 @@ export function Hero() {
 
         {/* Headline */}
         <h1 className="mt-6 text-[clamp(2rem,7vw,5.5rem)] leading-[1.02] font-bold tracking-tight">
-          I ship web apps
+          {HERO_COPY.title}
           <br />
-          <span className="text-muted-foreground">that drive growth.</span>
+          <span className="text-muted-foreground">{HERO_COPY.titleAccent}</span>
         </h1>
 
         {/* Sub copy */}
         <p className="mx-auto mt-6 max-w-[550px] text-lg">
-          <span className="font-semibold">
-            I build websites and web apps with logins, payments and live
-            features.{" "}
-          </span>
-          <span className="text-muted-foreground">
-            Built with AI agents, reviewed by me, then tested and deployed.
-          </span>
+          <span className="font-semibold">{HERO_COPY.lead} </span>
+          <span className="text-muted-foreground">{HERO_COPY.detail}</span>
         </p>
 
         {/* CTAs */}
         <div className="mt-8 flex-center flex-col justify-center gap-3 xsm:flex-row">
           <HeroMessageButton />
           <Link
-            href="/projects"
+            href="/about"
             className="rounded-xl border border-border bg-background px-6 py-3 font-semibold transition-colors hover:bg-muted"
           >
-            My work
+            {HERO_COPY.projectsLabel}
           </Link>
         </div>
 
@@ -106,7 +106,7 @@ export function Hero() {
         <div className="flex items-stretch">
           <p className="flex shrink-0 items-center gap-2 px-4 text-sm font-medium text-muted-foreground sm:px-6">
             <span aria-hidden className="size-2 rounded-full bg-blue-600" />
-            What I build
+            Yang saya bangun
           </p>
 
           <div className="relative flex-1 overflow-hidden">

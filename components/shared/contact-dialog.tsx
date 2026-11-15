@@ -1,13 +1,12 @@
 "use client"
 
 import * as React from "react"
-import Image from "next/image"
 
 import { ArrowUpRight, Loader2, Phone } from "lucide-react"
 
 import { sendContactMessage } from "@/actions/contact"
 import type { ContactActionState } from "@/actions/contact"
-import { NAVBAR_AVATAR } from "@/constants/navigation"
+import { NAVBAR_INITIALS } from "@/constants/navigation"
 import { hero_profile } from "@/lib/portfolio-data"
 import { SocialIcon } from "@/components/shared/social-icons"
 import { Button } from "@/components/ui/button"
@@ -41,7 +40,7 @@ export function ContactDialog({
     if (!state.message) return
     if (state.success) {
       toast.add({
-        title: "Message sent",
+        title: "Pesan terkirim",
         description: state.message,
         type: "success",
       })
@@ -49,7 +48,7 @@ export function ContactDialog({
       onOpenChange(false)
     } else {
       toast.add({
-        title: "Something went wrong",
+        title: "Terjadi masalah",
         description: state.message,
         type: "error",
       })
@@ -64,9 +63,11 @@ export function ContactDialog({
       >
         <SheetHeader className="p-0 text-left">
           <SheetTitle className="text-3xl font-bold tracking-tight">
-            What{"'"}s on your mind?
+            Ada yang ingin didiskusikan?
           </SheetTitle>
-          <SheetDescription>Fill out the form below.</SheetDescription>
+          <SheetDescription>
+            Isi formulir berikut untuk memulai percakapan.
+          </SheetDescription>
         </SheetHeader>
 
         {/* WhatsApp quick-talk card */}
@@ -85,10 +86,10 @@ export function ContactDialog({
             </span>
             <span className="min-w-0 flex-1">
               <span className="block text-sm text-muted-foreground">
-                Want to talk?
+                Ingin berbicara langsung?
               </span>
               <span className="block truncate text-base font-bold">
-                Message me on WhatsApp
+                Kirim pesan via WhatsApp
               </span>
             </span>
             <ArrowUpRight
@@ -98,19 +99,18 @@ export function ContactDialog({
           </span>
           <span className="mt-3 flex items-center gap-2 border-t border-border pt-3 text-sm text-muted-foreground">
             <Phone aria-hidden className="size-4 shrink-0" />
-            Prefer a call? Just ask and we will schedule a time.
+            Ingin panggilan? Kirim pesan untuk menentukan waktu.
           </span>
         </a>
 
         {/* Identity row */}
         <div className="mt-6 flex-center gap-3">
-          <Image
-            src={NAVBAR_AVATAR}
-            alt={hero_profile.name}
-            width={40}
-            height={40}
-            className="size-10 rounded-full object-cover"
-          />
+          <span
+            aria-hidden
+            className="flex-center size-10 justify-center rounded-full bg-blue-600 text-sm font-bold text-white"
+          >
+            {NAVBAR_INITIALS}
+          </span>
           <div>
             <p className="text-[15px] font-bold">{hero_profile.name}</p>
             <a
@@ -122,14 +122,18 @@ export function ContactDialog({
           </div>
         </div>
 
-        <form ref={formRef} action={formAction} className="mt-6 flex flex-col gap-5">
+        <form
+          ref={formRef}
+          action={formAction}
+          className="mt-6 flex flex-col gap-5"
+        >
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="contact-name">Name</Label>
+              <Label htmlFor="contact-name">Nama</Label>
               <Input
                 id="contact-name"
                 name="name"
-                placeholder="Name"
+                placeholder="Nama"
                 required
               />
             </div>
@@ -145,9 +149,19 @@ export function ContactDialog({
             </div>
           </div>
 
+          <div aria-hidden className="hidden">
+            <Label htmlFor="contact-website">Website</Label>
+            <Input
+              id="contact-website"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
+
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="contact-message">
-              Send a message or describe your project
+              Ceritakan kebutuhan atau proyek Anda
             </Label>
             <Textarea
               id="contact-message"
@@ -158,14 +172,18 @@ export function ContactDialog({
             />
           </div>
 
-          <Button type="submit" disabled={isPending} className="h-12 font-semibold">
+          <Button
+            type="submit"
+            disabled={isPending}
+            className="h-12 font-semibold"
+          >
             {isPending ? (
               <>
                 <Loader2 aria-hidden className="size-4 animate-spin" />
-                Sending...
+                Mengirim...
               </>
             ) : (
-              "Send Message"
+              "Kirim pesan"
             )}
           </Button>
         </form>

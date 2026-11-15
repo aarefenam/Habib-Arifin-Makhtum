@@ -1,4 +1,5 @@
-export const NAVBAR_AVATAR = "/avatar.webp"
+export const NAVBAR_INITIALS = "HA"
+export const NAVBAR_NAME = "Habib Arifin"
 
 export const NAV_LINKS = [
   { label: "About", target: "#about" },

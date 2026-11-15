@@ -1,48 +1,62 @@
 export const ABOUT_HEADER = {
-  badge: "About me",
-  titleBlack: "Meet Rabbi. ",
-  // titleBlack: "A developer.",
-  titleGray: "Self-taught, always curious.",
-  // titleGray: "with a human side.",
-  sideNote: "A bit about me, how I work, and what I care about.",
+  badge: "Tentang saya",
+  titleBlack: "Kenal lebih dekat",
+  titleGray: "dengan Habib.",
+  sideNote:
+    "Membangun solusi teknologi yang jelas, fungsional, dan siap berkembang.",
 }
 
 export const ABOUT_WHO = {
-  badge: "Who I am",
+  badge: "Siapa saya",
   heading:
-    "I'm a software developer who enjoys building software that makes everyday life a little easier, including my own.",
+    "Full-Stack Developer dan IT Solver yang mengubah kebutuhan operasional menjadi sistem digital.",
   para1:
-    "I specialize in web development, mostly with the MERN stack and Next.js, and I also build mobile and desktop apps. What excites me most is creating something useful, even if it's a tiny app. I've built a prayer time app, a small calculator, and a YouTube video summarizer, and I use all of them myself. I want to bring software into every aspect of life.",
+    "Saya berbasis di Kairo, Mesir dan berasal dari Bandung, Indonesia. Fokus saya mencakup arsitektur sistem, aplikasi web berkinerja tinggi, ERP fungsional, dashboard CMS, serta integrasi API dan IoT.",
   para2:
-    "Currently, I'm focused on sharpening my engineering skills, building better products, and exploring new ideas across software and technology.",
-  links: [{ label: "More About Me", href: "/about", icon: "user" }],
+    "Sebagai Co-Founder dan Technology Director di PT Enova Cakra Digital, saya membantu membawa produk dari purwarupa ke production dengan fondasi teknis yang terukur.",
+  links: [{ label: "Selengkapnya", href: "/about", icon: "user" }],
 }
 
 export const ABOUT_PROFILE = {
-  initial: "R",
-  name: "Rabbi",
-  role: "Software Developer",
-  image: "/desk.png",
-  // image: "/my-desk.jpg",
+  initial: "HA",
+  name: "Habib Arifin Makhtum",
+  role: "Full-Stack Developer & IT Solver",
 }
 
 export const ABOUT_NOW = {
-  badge: "Currently",
-  heading: "Building faster, learning more.",
-  body: "I'm shipping apps faster with AI agents, getting more out of the skills I already have, and learning new ones to become a stronger engineer.",
+  badge: "Saat ini",
+  heading: "Membangun sistem yang berdampak.",
+  body: "Menerima proyek freelance dan mengembangkan solusi digital melalui agensi IT.",
 }
 
 export const ABOUT_EXPERIENCE = {
-  badge: "BUILDING",
-  value: "3+",
-  text: "Years since 2022.",
-  muted: "All self-taught.",
+  badge: "FOKUS",
+  value: "ERP",
+  text: "Dari ide ke sistem.",
+  muted: "Web, dashboard, dan integrasi.",
 }
 
 export const ABOUT_WORK = {
-  badge: "What I do",
-  heading: "Full-stack web development.",
-  sub: "I build websites and web apps from the database to the screen, and mobile and desktop apps when a project needs them.",
+  badge: "Yang saya kerjakan",
+  heading: "Software yang memecahkan masalah.",
+  sub: "Mulai dari UI dan database hingga API, server, deployment, dan operasi sistem.",
+}
+
+export const ABOUT_PAGE = {
+  eyebrow: "Tentang Habib",
+  title: "Teknologi yang bekerja untuk kebutuhan nyata.",
+  description:
+    "Habib Arifin Makhtum adalah Full-Stack Developer dan IT Solver berusia 24 tahun yang berbasis di Kairo, Mesir. Ia memadukan studi akademis di Universitas Al-Azhar dengan praktik rekayasa perangkat lunak untuk merancang sistem yang fungsional dan terukur.",
+  focus: [
+    "Full-stack web development dan single-page applications",
+    "Sistem ERP dan CMS dashboard",
+    "Integrasi API, WhatsApp webhook, dan layanan B2B",
+    "Rapid prototyping dan UI design",
+    "Linux VPS, Docker, dan Cloudflare R2",
+  ],
+  education: "Department of Philosophy, Al-Azhar University, Egypt",
+  location:
+    "Berasal dari Bandung, Jawa Barat, Indonesia. Kini berdomisili di Kairo, Mesir.",
 }
 
 export const ABOUT_TOP = {

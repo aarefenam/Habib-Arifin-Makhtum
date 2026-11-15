@@ -1,74 +1,90 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 
-import { FolderKanban, Mail, Sparkles } from "lucide-react"
+import { ArrowUpRight, GraduationCap, MapPin, Wrench } from "lucide-react"
 
-import { ABOUT_CTA, ABOUT_TOP } from "@/constants/about"
-import { AboutToc } from "@/components/public/about/about-toc"
-import { MyStory } from "@/components/public/about/my-story"
-import { HowIWork } from "@/components/public/about/how-i-work"
-import { Beliefs } from "@/components/public/about/beliefs"
-import { ABitOfMe } from "@/components/public/about/a-bit-of-me"
-import { Stories } from "@/components/public/about/stories"
-import { Inspiration } from "@/components/public/about/inspiration"
-import { RecentBlogs } from "@/components/public/about/recent-blogs"
+import { ABOUT_PAGE } from "@/constants/about"
 
 export const metadata: Metadata = {
-  title: "About Fazle Rabbi | Software Developer",
+  title: "Tentang",
   description:
-    "Fazle Rabbi is a Bangladeshi software developer building for the web since 2022, specializing in the web development with the MERN stack and Next.js.",
+    "Pelajari fokus kerja, latar belakang, dan teknologi yang digunakan Habib Arifin Makhtum.",
 }
 
 export default function AboutPage() {
   return (
     <main className="pb-24">
-      <AboutToc />
-      <section
-        aria-label="About me"
-        className="relative mt-10 overflow-hidden sm:mt-0"
-      >
-        <div className="relative flex flex-col gap-6">
-          <div className="flex-center flex-col justify-center">
-            <h1 className="heading-1 text-foreground">{ABOUT_TOP.title}</h1>
-
-            <p className="heading-3 font-semibold tracking-tight text-muted-foreground/70">
-              {ABOUT_TOP.sub}
+      <section aria-labelledby="about-title" className="py-6 sm:py-12">
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+          <div>
+            <p className="flex-center w-fit gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-semibold text-blue-600">
+              <span aria-hidden className="size-1.5 rounded-full bg-blue-600" />
+              {ABOUT_PAGE.eyebrow}
             </p>
+            <h1 id="about-title" className="heading-1 mt-5 max-w-3xl">
+              {ABOUT_PAGE.title}
+            </h1>
           </div>
+          <p className="max-w-xl text-lg leading-7 text-muted-foreground">
+            {ABOUT_PAGE.description}
+          </p>
         </div>
       </section>
 
-      <MyStory />
-      <HowIWork />
-      <Beliefs />
-      <ABitOfMe />
-      <Stories />
-      <Inspiration />
-      <RecentBlogs />
+      <section
+        aria-label="Fokus dan latar belakang"
+        className="grid gap-4 md:grid-cols-2"
+      >
+        <article className="rounded-2xl border border-border bg-card p-6 sm:p-8">
+          <Wrench aria-hidden className="size-5 text-blue-600" />
+          <h2 className="heading-4 mt-5">Fokus kerja</h2>
+          <ul className="mt-4 space-y-3 text-muted-foreground">
+            {ABOUT_PAGE.focus.map((item) => (
+              <li key={item} className="flex gap-3">
+                <span
+                  aria-hidden
+                  className="mt-2 size-1.5 shrink-0 rounded-full bg-blue-600"
+                />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </article>
 
-      <div className="mt-16 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
+        <div className="grid gap-4">
+          <article className="rounded-2xl border border-border bg-card p-6">
+            <GraduationCap aria-hidden className="size-5 text-blue-600" />
+            <h2 className="heading-5 mt-4">Pendidikan</h2>
+            <p className="mt-2 text-muted-foreground">{ABOUT_PAGE.education}</p>
+          </article>
+
+          <article className="rounded-2xl border border-border bg-card p-6">
+            <MapPin aria-hidden className="size-5 text-blue-600" />
+            <h2 className="heading-5 mt-4">Lokasi</h2>
+            <p className="mt-2 text-muted-foreground">{ABOUT_PAGE.location}</p>
+          </article>
+        </div>
+      </section>
+
+      <section
+        aria-label="Hubungi Habib"
+        className="mt-12 rounded-2xl bg-foreground p-6 text-background sm:p-8"
+      >
+        <h2 className="heading-3">
+          Mari diskusikan sistem yang ingin Anda bangun.
+        </h2>
+        <p className="mt-3 max-w-xl text-background/70">
+          Dari ide awal hingga deployment, setiap kebutuhan dapat dipetakan
+          menjadi langkah kerja yang jelas.
+        </p>
         <Link
-          href={ABOUT_CTA.contactHref}
-          className="flex-center justify-center gap-2 rounded-full bg-blue-600 px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-blue-600/25 transition-transform hover:scale-105"
+          href="/#contact"
+          className="mt-6 inline-flex items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-105"
         >
-          <Mail aria-hidden className="size-5" />
-          {ABOUT_CTA.contactLabel}
+          Hubungi saya
+          <ArrowUpRight aria-hidden className="size-4" />
         </Link>
-        <Link
-          href={ABOUT_CTA.skillsHref}
-          className="flex-center justify-center gap-2 rounded-full border border-border bg-card px-8 py-3.5 text-base font-semibold transition-colors hover:border-blue-600 hover:text-blue-600"
-        >
-          <Sparkles aria-hidden className="size-5" />
-          {ABOUT_CTA.skillsLabel}
-        </Link>
-        <Link
-          href={ABOUT_CTA.projectsHref}
-          className="flex-center justify-center gap-2 rounded-full border border-border bg-card px-8 py-3.5 text-base font-semibold transition-colors hover:border-blue-600 hover:text-blue-600"
-        >
-          <FolderKanban aria-hidden className="size-5" />
-          {ABOUT_CTA.projectsLabel}
-        </Link>
-      </div>
+      </section>
     </main>
   )
 }

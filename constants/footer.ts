@@ -12,26 +12,29 @@ export type FooterSocial = {
 
 export const FOOTER_SOCIALS: FooterSocial[] = [
   {
-    label: "X",
-    brand: "x",
-    href: "https://x.com/fazle_rabbi_dev",
-    handle: "@fazle_rabbi_dev",
-  },
-  {
     label: "GitHub",
     brand: "github",
-    href: "https://github.com/fazle-rabbi-dev",
-    handle: "@fazle-rabbi-dev",
+    href: "https://github.com/aarefenam",
+    handle: "@aarefenam",
   },
   {
     label: "LinkedIn",
     brand: "linkedin",
-    href: "https://www.linkedin.com/in/fazlerabbidev",
-    handle: "@fazlerabbidev",
-    followers: "1300+",
+    href: "https://www.linkedin.com/in/habib-arifin-makhtum",
+    handle: "Habib Arifin Makhtum",
   },
-  // { label: "WhatsApp", brand: "whatsapp", href: hero_profile.whatsapp },
-  // { label: "Telegram", brand: "telegram", href: "https://t.me/fazlerabbidev" },
+  {
+    label: "Instagram",
+    brand: "instagram",
+    href: "https://www.instagram.com/sowlyy_/",
+    handle: "@sowlyy_",
+  },
+  {
+    label: "WhatsApp",
+    brand: "whatsapp",
+    href: hero_profile.whatsapp,
+    handle: "WhatsApp",
+  },
 ]
 
 export const FOOTER_LEGAL = [

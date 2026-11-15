@@ -1,11 +1,15 @@
 "use client"
 
 import * as React from "react"
-import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { X } from "lucide-react"
 
-import { NAV_CONTACT, NAV_LINKS, NAVBAR_AVATAR } from "@/constants/navigation"
+import {
+  NAVBAR_INITIALS,
+  NAVBAR_NAME,
+  NAV_CONTACT,
+  NAV_LINKS,
+} from "@/constants/navigation"
 import { cn } from "@/lib/utils"
 import { scrollToSection, scrollToTop } from "@/lib/scroll"
 
@@ -122,81 +126,84 @@ export function Navbar() {
     return () => window.removeEventListener("keydown", onKey)
   }, [mobileOpen])
 
+  if (pathname.startsWith("/admin")) {
+    return null
+  }
+
   return (
     <header className="fixed inset-x-0 top-4 z-50 flex justify-center px-4">
-        <nav
-          aria-label="Primary"
-          onMouseLeave={() => setNavHovered(false)}
-          className={cn(
-            "w-[min(78vw,280px)] overflow-clip border border-foreground/15 bg-background/40 backdrop-blur-xs transition-[padding,background-color] duration-300 ease-in-out md:w-auto",
-            radiusOpen
-              ? "rounded-[28px] py-2 pr-4 pl-2 md:rounded-full md:p-0 md:py-2 md:pl-2"
-              : "rounded-full py-2 pr-4 pl-2",
-            !radiusOpen && (showFull ? "md:pr-2" : "md:pr-6"),
-            "md:flex-center md:gap-7"
-          )}
-        >
-          {/* Top row - same nav, grows taller when open on mobile */}
-          <div className="flex-center justify-between gap-2 md:justify-start md:gap-7">
-            <button
-              type="button"
-              onClick={goHome}
-              aria-label="Go to home"
-              className="flex-center cursor-pointer gap-2.5 pl-1"
+      <nav
+        aria-label="Primary"
+        onMouseLeave={() => setNavHovered(false)}
+        className={cn(
+          "w-[min(78vw,280px)] overflow-clip border border-foreground/15 bg-background/40 backdrop-blur-xs transition-[padding,background-color] duration-300 ease-in-out md:w-auto",
+          radiusOpen
+            ? "rounded-[28px] py-2 pr-4 pl-2 md:rounded-full md:p-0 md:py-2 md:pl-2"
+            : "rounded-full py-2 pr-4 pl-2",
+          !radiusOpen && (showFull ? "md:pr-2" : "md:pr-6"),
+          "md:flex-center md:gap-7"
+        )}
+      >
+        {/* Top row - same nav, grows taller when open on mobile */}
+        <div className="flex-center justify-between gap-2 md:justify-start md:gap-7">
+          <button
+            type="button"
+            onClick={goHome}
+            aria-label="Go to home"
+            className="flex-center cursor-pointer gap-2.5 pl-1"
+          >
+            <span
+              aria-hidden
+              className="flex-center size-8 justify-center rounded-full bg-blue-600 text-xs font-bold text-white"
             >
-              <Image
-                src={NAVBAR_AVATAR}
-                alt="Fazle Rabbi"
-                width={32}
-                height={32}
-                className="size-8 rounded-full object-cover"
-              />
-              <span className="text-[15px] font-bold tracking-tight whitespace-nowrap">
-                Fazle Rabbi
-              </span>
-            </button>
+              {NAVBAR_INITIALS}
+            </span>
+            <span className="text-[15px] font-bold tracking-tight whitespace-nowrap">
+              {NAVBAR_NAME}
+            </span>
+          </button>
 
-            {/* Mobile toggle: typing dots when closed, X when open + during close */}
-            <button
-              type="button"
-              onClick={toggleMobile}
-              aria-expanded={mobileOpen}
-              aria-label={radiusOpen ? "Close menu" : "Open menu"}
-              className="flex-center h-8 cursor-pointer gap-1 pr-2 pl-3 text-muted-foreground md:hidden"
-            >
-              {radiusOpen ? (
-                <X aria-hidden className="size-5" />
-              ) : (
-                <>
-                  <span
-                    aria-hidden="true"
-                    className="typing-dot size-1.5 shrink-0 rounded-full bg-current"
-                  />
-                  <span
-                    aria-hidden="true"
-                    className="typing-dot size-1.5 shrink-0 rounded-full bg-current"
-                  />
-                  <span
-                    aria-hidden="true"
-                    className="typing-dot size-1.5 shrink-0 rounded-full bg-current"
-                  />
-                </>
-              )}
-            </button>
+          {/* Mobile toggle: typing dots when closed, X when open + during close */}
+          <button
+            type="button"
+            onClick={toggleMobile}
+            aria-expanded={mobileOpen}
+            aria-label={radiusOpen ? "Close menu" : "Open menu"}
+            className="flex-center h-8 cursor-pointer gap-1 pr-2 pl-3 text-muted-foreground md:hidden"
+          >
+            {radiusOpen ? (
+              <X aria-hidden className="size-5" />
+            ) : (
+              <>
+                <span
+                  aria-hidden="true"
+                  className="typing-dot size-1.5 shrink-0 rounded-full bg-current"
+                />
+                <span
+                  aria-hidden="true"
+                  className="typing-dot size-1.5 shrink-0 rounded-full bg-current"
+                />
+                <span
+                  aria-hidden="true"
+                  className="typing-dot size-1.5 shrink-0 rounded-full bg-current"
+                />
+              </>
+            )}
+          </button>
 
-            {/* Desktop trailing slot - links + dots share one grid cell
+          {/* Desktop trailing slot - links + dots share one grid cell
                 so widths overlap (max) instead of adding (sum).
                 Only the links animate width, dots crossfade on top. */}
-            <div className="relative hidden md:grid">
-              {/* Desktop expanded links - the only width driver */}
-              <div
-                className={cn(
-                  "col-start-1 row-start-1 gap-1 self-center overflow-hidden whitespace-nowrap transition-[max-width,opacity] ease-in-out md:flex md:items-center",
-                  showFull
-                    ? "max-w-[500px] opacity-100 duration-1000"
-                    : "max-w-0 opacity-0 duration-500"
-                )}
-              >
+          <div className="relative hidden md:grid">
+            {/* Desktop expanded links - the only width driver */}
+            <div
+              className={cn(
+                "col-start-1 row-start-1 gap-1 self-center overflow-hidden whitespace-nowrap transition-[max-width,opacity] ease-in-out md:flex md:items-center",
+                showFull
+                  ? "max-w-[500px] opacity-100 duration-1000"
+                  : "max-w-0 opacity-0 duration-500"
+              )}
+            >
               <div
                 className="hidden md:flex-center"
                 onMouseLeave={() => setHovered(null)}
@@ -259,65 +266,65 @@ export function Navbar() {
                 className="grip-tilt size-4 shrink-0"
               /> */}
             </button>
-            </div>
           </div>
+        </div>
 
-          {/* Mobile links - content fades fast on close, height collapses after */}
-          <div
-            aria-hidden={!mobileOpen}
-            className={cn(
-              "grid transition-[grid-template-rows,opacity,margin] md:hidden",
-              mobileOpen
-                ? "mt-2 grid-rows-[1fr] opacity-100 duration-300 ease-in-out"
-                : "pointer-events-none mt-0 grid-rows-[0fr] opacity-0 duration-150 ease-out"
-            )}
-          >
-            <div className="min-h-0 overflow-hidden">
-              <div className="flex flex-col">
-                {NAV_LINKS.map((link, index) => (
-                  <button
-                    key={link.label}
-                    type="button"
-                    onClick={() => goToSection(link.target)}
-                    tabIndex={mobileOpen ? 0 : -1}
-                    style={{
-                      transitionDelay: mobileOpen ? `${index * 70}ms` : "0ms",
-                    }}
-                    className={cn(
-                      "cursor-pointer rounded-xl px-3 py-2.5 text-left text-2xl font-medium tracking-tight transition-[opacity,translate,background-color] duration-300 ease-out hover:bg-muted",
-                      mobileOpen
-                        ? "translate-x-0 opacity-100"
-                        : "pointer-events-none -translate-x-4 opacity-0"
-                    )}
-                  >
-                    {link.label}
-                  </button>
-                ))}
+        {/* Mobile links - content fades fast on close, height collapses after */}
+        <div
+          aria-hidden={!mobileOpen}
+          className={cn(
+            "grid transition-[grid-template-rows,opacity,margin] md:hidden",
+            mobileOpen
+              ? "mt-2 grid-rows-[1fr] opacity-100 duration-300 ease-in-out"
+              : "pointer-events-none mt-0 grid-rows-[0fr] opacity-0 duration-150 ease-out"
+          )}
+        >
+          <div className="min-h-0 overflow-hidden">
+            <div className="flex flex-col">
+              {NAV_LINKS.map((link, index) => (
                 <button
+                  key={link.label}
                   type="button"
+                  onClick={() => goToSection(link.target)}
                   tabIndex={mobileOpen ? 0 : -1}
                   style={{
-                    transitionDelay: mobileOpen
-                      ? `${NAV_LINKS.length * 70}ms`
-                      : "0ms",
-                  }}
-                  onClick={() => {
-                    closeMobile()
-                    goToSection(NAV_CONTACT.href)
+                    transitionDelay: mobileOpen ? `${index * 70}ms` : "0ms",
                   }}
                   className={cn(
-                    "mt-3 w-full cursor-pointer rounded-full border border-foreground/15 bg-background px-5 py-3 text-[15px] font-semibold shadow-sm transition-[opacity,translate,background-color] duration-300 ease-out hover:bg-muted",
+                    "cursor-pointer rounded-xl px-3 py-2.5 text-left text-2xl font-medium tracking-tight transition-[opacity,translate,background-color] duration-300 ease-out hover:bg-muted",
                     mobileOpen
                       ? "translate-x-0 opacity-100"
                       : "pointer-events-none -translate-x-4 opacity-0"
                   )}
                 >
-                  {NAV_CONTACT.label}
+                  {link.label}
                 </button>
-              </div>
+              ))}
+              <button
+                type="button"
+                tabIndex={mobileOpen ? 0 : -1}
+                style={{
+                  transitionDelay: mobileOpen
+                    ? `${NAV_LINKS.length * 70}ms`
+                    : "0ms",
+                }}
+                onClick={() => {
+                  closeMobile()
+                  goToSection(NAV_CONTACT.href)
+                }}
+                className={cn(
+                  "mt-3 w-full cursor-pointer rounded-full border border-foreground/15 bg-background px-5 py-3 text-[15px] font-semibold shadow-sm transition-[opacity,translate,background-color] duration-300 ease-out hover:bg-muted",
+                  mobileOpen
+                    ? "translate-x-0 opacity-100"
+                    : "pointer-events-none -translate-x-4 opacity-0"
+                )}
+              >
+                {NAV_CONTACT.label}
+              </button>
             </div>
           </div>
-        </nav>
-      </header>
+        </div>
+      </nav>
+    </header>
   )
 }

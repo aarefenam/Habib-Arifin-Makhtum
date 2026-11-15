@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { SmoothScroll } from "@/components/smooth-scroll"
+import { PageShell } from "@/components/shared/page-shell"
 import { Navbar } from "@/components/shared/navbar"
 import { Footer } from "@/components/shared/footer"
 import { BackToTop } from "@/components/shared/back-to-top"
@@ -15,6 +16,7 @@ import { FloatingFullscreenToggle } from "@/components/shared/floating-fullscree
 import { FloatingCommandButton } from "@/components/shared/floating-command-button"
 import { CommandPalette } from "@/components/shared/command-palette"
 import { Toaster } from "@/components/ui/toast"
+import { SITE, SITE_DESCRIPTION } from "@/constants/site"
 import { cn } from "@/lib/utils"
 
 const switzer = localFont({
@@ -33,45 +35,56 @@ const switzer = localFont({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://fazle-rabbi-dev.vercel.app"),
-  title: "Fazle Rabbi | Software Developer",
-  description:
-    "Fazle Rabbi is a Bangladeshi software developer specializing in web development, building software that makes everyday life a little easier.",
+  metadataBase: new URL(SITE.siteUrl),
+  title: {
+    default: `${SITE.name} | ${SITE.role}`,
+    template: `%s | ${SITE.name}`,
+  },
+  description: SITE_DESCRIPTION,
   icons: {
-    icon: [
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-    ],
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
-    ],
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
   },
   keywords: [
-    "Fazle Rabbi",
-    "fazlerabbidev",
-    "fazle-rabbi-dev",
-    "fazle_rabbi_dev",
-    "Bangladeshi software developer",
-    "web developer Bangladesh",
-    "MERN stack developer",
+    "Habib Arifin Makhtum",
+    "full-stack developer",
+    "IT solver",
+    "ERP developer",
+    "web developer Indonesia",
     "Next.js developer",
+    "integrasi API",
+    "Cloudflare R2",
   ],
-  authors: [{ name: "Fazle Rabbi" }],
-  creator: "Fazle Rabbi",
+  authors: [{ name: SITE.name }],
+  creator: SITE.name,
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: SITE.siteUrl,
+    title: `${SITE.name} | ${SITE.role}`,
+    description: SITE_DESCRIPTION,
+    siteName: SITE.name,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE.name} | ${SITE.role}`,
+    description: SITE_DESCRIPTION,
+  },
 }
 
 const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "Fazle Rabbi",
-  alternateName: ["fazlerabbidev", "fazle-rabbi-dev", "fazle_rabbi_dev"],
-  url: "https://fazle-rabbi-dev.vercel.app",
-  jobTitle: "Software Developer",
-  sameAs: [
-    "https://x.com/fazle_rabbi_dev",
-    "https://github.com/fazle-rabbi-dev",
-    "https://www.linkedin.com/in/fazlerabbidev",
-  ],
+  name: SITE.name,
+  alternateName: [SITE.handle],
+  url: SITE.siteUrl,
+  jobTitle: SITE.role,
+  description: SITE_DESCRIPTION,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Cairo",
+    addressCountry: "EG",
+  },
+  sameAs: [SITE.github, SITE.linkedin, SITE.instagram],
 }
 
 export default function RootLayout({
@@ -81,16 +94,10 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="id"
       suppressHydrationWarning
       className={cn("antialiased", "font-sans", switzer.variable)}
     >
-      <head>
-        <meta
-          name="google-site-verification"
-          content="bBOJ8YhTLw-vz1qayvGCHKw3GnTLPoQ4RWRodFvBqI4"
-        />
-      </head>
       <body>
         <script
           type="application/ld+json"
@@ -99,11 +106,7 @@ export default function RootLayout({
         <ThemeProvider>
           <Navbar />
           <SmoothScroll>
-            <div className="max-body">
-              <div className="border-foreground/15 px-2 pt-24 sm:border-x sm:px-6 dark:border-foreground/10">
-                {children}
-              </div>
-            </div>
+            <PageShell>{children}</PageShell>
           </SmoothScroll>
           <Footer />
           <BackToTop />

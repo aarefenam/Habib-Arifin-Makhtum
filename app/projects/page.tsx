@@ -1,24 +1,20 @@
-import Link from "next/link"
-import { Rocket } from "lucide-react"
+import type { Metadata } from "next"
 
-import { buttonVariants } from "@/components/ui/button"
-import { SocialIcon } from "@/components/shared/social-icons"
+import { GitFork } from "lucide-react"
 
 import { SectionHeader } from "@/components/shared/section-header"
-import { FilterableProjects } from "@/components/public/projects/filterable-projects"
+import { PROJECTS_CTA, PROJECTS_HEADER } from "@/constants/projects"
 
-import { PROJECTS_HEADER } from "@/constants/projects"
-
-export const metadata = {
-  title: "Projects by Fazle Rabbi | Software Developer",
+export const metadata: Metadata = {
+  title: "Portfolio",
   description:
-    "Explore projects by Fazle Rabbi, a Bangladeshi software developer building web apps with the MERN stack and Next.js, from idea to live launch.",
+    "Case study aplikasi web, ERP, integrasi sistem, dan solusi digital oleh Habib Arifin Makhtum.",
 }
 
 export default function ProjectsPage() {
   return (
     <main className="flex flex-col gap-4 pb-24">
-      <section aria-label="Projects" className="py-6">
+      <section aria-label="Portfolio" className="py-6">
         <div className="flex flex-col gap-8">
           <SectionHeader
             badge={PROJECTS_HEADER.badge}
@@ -29,28 +25,22 @@ export default function ProjectsPage() {
             badgeCenter
           />
 
-          <FilterableProjects />
-
-          <div aria-hidden className="mt-8 border-t border-dashed border-foreground/25" />
-
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="rounded-2xl border border-dashed border-border bg-card p-6 sm:p-8">
+            <h2 className="heading-4">Menyiapkan portfolio yang relevan.</h2>
+            <p className="mt-3 max-w-2xl text-muted-foreground">
+              Setiap proyek akan dipublikasikan dengan konteks masalah,
+              pendekatan, dan hasilnya. Sementara itu, kunjungi GitHub untuk
+              melihat aktivitas pengembangan yang tersedia.
+            </p>
             <a
-              href="https://github.com/fazle-rabbi-dev?tab=repositories"
+              href={PROJECTS_CTA.href}
               target="_blank"
               rel="noreferrer"
-              className={buttonVariants({ variant: "outline", size: "lg" })}
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-105"
             >
-              All of my projects can be found on GitHub
-              <SocialIcon brand="github" className="size-4" />
+              <GitFork aria-hidden className="size-4" />
+              {PROJECTS_CTA.label}
             </a>
-
-            <Link
-              href="/project-launchpad"
-              className={buttonVariants({ variant: "outline", size: "lg" })}
-            >
-              Open and try live projects from the Launchpad
-              <Rocket className="size-4" aria-hidden />
-            </Link>
           </div>
         </div>
       </section>
