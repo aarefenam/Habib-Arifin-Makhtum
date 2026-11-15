@@ -59,7 +59,7 @@ function getR2UploadMessage(error: unknown) {
 function getSupabaseInsertMessage(error: unknown) {
   const errorCode = getErrorCode(error)
 
-  if (/42P01|PGRST204/i.test(errorCode)) {
+  if (/42P01|PGRST20[45]/i.test(errorCode)) {
     return "Tabel media_assets belum tersedia di Supabase. Jalankan migration 0001_portfolio_foundation.sql terlebih dahulu."
   }
 
