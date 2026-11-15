@@ -130,14 +130,20 @@ export function Navbar({
           >
             <span
               aria-hidden
-              className="flex-center size-8 justify-center rounded-full bg-blue-600 text-xs font-bold text-white"
+              className={cn(
+                "flex-center size-8 shrink-0 justify-center overflow-hidden rounded-full text-xs font-bold text-white",
+                // Photo: neutral ring instead of the blue initials badge
+                logoUrl
+                  ? "bg-muted ring-1 ring-border ring-offset-2 ring-offset-background"
+                  : "bg-blue-600"
+              )}
             >
               {logoUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={logoUrl}
                   alt=""
-                  className="size-full rounded-full object-contain"
+                  className="size-full object-cover object-top"
                 />
               ) : (
                 content.initials
