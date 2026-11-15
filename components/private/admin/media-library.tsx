@@ -10,6 +10,19 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import type { PortfolioMediaAsset } from "@/types/cms"
 
+async function getResponseMessage(response: Response, fallback: string) {
+  const body = await response.text()
+
+  if (!body) return fallback
+
+  try {
+    const result = JSON.parse(body) as { message?: unknown }
+    return typeof result.message === "string" ? result.message : fallback
+  } catch {
+    return fallback
+  }
+}
+
 export function MediaLibrary({ assets }: { assets: PortfolioMediaAsset[] }) {
   const router = useRouter()
   const [isUploading, setIsUploading] = useState(false)
@@ -26,11 +39,15 @@ export function MediaLibrary({ assets }: { assets: PortfolioMediaAsset[] }) {
         body: formData,
         method: "POST",
       })
-      const result = (await response.json()) as { message?: string }
 
       if (!response.ok) {
         setIsError(true)
-        setMessage(result.message ?? "Upload gambar gagal.")
+        setMessage(
+          await getResponseMessage(
+            response,
+            "Upload gambar gagal. Server tidak memberi detail yang dapat dibaca."
+          )
+        )
         return
       }
 
@@ -57,11 +74,10 @@ export function MediaLibrary({ assets }: { assets: PortfolioMediaAsset[] }) {
         headers: { "Content-Type": "application/json" },
         method: "DELETE",
       })
-      const result = (await response.json()) as { message?: string }
 
       if (!response.ok) {
         setIsError(true)
-        setMessage(result.message ?? "Aset gagal dihapus.")
+        setMessage(await getResponseMessage(response, "Aset gagal dihapus."))
         return
       }
 
