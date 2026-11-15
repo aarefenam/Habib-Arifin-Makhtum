@@ -45,19 +45,19 @@ export function Contact({
     {
       href: `mailto:${site.email}`,
       icon: "mail" as const,
-      label: "Email",
+      label: content.emailLabel,
       value: site.email,
     },
     {
       href: site.whatsappUrl,
       icon: "whatsapp" as const,
-      label: "WhatsApp",
+      label: content.whatsappLabel,
       value: site.phone,
     },
     {
       href: `tel:${site.phone.replace(/\s/g, "")}`,
       icon: "phone" as const,
-      label: "Telepon",
+      label: content.phoneLabel,
       value: site.phone,
     },
   ].filter((method) => method.href && method.value)
@@ -81,7 +81,7 @@ export function Contact({
               const Icon = METHOD_ICONS[method.icon]
               return (
                 <a
-                  key={method.label}
+                  key={method.icon}
                   href={method.href}
                   target={method.href.startsWith("http") ? "_blank" : undefined}
                   rel={
@@ -114,7 +114,7 @@ export function Contact({
             })}
 
             <p className="mt-2 text-xs text-muted-foreground">
-              Temukan saya di
+              {content.socialLabel}
             </p>
             <div className="flex flex-wrap gap-2">
               {socialLinks.map((social) => (
@@ -155,22 +155,24 @@ export function Contact({
                 {content.headerBadge} · {content.eyebrow}
               </p>
               <h3 className="heading-3 mt-4 max-w-sm text-white">
-                {content.cardHeading
-                  .split(content.cardHeadingAccent)
-                  .reduce<React.ReactNode[]>(
-                    (parts, part, i, arr) => [
-                      ...parts,
-                      part,
-                      ...(i < arr.length - 1
-                        ? [
-                            <span key={i} className="text-blue-500">
-                              {content.cardHeadingAccent}
-                            </span>,
-                          ]
-                        : []),
-                    ],
-                    []
-                  )}
+                {content.cardHeadingAccent
+                  ? content.cardHeading
+                      .split(content.cardHeadingAccent)
+                      .reduce<React.ReactNode[]>(
+                        (parts, part, i, arr) => [
+                          ...parts,
+                          part,
+                          ...(i < arr.length - 1
+                            ? [
+                                <span key={i} className="text-blue-500">
+                                  {content.cardHeadingAccent}
+                                </span>,
+                              ]
+                            : []),
+                        ],
+                        []
+                      )
+                  : content.cardHeading}
               </h3>
               <p className="mt-3 max-w-xs text-white/60">{content.cardSub}</p>
 

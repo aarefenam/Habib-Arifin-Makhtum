@@ -9,6 +9,20 @@ type ProjectDetailsPageProps = {
   params: Promise<{ slug: string }>
 }
 
+export async function generateMetadata({
+  params,
+}: ProjectDetailsPageProps): Promise<Metadata> {
+  const [{ slug }, snapshot] = await Promise.all([
+    params,
+    getPortfolioCmsSnapshot(),
+  ])
+  const project = snapshot.projects.find(
+    (item) => item.slug === slug && item.status === "published"
+  )
+  if (!project) notFound()
+  return { title: project.title, description: project.shortDescription }
+}
+
 export default async function ProjectDetailsPage({
   params,
 }: ProjectDetailsPageProps) {
@@ -21,6 +35,7 @@ export default async function ProjectDetailsPage({
   )
 
   if (!project) notFound()
+  const labels = snapshot.content.projectDetail
 
   const cover = project.coverKey
     ? snapshot.media.find((asset) => asset.storageKey === project.coverKey)
@@ -36,7 +51,7 @@ export default async function ProjectDetailsPage({
           className="flex-center min-h-11 w-fit gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft aria-hidden className="size-4" />
-          Kembali ke projects
+          {labels.backLabel}
         </Link>
 
         <div className="mt-10 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
@@ -57,7 +72,7 @@ export default async function ProjectDetailsPage({
                 rel="noreferrer"
                 className="flex-center min-h-11 gap-2 rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-85"
               >
-                Lihat website
+                {labels.liveLabel}
                 <ExternalLink aria-hidden className="size-4" />
               </a>
             ) : null}
@@ -69,7 +84,7 @@ export default async function ProjectDetailsPage({
                 className="flex-center min-h-11 gap-2 rounded-lg border border-border bg-card px-4 text-sm font-medium transition-colors hover:bg-muted"
               >
                 <GitFork aria-hidden className="size-4" />
-                Repository
+                {labels.repositoryLabel}
               </a>
             ) : null}
           </div>
@@ -85,20 +100,20 @@ export default async function ProjectDetailsPage({
             />
           ) : (
             <div className="flex-center aspect-video justify-center text-sm text-muted-foreground">
-              Cover project belum ditambahkan.
+              {labels.emptyCover}
             </div>
           )}
         </div>
 
         <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_18rem]">
           <article>
-            <h2 className="heading-4">Tentang project</h2>
+            <h2 className="heading-4">{labels.bodyTitle}</h2>
             <div className="mt-4 leading-8 whitespace-pre-wrap text-muted-foreground">
               {body || project.shortDescription}
             </div>
           </article>
           <aside className="rounded-2xl border border-border bg-card p-5">
-            <p className="text-sm font-medium">Teknologi</p>
+            <h2 className="text-sm font-medium">{labels.technologiesTitle}</h2>
             {project.technologies.length ? (
               <ul className="mt-4 flex flex-wrap gap-2">
                 {project.technologies.map((technology) => (
@@ -112,7 +127,7 @@ export default async function ProjectDetailsPage({
               </ul>
             ) : (
               <p className="mt-3 text-sm text-muted-foreground">
-                Belum ditambahkan.
+                {labels.emptyTechnologies}
               </p>
             )}
           </aside>
@@ -121,3 +136,4 @@ export default async function ProjectDetailsPage({
     </main>
   )
 }
+import type { Metadata } from "next"

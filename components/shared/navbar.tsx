@@ -1,15 +1,21 @@
 "use client"
 
 import * as React from "react"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { X } from "lucide-react"
 
-import { NAV_CONTACT, NAV_LINKS } from "@/constants/navigation"
+import { ContentLink } from "@/components/shared/content-link"
 import { cn } from "@/lib/utils"
-import { scrollToSection, scrollToTop } from "@/lib/scroll"
-import type { PortfolioSiteSettings } from "@/types/cms"
+import { scrollToTop } from "@/lib/scroll"
+import type { WebsiteContent } from "@/types/cms"
 
-export function Navbar({ site }: { site: PortfolioSiteSettings }) {
+export function Navbar({
+  content,
+  logoUrl,
+}: {
+  content: WebsiteContent["header"]
+  logoUrl?: string
+}) {
   const [collapsed, setCollapsed] = React.useState(false)
   const [hovered, setHovered] = React.useState<string | null>(null)
   const [navHovered, setNavHovered] = React.useState(false)
@@ -20,49 +26,6 @@ export function Navbar({ site }: { site: PortfolioSiteSettings }) {
   const [radiusOpen, setRadiusOpen] = React.useState(false)
   const radiusTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null)
   const pathname = usePathname()
-  const router = useRouter()
-  const pendingTarget = React.useRef<string | null>(null)
-  const pendingTop = React.useRef(false)
-  const initials = site.name
-    .split(" ")
-    .map((part) => part.slice(0, 1))
-    .slice(0, 2)
-    .join("")
-
-  function goHome() {
-    closeMobile()
-    if (pathname === "/") {
-      scrollToTop()
-    } else {
-      pendingTop.current = true
-      router.push("/")
-    }
-  }
-
-  function goToSection(target: string) {
-    closeMobile()
-    if (pathname === "/") {
-      scrollToSection(target)
-    } else {
-      pendingTarget.current = target
-      router.push("/")
-    }
-  }
-
-  React.useEffect(() => {
-    if (pathname === "/" && pendingTop.current) {
-      pendingTop.current = false
-      const id = setTimeout(() => scrollToTop(), 100)
-      return () => clearTimeout(id)
-    }
-    if (pathname === "/" && pendingTarget.current) {
-      const target = pendingTarget.current
-      pendingTarget.current = null
-      // Wait a tick for home sections to mount after navigation
-      const id = setTimeout(() => scrollToSection(target), 100)
-      return () => clearTimeout(id)
-    }
-  }, [pathname])
 
   function toggleMobile() {
     if (radiusTimer.current) {
@@ -147,29 +110,52 @@ export function Navbar({ site }: { site: PortfolioSiteSettings }) {
       >
         {/* Top row - same nav, grows taller when open on mobile */}
         <div className="flex-center justify-between gap-2 md:justify-start md:gap-7">
-          <button
-            type="button"
-            onClick={goHome}
-            aria-label="Go to home"
+          <ContentLink
+            href="/"
+            onClick={(event) => {
+              closeMobile()
+              if (
+                pathname === "/" &&
+                !event.metaKey &&
+                !event.ctrlKey &&
+                !event.shiftKey &&
+                !event.altKey
+              ) {
+                event.preventDefault()
+                scrollToTop()
+              }
+            }}
+            aria-label={content.homeLabel}
             className="flex-center cursor-pointer gap-2.5 pl-1"
           >
             <span
               aria-hidden
               className="flex-center size-8 justify-center rounded-full bg-blue-600 text-xs font-bold text-white"
             >
-              {initials}
+              {logoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={logoUrl}
+                  alt=""
+                  className="size-full rounded-full object-contain"
+                />
+              ) : (
+                content.initials
+              )}
             </span>
             <span className="text-[15px] font-bold tracking-tight whitespace-nowrap">
-              {site.shortName}
+              {content.brandName}
             </span>
-          </button>
+          </ContentLink>
 
           {/* Mobile toggle: typing dots when closed, X when open + during close */}
           <button
             type="button"
             onClick={toggleMobile}
             aria-expanded={mobileOpen}
-            aria-label={radiusOpen ? "Close menu" : "Open menu"}
+            aria-label={
+              mobileOpen ? content.menuCloseLabel : content.menuOpenLabel
+            }
             className="flex-center h-8 cursor-pointer gap-1 pr-2 pl-3 text-muted-foreground md:hidden"
           >
             {radiusOpen ? (
@@ -201,7 +187,7 @@ export function Navbar({ site }: { site: PortfolioSiteSettings }) {
               className={cn(
                 "col-start-1 row-start-1 gap-1 self-center overflow-hidden whitespace-nowrap transition-[max-width,opacity] ease-in-out md:flex md:items-center",
                 showFull
-                  ? "max-w-[500px] opacity-100 duration-1000"
+                  ? "max-w-[70vw] opacity-100 duration-1000"
                   : "max-w-0 opacity-0 duration-500"
               )}
             >
@@ -209,11 +195,11 @@ export function Navbar({ site }: { site: PortfolioSiteSettings }) {
                 className="hidden md:flex-center"
                 onMouseLeave={() => setHovered(null)}
               >
-                {NAV_LINKS.map((link) => (
-                  <button
-                    key={link.label}
-                    type="button"
-                    onClick={() => goToSection(link.target)}
+                {content.links.map((link, index) => (
+                  <ContentLink
+                    key={`${index}-${link.href}`}
+                    href={link.href}
+                    onClick={closeMobile}
                     onMouseEnter={() => setHovered(link.label)}
                     className={cn(
                       "cursor-pointer rounded-full px-2 py-1.5 text-[15px] font-semibold tracking-tight transition-colors",
@@ -223,16 +209,16 @@ export function Navbar({ site }: { site: PortfolioSiteSettings }) {
                     )}
                   >
                     {link.label}
-                  </button>
+                  </ContentLink>
                 ))}
               </div>
-              <button
-                type="button"
-                onClick={() => goToSection(NAV_CONTACT.href)}
+              <ContentLink
+                href={content.ctaHref}
+                onClick={closeMobile}
                 className="cursor-pointer rounded-full border border-foreground/15 bg-background px-5 py-1.5 text-[15px] font-semibold tracking-tight text-foreground shadow-sm transition-colors hover:bg-muted"
               >
-                {NAV_CONTACT.label}
-              </button>
+                {content.ctaLabel}
+              </ContentLink>
             </div>
 
             {/* Desktop typing indicator - overlays the links slot,
@@ -282,11 +268,11 @@ export function Navbar({ site }: { site: PortfolioSiteSettings }) {
         >
           <div className="min-h-0 overflow-hidden">
             <div className="flex flex-col">
-              {NAV_LINKS.map((link, index) => (
-                <button
-                  key={link.label}
-                  type="button"
-                  onClick={() => goToSection(link.target)}
+              {content.links.map((link, index) => (
+                <ContentLink
+                  key={`${index}-${link.href}`}
+                  href={link.href}
+                  onClick={closeMobile}
                   tabIndex={mobileOpen ? 0 : -1}
                   style={{
                     transitionDelay: mobileOpen ? `${index * 70}ms` : "0ms",
@@ -299,20 +285,17 @@ export function Navbar({ site }: { site: PortfolioSiteSettings }) {
                   )}
                 >
                   {link.label}
-                </button>
+                </ContentLink>
               ))}
-              <button
-                type="button"
+              <ContentLink
+                href={content.ctaHref}
                 tabIndex={mobileOpen ? 0 : -1}
                 style={{
                   transitionDelay: mobileOpen
-                    ? `${NAV_LINKS.length * 70}ms`
+                    ? `${content.links.length * 70}ms`
                     : "0ms",
                 }}
-                onClick={() => {
-                  closeMobile()
-                  goToSection(NAV_CONTACT.href)
-                }}
+                onClick={closeMobile}
                 className={cn(
                   "mt-3 w-full cursor-pointer rounded-full border border-foreground/15 bg-background px-5 py-3 text-[15px] font-semibold shadow-sm transition-[opacity,translate,background-color] duration-300 ease-out hover:bg-muted",
                   mobileOpen
@@ -320,8 +303,8 @@ export function Navbar({ site }: { site: PortfolioSiteSettings }) {
                     : "pointer-events-none -translate-x-4 opacity-0"
                 )}
               >
-                {NAV_CONTACT.label}
-              </button>
+                {content.ctaLabel}
+              </ContentLink>
             </div>
           </div>
         </div>

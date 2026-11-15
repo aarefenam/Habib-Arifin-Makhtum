@@ -4,6 +4,7 @@ import { LayoutDashboard, LogOut, PanelLeft } from "lucide-react"
 
 import { signOutAdmin } from "@/actions/admin-auth"
 import { ADMIN_CONTENT_AREAS } from "@/constants/admin"
+import { CONTENT_COLLECTIONS, CONTENT_PAGES } from "@/constants/content-editor"
 import { SITE } from "@/constants/site"
 import { Button } from "@/components/ui/button"
 import type { AdminSession } from "@/types/auth"
@@ -45,7 +46,10 @@ export function AdminShell({
           </Link>
         </div>
 
-        <nav aria-label="Navigasi admin" className="flex-1 px-4 py-6">
+        <nav
+          aria-label="Navigasi admin"
+          className="flex-1 overflow-y-auto px-4 py-6"
+        >
           <p className="px-3 text-xs font-medium tracking-[0.14em] text-muted-foreground uppercase">
             Workspace
           </p>
@@ -68,22 +72,61 @@ export function AdminShell({
           <div className="mt-3 space-y-1">
             {ADMIN_CONTENT_AREAS.map((area) => {
               const Icon = area.icon
-              const isActive = activePath === area.href
+              const isActive =
+                activePath === area.href ||
+                activePath.startsWith(`${area.href}/`)
 
               return (
-                <Link
-                  key={area.id}
-                  href={area.href}
-                  aria-current={isActive ? "page" : undefined}
-                  className={
-                    isActive
-                      ? "flex-center min-h-11 gap-3 rounded-lg bg-muted px-3 text-sm font-medium text-foreground"
-                      : "flex-center min-h-11 gap-3 rounded-lg px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                  }
-                >
-                  <Icon aria-hidden className="size-4" />
-                  {area.title}
-                </Link>
+                <div key={area.id}>
+                  <Link
+                    href={area.href}
+                    aria-current={isActive ? "page" : undefined}
+                    className={
+                      isActive
+                        ? "flex-center min-h-11 gap-3 rounded-lg bg-muted px-3 text-sm font-medium text-foreground"
+                        : "flex-center min-h-11 gap-3 rounded-lg px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                    }
+                  >
+                    <Icon aria-hidden className="size-4" />
+                    {area.title}
+                  </Link>
+                  {area.id === "site-settings" && isActive ? (
+                    <div className="ml-7 border-l border-border pl-3">
+                      {CONTENT_PAGES.map((page) => (
+                        <Link
+                          key={page.id}
+                          href={`/admin/content/${page.id}`}
+                          aria-current={
+                            activePath.startsWith(`/admin/content/${page.id}/`)
+                              ? "page"
+                              : undefined
+                          }
+                          className="block py-2 text-xs text-muted-foreground hover:text-foreground aria-[current=page]:font-semibold aria-[current=page]:text-foreground"
+                        >
+                          {page.title}
+                        </Link>
+                      ))}
+                    </div>
+                  ) : null}
+                  {area.id === "content" && isActive ? (
+                    <div className="ml-7 border-l border-border pl-3">
+                      {CONTENT_COLLECTIONS.map((collection) => (
+                        <Link
+                          key={collection.id}
+                          href={`/admin/collections/${collection.id}`}
+                          aria-current={
+                            activePath === `/admin/collections/${collection.id}`
+                              ? "page"
+                              : undefined
+                          }
+                          className="block py-2 text-xs text-muted-foreground hover:text-foreground aria-[current=page]:font-semibold aria-[current=page]:text-foreground"
+                        >
+                          {collection.title}
+                        </Link>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
               )
             })}
           </div>
@@ -132,6 +175,30 @@ export function AdminShell({
           <PanelLeft aria-hidden className="size-4" />
         </Link>
       </header>
+
+      <nav
+        aria-label="Modul admin seluler"
+        className="flex gap-2 overflow-x-auto border-b border-border bg-card p-3 lg:hidden"
+      >
+        {ADMIN_CONTENT_AREAS.map((area) => {
+          const active =
+            activePath === area.href || activePath.startsWith(`${area.href}/`)
+          return (
+            <Link
+              key={area.id}
+              href={area.href}
+              aria-current={active ? "page" : undefined}
+              className={
+                active
+                  ? "shrink-0 rounded-lg bg-primary px-3 py-2 text-sm text-primary-foreground"
+                  : "shrink-0 rounded-lg px-3 py-2 text-sm text-muted-foreground"
+              }
+            >
+              {area.title}
+            </Link>
+          )
+        })}
+      </nav>
 
       <main id="admin-main" tabIndex={-1} className="lg:pl-72">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-10 xl:px-12">

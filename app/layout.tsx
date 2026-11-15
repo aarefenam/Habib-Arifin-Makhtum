@@ -17,7 +17,7 @@ import { FloatingCommandButton } from "@/components/shared/floating-command-butt
 import { CommandPalette } from "@/components/shared/command-palette"
 import { Toaster } from "@/components/ui/toast"
 import { SITE, SITE_DESCRIPTION } from "@/constants/site"
-import { getPublicSiteSettings } from "@/lib/cms"
+import { getPublicSiteConfiguration } from "@/lib/cms"
 import { cn } from "@/lib/utils"
 
 const switzer = localFont({
@@ -36,7 +36,7 @@ const switzer = localFont({
 })
 
 export async function generateMetadata(): Promise<Metadata> {
-  const site = await getPublicSiteSettings()
+  const { site } = await getPublicSiteConfiguration()
 
   return {
     metadataBase: new URL(SITE.siteUrl),
@@ -81,7 +81,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const site = await getPublicSiteSettings()
+  const { site, content, logoUrl } = await getPublicSiteConfiguration()
   const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -102,16 +102,18 @@ export default async function RootLayout({
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
+          }}
         />
         <ThemeProvider>
-          <Navbar site={site} />
+          <Navbar content={content.header} logoUrl={logoUrl} />
           <SmoothScroll>
             <PageShell>{children}</PageShell>
           </SmoothScroll>
-          <Footer site={site} />
+          <Footer site={site} content={content.footer} />
           <BackToTop />
-          <GlobalContactDialog site={site} />
+          <GlobalContactDialog site={site} content={content.contactDialog} />
           <CommandPalette />
           <FloatingCommandButton />
           <FloatingFullscreenToggle />

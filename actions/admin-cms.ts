@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache"
 import { getPublishedStatus } from "@/lib/cms"
 import { requireAdminSession } from "@/lib/auth/guard"
 import { getSupabaseAdmin } from "@/lib/supabase"
-import type { CmsActionState, HomePageContent } from "@/types/cms"
+import type { CmsActionState } from "@/types/cms"
 
 const DEFAULT_ERROR = "Perubahan tidak dapat disimpan. Coba lagi."
 
@@ -43,155 +43,11 @@ function commaSeparated(formData: FormData, name: string) {
     .filter(Boolean)
 }
 
-function buildItems(value: string): HomePageContent["hero"]["buildItems"] {
-  return value
-    .split("\n")
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((line, index) => {
-      const [label, icon] = line.split("|").map((part) => part.trim())
-      const fallbackIcons = ["globe", "briefcase", "shield", "store"]
-      return {
-        icon: icon || fallbackIcons[index % fallbackIcons.length],
-        label,
-      }
-    })
-    .filter((item) => item.label)
-}
-
 function refreshPublicContent() {
-  revalidatePath("/")
+  revalidatePath("/", "layout")
   revalidatePath("/about")
   revalidatePath("/projects")
   revalidatePath("/admin")
-}
-
-export async function saveSiteContent(
-  _previousState: CmsActionState,
-  formData: FormData
-): Promise<CmsActionState> {
-  await requireAdminSession()
-
-  const siteName = requiredText(formData, "site_name")
-  const shortName = requiredText(formData, "short_name")
-  const handle = requiredText(formData, "handle")
-  const role = requiredText(formData, "role")
-  const email = requiredText(formData, "email")
-
-  if (!siteName || !shortName || !handle || !role || !email) {
-    return failure("Nama, handle, role, dan email wajib diisi.")
-  }
-
-  const content: HomePageContent = {
-    about: {
-      experienceBadge: requiredText(formData, "about_experience_badge"),
-      experienceMuted: requiredText(formData, "about_experience_muted"),
-      experienceText: requiredText(formData, "about_experience_text"),
-      experienceValue: requiredText(formData, "about_experience_value"),
-      nowBadge: requiredText(formData, "about_now_badge"),
-      nowBody: requiredText(formData, "about_now_body"),
-      nowHeading: requiredText(formData, "about_now_heading"),
-      sideNote: requiredText(formData, "about_side_note"),
-      titleBlack: requiredText(formData, "about_title_black"),
-      titleGray: requiredText(formData, "about_title_gray"),
-      whoBadge: requiredText(formData, "about_who_badge"),
-      whoBody: requiredText(formData, "about_who_body"),
-      whoHeading: requiredText(formData, "about_who_heading"),
-      workBadge: requiredText(formData, "about_work_badge"),
-      workBody: requiredText(formData, "about_work_body"),
-      workHeading: requiredText(formData, "about_work_heading"),
-    },
-    contact: {
-      cardHeading: requiredText(formData, "contact_card_heading"),
-      cardHeadingAccent: requiredText(formData, "contact_card_heading_accent"),
-      cardSub: requiredText(formData, "contact_card_sub"),
-      ctaLabel: requiredText(formData, "contact_cta_label"),
-      eyebrow: requiredText(formData, "contact_eyebrow"),
-      giantWord: requiredText(formData, "contact_giant_word"),
-      headerBadge: requiredText(formData, "contact_header_badge"),
-      headerSideNote: requiredText(formData, "contact_header_side_note"),
-      headerTitleBlack: requiredText(formData, "contact_header_title_black"),
-      headerTitleGray: requiredText(formData, "contact_header_title_gray"),
-    },
-    faq: {
-      badge: requiredText(formData, "faq_badge"),
-      sideNote: requiredText(formData, "faq_side_note"),
-      titleBlack: requiredText(formData, "faq_title_black"),
-      titleGray: requiredText(formData, "faq_title_gray"),
-    },
-    hero: {
-      availability: requiredText(formData, "hero_availability"),
-      badgeRole: requiredText(formData, "hero_badge_role"),
-      buildItems: buildItems(requiredText(formData, "hero_build_items")),
-      chips: commaSeparated(formData, "hero_chips"),
-      detail: requiredText(formData, "hero_detail"),
-      lead: requiredText(formData, "hero_lead"),
-      secondaryCtaLabel: requiredText(formData, "hero_secondary_cta"),
-      title: requiredText(formData, "hero_title"),
-      titleAccent: requiredText(formData, "hero_title_accent"),
-    },
-    projects: {
-      emptyDescription: requiredText(formData, "projects_empty_description"),
-      emptyTitle: requiredText(formData, "projects_empty_title"),
-      headerBadge: requiredText(formData, "projects_header_badge"),
-      headerSideNote: requiredText(formData, "projects_header_side_note"),
-      headerTitleBlack: requiredText(formData, "projects_header_title_black"),
-      headerTitleGray: requiredText(formData, "projects_header_title_gray"),
-    },
-    skills: {
-      additionalDescription: requiredText(
-        formData,
-        "skills_additional_description"
-      ),
-      additionalTitle: requiredText(formData, "skills_additional_title"),
-      badge: requiredText(formData, "skills_badge"),
-      coreDescription: requiredText(formData, "skills_core_description"),
-      coreTitle: requiredText(formData, "skills_core_title"),
-      sideNote: requiredText(formData, "skills_side_note"),
-      titleBlack: requiredText(formData, "skills_title_black"),
-      titleGray: requiredText(formData, "skills_title_gray"),
-      toolkitDescription: requiredText(formData, "skills_toolkit_description"),
-      toolkitTitle: requiredText(formData, "skills_toolkit_title"),
-    },
-  }
-
-  try {
-    const { error } = await getSupabaseAdmin()
-      .from("site_settings")
-      .upsert({
-        bio: optionalText(formData, "bio"),
-        business_role: optionalText(formData, "business_role"),
-        content,
-        email,
-        handle,
-        id: true,
-        location: optionalText(formData, "location"),
-        origin: optionalText(formData, "origin"),
-        phone: optionalText(formData, "phone"),
-        profile_image_key: optionalText(formData, "profile_image_key"),
-        role,
-        seo: {
-          description: requiredText(formData, "seo_description"),
-          title: requiredText(formData, "seo_title"),
-        },
-        short_name: shortName,
-        site_name: siteName,
-        social_links: {
-          github: optionalText(formData, "github_url") ?? "",
-          instagram: optionalText(formData, "instagram_url") ?? "",
-          linkedin: optionalText(formData, "linkedin_url") ?? "",
-        },
-        whatsapp_url: optionalText(formData, "whatsapp_url"),
-      })
-
-    if (error) return failure()
-  } catch {
-    return failure()
-  }
-
-  refreshPublicContent()
-  revalidatePath("/admin/content")
-  return success("Konten website berhasil diperbarui.")
 }
 
 export async function saveProject(
@@ -315,6 +171,7 @@ export async function saveService(
       if (!id) return failure("Layanan tidak ditemukan.")
       const { error } = await client.from("services").delete().eq("id", id)
       if (error) return failure()
+      refreshPublicContent()
       revalidatePath("/admin/collections")
       return success("Layanan dihapus.")
     }
@@ -338,6 +195,7 @@ export async function saveService(
   }
 
   revalidatePath("/admin/collections")
+  refreshPublicContent()
   return success(id ? "Layanan diperbarui." : "Layanan baru ditambahkan.")
 }
 
@@ -403,6 +261,7 @@ export async function saveTimelineEntry(
         .eq("id", id)
       if (error) return failure()
       revalidatePath("/admin/collections")
+      refreshPublicContent()
       return success("Riwayat dihapus.")
     }
 
@@ -431,6 +290,7 @@ export async function saveTimelineEntry(
   }
 
   revalidatePath("/admin/collections")
+  refreshPublicContent()
   return success(id ? "Riwayat diperbarui." : "Riwayat baru ditambahkan.")
 }
 

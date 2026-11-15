@@ -1,5 +1,6 @@
 import { saveProject } from "@/actions/admin-cms"
 import { AdminForm } from "@/components/private/admin/admin-form"
+import { AssetField } from "@/components/private/admin/asset-field"
 import {
   Card,
   CardContent,
@@ -10,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import type { PortfolioProject } from "@/types/cms"
+import type { PortfolioMediaAsset, PortfolioProject } from "@/types/cms"
 
 function CheckboxField({
   defaultChecked,
@@ -34,7 +35,13 @@ function CheckboxField({
   )
 }
 
-function ProjectFields({ project }: { project?: PortfolioProject }) {
+function ProjectFields({
+  project,
+  media,
+}: {
+  project?: PortfolioProject
+  media: PortfolioMediaAsset[]
+}) {
   const body =
     typeof project?.content.body === "string" ? project.content.body : ""
 
@@ -119,17 +126,13 @@ function ProjectFields({ project }: { project?: PortfolioProject }) {
           className="h-11"
         />
       </div>
-      <div className="flex flex-col gap-2">
-        <Label htmlFor={`project-cover-${project?.id ?? "new"}`}>
-          Storage key cover
-        </Label>
-        <Input
-          id={`project-cover-${project?.id ?? "new"}`}
-          name="cover_key"
-          defaultValue={project?.coverKey ?? ""}
-          className="h-11"
-        />
-      </div>
+      <AssetField
+        id={`project-cover-${project?.id ?? "new"}`}
+        name="cover_key"
+        label="Cover project"
+        value={project?.coverKey ?? null}
+        assets={media}
+      />
       <div className="flex flex-col gap-2">
         <Label htmlFor={`project-live-${project?.id ?? "new"}`}>URL live</Label>
         <Input
@@ -175,7 +178,15 @@ function ProjectFields({ project }: { project?: PortfolioProject }) {
   )
 }
 
-export function ProjectEditor({ projects }: { projects: PortfolioProject[] }) {
+export function ProjectEditor({
+  projects,
+  media,
+  configured,
+}: {
+  projects: PortfolioProject[]
+  media: PortfolioMediaAsset[]
+  configured: boolean
+}) {
   return (
     <div className="mt-8 space-y-6">
       <Card className="border border-border py-0 shadow-none">
@@ -187,8 +198,13 @@ export function ProjectEditor({ projects }: { projects: PortfolioProject[] }) {
           </CardDescription>
         </CardHeader>
         <CardContent className="px-5 py-5 sm:px-6 sm:py-6">
-          <AdminForm action={saveProject} submitLabel="Tambah project">
-            <ProjectFields />
+          <AdminForm
+            action={saveProject}
+            disabled={!configured}
+            resetOnSuccess
+            submitLabel="Tambah project"
+          >
+            <ProjectFields media={media} />
           </AdminForm>
         </CardContent>
       </Card>
@@ -223,12 +239,17 @@ export function ProjectEditor({ projects }: { projects: PortfolioProject[] }) {
                   </div>
                 </CardHeader>
                 <CardContent className="px-5 py-5 sm:px-6 sm:py-6">
-                  <AdminForm action={saveProject} submitLabel="Simpan project">
-                    <ProjectFields project={project} />
+                  <AdminForm
+                    action={saveProject}
+                    disabled={!configured}
+                    submitLabel="Simpan project"
+                  >
+                    <ProjectFields project={project} media={media} />
                     <button
                       type="submit"
                       name="intent"
                       value="delete"
+                      formNoValidate
                       className="mt-5 min-h-11 cursor-pointer rounded-lg border border-destructive/30 px-4 text-sm font-medium text-destructive transition-colors hover:bg-destructive/10"
                     >
                       Hapus project

@@ -16,16 +16,17 @@ export default async function Home() {
 
   return (
     <main id="top" className="flex flex-col gap-4 pb-24">
-      <Hero
-        content={snapshot.content.hero}
-        messageLabel={snapshot.content.contact.ctaLabel}
-      />
+      <Hero content={snapshot.content.hero} />
       <About
         content={snapshot.content.about}
         site={snapshot.site}
         profileImageUrl={profileImageUrl}
       />
-      <Skills content={snapshot.content.skills} skills={snapshot.skills} />
+      <Skills
+        content={snapshot.content.skills}
+        skills={snapshot.skills}
+        media={snapshot.media}
+      />
       <Projects
         content={snapshot.content.projects}
         projects={snapshot.projects}

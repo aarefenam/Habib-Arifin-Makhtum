@@ -8,12 +8,12 @@ import {
 
 export const ADMIN_CONTENT_AREAS = [
   {
-    description: "Identitas, bio, sosial media, dan SEO global.",
+    description: "Global, homepage, About, dan Projects - per section.",
     href: "/admin/content",
     id: "site-settings",
     icon: Settings2,
     priority: "Mulai dari sini",
-    title: "Site settings",
+    title: "Halaman & section",
   },
   {
     description: "Case study, teknologi, link, dan urutan tampilan.",
@@ -29,7 +29,7 @@ export const ADMIN_CONTENT_AREAS = [
     id: "content",
     icon: Sparkles,
     priority: "Konten pendukung",
-    title: "Content",
+    title: "Koleksi konten",
   },
   {
     description: "Avatar, project cover, dan seluruh aset R2.",

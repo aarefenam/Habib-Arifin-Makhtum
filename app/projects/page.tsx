@@ -6,10 +6,12 @@ import { ArrowUpRight } from "lucide-react"
 import { SectionHeader } from "@/components/shared/section-header"
 import { getPortfolioCmsSnapshot } from "@/lib/cms"
 
-export const metadata: Metadata = {
-  title: "Portfolio",
-  description:
-    "Case study aplikasi web, ERP, integrasi sistem, dan solusi digital oleh Habib Arifin Makhtum.",
+export async function generateMetadata(): Promise<Metadata> {
+  const { content } = await getPortfolioCmsSnapshot()
+  return {
+    title: content.projectsPage.seoTitle,
+    description: content.projectsPage.seoDescription,
+  }
 }
 
 export default async function ProjectsPage() {
@@ -23,10 +25,10 @@ export default async function ProjectsPage() {
       <section aria-label="Portfolio" className="py-6">
         <div className="flex flex-col gap-8">
           <SectionHeader
-            badge={snapshot.content.projects.headerBadge}
-            titleBlack={snapshot.content.projects.headerTitleBlack}
-            titleGray={snapshot.content.projects.headerTitleGray}
-            sideNote={snapshot.content.projects.headerSideNote}
+            badge={snapshot.content.projectsPage.headerBadge}
+            titleBlack={snapshot.content.projectsPage.headerTitleBlack}
+            titleGray={snapshot.content.projectsPage.headerTitleGray}
+            sideNote={snapshot.content.projectsPage.headerSideNote}
             center={false}
             badgeCenter
           />
@@ -84,10 +86,10 @@ export default async function ProjectsPage() {
           ) : (
             <div className="rounded-2xl border border-dashed border-border bg-card p-6 text-center sm:p-8">
               <h2 className="heading-4">
-                {snapshot.content.projects.emptyTitle}
+                {snapshot.content.projectsPage.emptyTitle}
               </h2>
               <p className="mt-3 text-muted-foreground">
-                {snapshot.content.projects.emptyDescription}
+                {snapshot.content.projectsPage.emptyDescription}
               </p>
             </div>
           )}

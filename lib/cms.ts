@@ -2,14 +2,14 @@ import "server-only"
 
 import { connection } from "next/server"
 
-import { DEFAULT_HOME_CONTENT, DEFAULT_SITE_SETTINGS } from "@/constants/cms"
+import { DEFAULT_WEBSITE_CONTENT, DEFAULT_SITE_SETTINGS } from "@/constants/cms"
 import { FAQS } from "@/constants/faq"
 import { ADDITIONAL, CORE_SKILLS, TOOLKIT } from "@/constants/skills"
 import { isSupabaseConfigured } from "@/lib/env"
 import { getSupabaseAdmin } from "@/lib/supabase"
+import { mergeWebsiteContent } from "@/lib/website-content"
 import type {
   ContentStatus,
-  HomePageContent,
   PortfolioCmsSnapshot,
   PortfolioContactMessage,
   PortfolioFaq,
@@ -37,6 +37,10 @@ function asNullableText(value: unknown) {
   return typeof value === "string" && value.trim() ? value : null
 }
 
+function optionalSetting(value: unknown, fallback: string) {
+  return value === null ? "" : typeof value === "string" ? value : fallback
+}
+
 function asNumber(value: unknown, fallback = 0) {
   return typeof value === "number" && Number.isFinite(value) ? value : fallback
 }
@@ -51,235 +55,49 @@ function asStringList(value: unknown, fallback: string[]) {
   return items.length > 0 ? items : fallback
 }
 
-function mergeContent(value: unknown): HomePageContent {
-  const source = asRecord(value)
-  const hero = asRecord(source.hero)
-  const about = asRecord(source.about)
-  const skills = asRecord(source.skills)
-  const projects = asRecord(source.projects)
-  const faq = asRecord(source.faq)
-  const contact = asRecord(source.contact)
-
-  const buildItems = Array.isArray(hero.buildItems)
-    ? hero.buildItems
-        .map((item) => asRecord(item))
-        .map((item, index) => ({
-          icon: asText(
-            item.icon,
-            DEFAULT_HOME_CONTENT.hero.buildItems[index]?.icon ?? "globe"
-          ),
-          label: asText(item.label, "Solusi digital"),
-        }))
-        .filter((item) => item.label)
-    : DEFAULT_HOME_CONTENT.hero.buildItems
-
-  return {
-    about: {
-      experienceBadge: asText(
-        about.experienceBadge,
-        DEFAULT_HOME_CONTENT.about.experienceBadge
-      ),
-      experienceMuted: asText(
-        about.experienceMuted,
-        DEFAULT_HOME_CONTENT.about.experienceMuted
-      ),
-      experienceText: asText(
-        about.experienceText,
-        DEFAULT_HOME_CONTENT.about.experienceText
-      ),
-      experienceValue: asText(
-        about.experienceValue,
-        DEFAULT_HOME_CONTENT.about.experienceValue
-      ),
-      nowBadge: asText(about.nowBadge, DEFAULT_HOME_CONTENT.about.nowBadge),
-      nowBody: asText(about.nowBody, DEFAULT_HOME_CONTENT.about.nowBody),
-      nowHeading: asText(
-        about.nowHeading,
-        DEFAULT_HOME_CONTENT.about.nowHeading
-      ),
-      sideNote: asText(about.sideNote, DEFAULT_HOME_CONTENT.about.sideNote),
-      titleBlack: asText(
-        about.titleBlack,
-        DEFAULT_HOME_CONTENT.about.titleBlack
-      ),
-      titleGray: asText(about.titleGray, DEFAULT_HOME_CONTENT.about.titleGray),
-      whoBadge: asText(about.whoBadge, DEFAULT_HOME_CONTENT.about.whoBadge),
-      whoBody: asText(about.whoBody, DEFAULT_HOME_CONTENT.about.whoBody),
-      whoHeading: asText(
-        about.whoHeading,
-        DEFAULT_HOME_CONTENT.about.whoHeading
-      ),
-      workBadge: asText(about.workBadge, DEFAULT_HOME_CONTENT.about.workBadge),
-      workBody: asText(about.workBody, DEFAULT_HOME_CONTENT.about.workBody),
-      workHeading: asText(
-        about.workHeading,
-        DEFAULT_HOME_CONTENT.about.workHeading
-      ),
-    },
-    contact: {
-      cardHeading: asText(
-        contact.cardHeading,
-        DEFAULT_HOME_CONTENT.contact.cardHeading
-      ),
-      cardHeadingAccent: asText(
-        contact.cardHeadingAccent,
-        DEFAULT_HOME_CONTENT.contact.cardHeadingAccent
-      ),
-      cardSub: asText(contact.cardSub, DEFAULT_HOME_CONTENT.contact.cardSub),
-      ctaLabel: asText(contact.ctaLabel, DEFAULT_HOME_CONTENT.contact.ctaLabel),
-      eyebrow: asText(contact.eyebrow, DEFAULT_HOME_CONTENT.contact.eyebrow),
-      giantWord: asText(
-        contact.giantWord,
-        DEFAULT_HOME_CONTENT.contact.giantWord
-      ),
-      headerBadge: asText(
-        contact.headerBadge,
-        DEFAULT_HOME_CONTENT.contact.headerBadge
-      ),
-      headerSideNote: asText(
-        contact.headerSideNote,
-        DEFAULT_HOME_CONTENT.contact.headerSideNote
-      ),
-      headerTitleBlack: asText(
-        contact.headerTitleBlack,
-        DEFAULT_HOME_CONTENT.contact.headerTitleBlack
-      ),
-      headerTitleGray: asText(
-        contact.headerTitleGray,
-        DEFAULT_HOME_CONTENT.contact.headerTitleGray
-      ),
-    },
-    faq: {
-      badge: asText(faq.badge, DEFAULT_HOME_CONTENT.faq.badge),
-      sideNote: asText(faq.sideNote, DEFAULT_HOME_CONTENT.faq.sideNote),
-      titleBlack: asText(faq.titleBlack, DEFAULT_HOME_CONTENT.faq.titleBlack),
-      titleGray: asText(faq.titleGray, DEFAULT_HOME_CONTENT.faq.titleGray),
-    },
-    hero: {
-      availability: asText(
-        hero.availability,
-        DEFAULT_HOME_CONTENT.hero.availability
-      ),
-      badgeRole: asText(hero.badgeRole, DEFAULT_HOME_CONTENT.hero.badgeRole),
-      buildItems,
-      chips: asStringList(hero.chips, DEFAULT_HOME_CONTENT.hero.chips),
-      detail: asText(hero.detail, DEFAULT_HOME_CONTENT.hero.detail),
-      lead: asText(hero.lead, DEFAULT_HOME_CONTENT.hero.lead),
-      secondaryCtaLabel: asText(
-        hero.secondaryCtaLabel,
-        DEFAULT_HOME_CONTENT.hero.secondaryCtaLabel
-      ),
-      title: asText(hero.title, DEFAULT_HOME_CONTENT.hero.title),
-      titleAccent: asText(
-        hero.titleAccent,
-        DEFAULT_HOME_CONTENT.hero.titleAccent
-      ),
-    },
-    projects: {
-      emptyDescription: asText(
-        projects.emptyDescription,
-        DEFAULT_HOME_CONTENT.projects.emptyDescription
-      ),
-      emptyTitle: asText(
-        projects.emptyTitle,
-        DEFAULT_HOME_CONTENT.projects.emptyTitle
-      ),
-      headerBadge: asText(
-        projects.headerBadge,
-        DEFAULT_HOME_CONTENT.projects.headerBadge
-      ),
-      headerSideNote: asText(
-        projects.headerSideNote,
-        DEFAULT_HOME_CONTENT.projects.headerSideNote
-      ),
-      headerTitleBlack: asText(
-        projects.headerTitleBlack,
-        DEFAULT_HOME_CONTENT.projects.headerTitleBlack
-      ),
-      headerTitleGray: asText(
-        projects.headerTitleGray,
-        DEFAULT_HOME_CONTENT.projects.headerTitleGray
-      ),
-    },
-    skills: {
-      additionalDescription: asText(
-        skills.additionalDescription,
-        DEFAULT_HOME_CONTENT.skills.additionalDescription
-      ),
-      additionalTitle: asText(
-        skills.additionalTitle,
-        DEFAULT_HOME_CONTENT.skills.additionalTitle
-      ),
-      badge: asText(skills.badge, DEFAULT_HOME_CONTENT.skills.badge),
-      coreDescription: asText(
-        skills.coreDescription,
-        DEFAULT_HOME_CONTENT.skills.coreDescription
-      ),
-      coreTitle: asText(
-        skills.coreTitle,
-        DEFAULT_HOME_CONTENT.skills.coreTitle
-      ),
-      sideNote: asText(skills.sideNote, DEFAULT_HOME_CONTENT.skills.sideNote),
-      titleBlack: asText(
-        skills.titleBlack,
-        DEFAULT_HOME_CONTENT.skills.titleBlack
-      ),
-      titleGray: asText(
-        skills.titleGray,
-        DEFAULT_HOME_CONTENT.skills.titleGray
-      ),
-      toolkitDescription: asText(
-        skills.toolkitDescription,
-        DEFAULT_HOME_CONTENT.skills.toolkitDescription
-      ),
-      toolkitTitle: asText(
-        skills.toolkitTitle,
-        DEFAULT_HOME_CONTENT.skills.toolkitTitle
-      ),
-    },
-  }
-}
-
 function normalizeSite(value: unknown): PortfolioSiteSettings {
   const source = asRecord(value)
   const socialLinks = asRecord(source.social_links)
   const seo = asRecord(source.seo)
 
   return {
-    bio: asText(source.bio, DEFAULT_SITE_SETTINGS.bio),
-    businessRole: asText(
+    bio: optionalSetting(source.bio, DEFAULT_SITE_SETTINGS.bio),
+    businessRole: optionalSetting(
       source.business_role,
       DEFAULT_SITE_SETTINGS.businessRole
     ),
     email: asText(source.email, DEFAULT_SITE_SETTINGS.email),
     handle: asText(source.handle, DEFAULT_SITE_SETTINGS.handle),
-    location: asText(source.location, DEFAULT_SITE_SETTINGS.location),
+    location: optionalSetting(source.location, DEFAULT_SITE_SETTINGS.location),
     name: asText(source.site_name, DEFAULT_SITE_SETTINGS.name),
-    origin: asText(source.origin, DEFAULT_SITE_SETTINGS.origin),
-    phone: asText(source.phone, DEFAULT_SITE_SETTINGS.phone),
+    origin: optionalSetting(source.origin, DEFAULT_SITE_SETTINGS.origin),
+    phone: optionalSetting(source.phone, DEFAULT_SITE_SETTINGS.phone),
     profileImageKey: asNullableText(source.profile_image_key),
     role: asText(source.role, DEFAULT_SITE_SETTINGS.role),
-    seoDescription: asText(
+    seoDescription: optionalSetting(
       seo.description,
       DEFAULT_SITE_SETTINGS.seoDescription
     ),
-    seoTitle: asText(seo.title, DEFAULT_SITE_SETTINGS.seoTitle),
+    seoTitle: optionalSetting(seo.title, DEFAULT_SITE_SETTINGS.seoTitle),
     shortName: asText(source.short_name, DEFAULT_SITE_SETTINGS.shortName),
     socialLinks: {
-      github: asText(
+      github: optionalSetting(
         socialLinks.github,
         DEFAULT_SITE_SETTINGS.socialLinks.github
       ),
-      instagram: asText(
+      instagram: optionalSetting(
         socialLinks.instagram,
         DEFAULT_SITE_SETTINGS.socialLinks.instagram
       ),
-      linkedin: asText(
+      linkedin: optionalSetting(
         socialLinks.linkedin,
         DEFAULT_SITE_SETTINGS.socialLinks.linkedin
       ),
     },
-    whatsappUrl: asText(source.whatsapp_url, DEFAULT_SITE_SETTINGS.whatsappUrl),
+    whatsappUrl: optionalSetting(
+      source.whatsapp_url,
+      DEFAULT_SITE_SETTINGS.whatsappUrl
+    ),
   }
 }
 
@@ -459,7 +277,7 @@ function normalizeMessages(value: unknown): PortfolioContactMessage[] {
 function getFallbackSnapshot(): PortfolioCmsSnapshot {
   return {
     configured: false,
-    content: DEFAULT_HOME_CONTENT,
+    content: DEFAULT_WEBSITE_CONTENT,
     faqs: FAQS.map((item, index) => ({
       ...item,
       id: `fallback-faq-${index}`,
@@ -539,6 +357,7 @@ export async function getPortfolioCmsSnapshot(): Promise<PortfolioCmsSnapshot> {
 
     if (
       settings.error ||
+      !settings.data ||
       projects.error ||
       skills.error ||
       services.error ||
@@ -553,7 +372,10 @@ export async function getPortfolioCmsSnapshot(): Promise<PortfolioCmsSnapshot> {
     const settingsData = asRecord(settings.data)
     return {
       configured: true,
-      content: mergeContent(settingsData.content),
+      content: mergeWebsiteContent(
+        settingsData.content,
+        normalizeSite(settingsData)
+      ),
       faqs: normalizeFaqs(faqs.data),
       media: normalizeMedia(media.data),
       messages: normalizeMessages(messages.data),
@@ -568,10 +390,15 @@ export async function getPortfolioCmsSnapshot(): Promise<PortfolioCmsSnapshot> {
   }
 }
 
-export async function getPublicSiteSettings(): Promise<PortfolioSiteSettings> {
+export async function getPublicSiteConfiguration() {
   await connection()
 
-  if (!isSupabaseConfigured()) return DEFAULT_SITE_SETTINGS
+  const fallback = {
+    site: DEFAULT_SITE_SETTINGS,
+    content: DEFAULT_WEBSITE_CONTENT,
+    logoUrl: undefined as string | undefined,
+  }
+  if (!isSupabaseConfigured()) return fallback
 
   try {
     const { data, error } = await getSupabaseAdmin()
@@ -580,10 +407,26 @@ export async function getPublicSiteSettings(): Promise<PortfolioSiteSettings> {
       .eq("id", true)
       .maybeSingle()
 
-    return error ? DEFAULT_SITE_SETTINGS : normalizeSite(data)
+    if (error || !data) return fallback
+    const site = normalizeSite(data)
+    const content = mergeWebsiteContent(asRecord(data).content, site)
+    let logoUrl: string | undefined
+    if (content.header.logoKey) {
+      const { data: logo } = await getSupabaseAdmin()
+        .from("media_assets")
+        .select("public_url")
+        .eq("storage_key", content.header.logoKey)
+        .maybeSingle()
+      logoUrl = logo?.public_url
+    }
+    return { site, content, logoUrl }
   } catch {
-    return DEFAULT_SITE_SETTINGS
+    return fallback
   }
+}
+
+export async function getPublicSiteSettings(): Promise<PortfolioSiteSettings> {
+  return (await getPublicSiteConfiguration()).site
 }
 
 export function getPublishedProjects(projects: PortfolioProject[]) {

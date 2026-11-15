@@ -1,4 +1,3 @@
-import Link from "next/link"
 import {
   Briefcase,
   CalendarCheck,
@@ -10,6 +9,7 @@ import {
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { ContentLink } from "@/components/shared/content-link"
 import { HeroMessageButton } from "@/components/public/home/hero-message-button"
 import { HeroTerminal } from "@/components/public/home/hero-terminal"
 import { Marquee } from "@/components/ui/marquee"
@@ -32,13 +32,7 @@ const CHIP_STYLES = [
   "top-[36%] right-[7%] -rotate-3",
 ]
 
-export function Hero({
-  content,
-  messageLabel,
-}: {
-  content: HomePageContent["hero"]
-  messageLabel: string
-}) {
+export function Hero({ content }: { content: HomePageContent["hero"] }) {
   return (
     <section className="relative overflow-hidden">
       {/* Ruled hairlines - fades out above the marquee strip */}
@@ -73,19 +67,19 @@ export function Hero({
 
         {/* CTAs */}
         <div className="mt-8 flex-center flex-col justify-center gap-3 xsm:flex-row">
-          <HeroMessageButton label={messageLabel} />
-          <Link
-            href="/about"
+          <HeroMessageButton label={content.primaryCtaLabel} />
+          <ContentLink
+            href={content.secondaryCtaHref}
             className="rounded-xl border border-border bg-background px-6 py-3 font-semibold transition-colors hover:bg-muted"
           >
             {content.secondaryCtaLabel}
-          </Link>
+          </ContentLink>
         </div>
 
         {/* Floating chips */}
         {content.chips.map((chip, index) => (
           <span
-            key={chip}
+            key={index}
             aria-hidden
             className={cn(
               "absolute hidden rounded-xl border border-border bg-background px-3.5 py-1.5 text-sm font-bold shadow-md lg:block",
@@ -98,7 +92,11 @@ export function Hero({
 
         {/* Terminal card */}
         <div className="mx-auto mt-12 w-full max-w-xl text-left">
-          <HeroTerminal />
+          <HeroTerminal
+            command={content.terminalCommand}
+            lines={content.terminalLines}
+            result={content.terminalResult}
+          />
         </div>
       </div>
 
@@ -107,7 +105,7 @@ export function Hero({
         <div className="flex items-stretch">
           <p className="flex shrink-0 items-center gap-2 px-4 text-sm font-medium text-muted-foreground sm:px-6">
             <span aria-hidden className="size-2 rounded-full bg-blue-600" />
-            Yang saya bangun
+            {content.buildLabel}
           </p>
 
           <div className="relative flex-1 overflow-hidden">
@@ -115,13 +113,13 @@ export function Hero({
               pauseOnHover
               className="py-4 [--duration:30s] [--gap:3rem]"
             >
-              {content.buildItems.map((item) => {
+              {content.buildItems.map((item, index) => {
                 const Icon =
                   BUILD_ICONS[item.icon as keyof typeof BUILD_ICONS] ?? Globe
 
                 return (
                   <span
-                    key={item.label}
+                    key={index}
                     className="flex items-center gap-3 text-xl font-bold tracking-tight whitespace-nowrap"
                   >
                     <span

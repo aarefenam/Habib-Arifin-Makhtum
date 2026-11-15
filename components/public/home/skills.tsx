@@ -1,5 +1,9 @@
 import { SectionHeader } from "@/components/shared/section-header"
-import type { HomePageContent, PortfolioSkill } from "@/types/cms"
+import type {
+  HomePageContent,
+  PortfolioMediaAsset,
+  PortfolioSkill,
+} from "@/types/cms"
 
 function SkillPill({ name, icon }: { name: string; icon: React.ReactNode }) {
   return (
@@ -40,9 +44,11 @@ function SkillGroup({
 export function Skills({
   content,
   skills,
+  media,
 }: {
   content: HomePageContent["skills"]
   skills: PortfolioSkill[]
+  media: PortfolioMediaAsset[]
 }) {
   const groups = [
     {
@@ -89,27 +95,34 @@ export function Skills({
           badgeCenter
         />
 
-        {groups.map((group) => (
+        {groups.map((group, index) => (
           <SkillGroup
-            key={group.title}
+            key={index}
             title={group.title}
-            countLabel={`${group.items.length} tools`}
+            countLabel={`${group.items.length} ${content.countLabel}`}
             description={group.description}
           >
-            {group.items.map((skill) => (
-              <SkillPill
-                key={skill.id}
-                name={skill.name}
-                icon={
-                  skill.iconKey ? (
-                    <span
-                      aria-hidden
-                      className="size-2 shrink-0 rounded-full bg-blue-600"
-                    />
-                  ) : null
-                }
-              />
-            ))}
+            {group.items.map((skill) => {
+              const icon = media.find(
+                (asset) => asset.storageKey === skill.iconKey
+              )
+              return (
+                <SkillPill
+                  key={skill.id}
+                  name={skill.name}
+                  icon={
+                    icon ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={icon.publicUrl}
+                        alt=""
+                        className="size-5 shrink-0 object-contain"
+                      />
+                    ) : null
+                  }
+                />
+              )
+            })}
           </SkillGroup>
         ))}
       </div>

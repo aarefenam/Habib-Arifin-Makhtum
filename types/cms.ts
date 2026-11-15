@@ -20,6 +20,10 @@ export type HomePageContent = {
     workHeading: string
   }
   contact: {
+    emailLabel: string
+    whatsappLabel: string
+    phoneLabel: string
+    socialLabel: string
     cardHeading: string
     cardHeadingAccent: string
     cardSub: string
@@ -32,12 +36,21 @@ export type HomePageContent = {
     headerTitleGray: string
   }
   faq: {
+    ctaLabel: string
+    ctaHref: string
+    emptyText: string
     badge: string
     sideNote: string
     titleBlack: string
     titleGray: string
   }
   hero: {
+    primaryCtaLabel: string
+    secondaryCtaHref: string
+    buildLabel: string
+    terminalCommand: string
+    terminalLines: string[]
+    terminalResult: string
     availability: string
     badgeRole: string
     buildItems: Array<{ icon: string; label: string }>
@@ -57,6 +70,7 @@ export type HomePageContent = {
     headerTitleGray: string
   }
   skills: {
+    countLabel: string
     additionalDescription: string
     additionalTitle: string
     badge: string
@@ -67,6 +81,86 @@ export type HomePageContent = {
     titleGray: string
     toolkitDescription: string
     toolkitTitle: string
+  }
+}
+
+export type ContentLink = { label: string; href: string }
+
+export type WebsiteContent = HomePageContent & {
+  header: {
+    brandName: string
+    initials: string
+    logoKey: string
+    homeLabel: string
+    menuOpenLabel: string
+    menuCloseLabel: string
+    links: ContentLink[]
+    ctaLabel: string
+    ctaHref: string
+  }
+  footer: {
+    title: string
+    titleAccent: string
+    emailLabel: string
+    whatsappLabel: string
+    whatsappCta: string
+    socialLabel: string
+    menuLabel: string
+    legalLabel: string
+    links: ContentLink[]
+    legalLinks: ContentLink[]
+    copyright: string
+    giantText: string
+  }
+  contactDialog: {
+    title: string
+    description: string
+    whatsappPrompt: string
+    whatsappLabel: string
+    callNote: string
+    nameLabel: string
+    emailLabel: string
+    messageLabel: string
+    submitLabel: string
+    pendingLabel: string
+    successTitle: string
+    errorTitle: string
+  }
+  aboutIntro: {
+    badge: string
+    title: string
+    titleAccent: string
+    description: string
+  }
+  aboutServices: { title: string; emptyText: string }
+  aboutTimeline: {
+    educationTitle: string
+    experienceTitle: string
+    locationTitle: string
+    emptyEducation: string
+    emptyExperience: string
+    currentLabel: string
+  }
+  aboutContact: {
+    title: string
+    titleAccent: string
+    description: string
+    ctaLabel: string
+    ctaHref: string
+  }
+  aboutSeo: { title: string; description: string }
+  projectsPage: HomePageContent["projects"] & {
+    seoTitle: string
+    seoDescription: string
+  }
+  projectDetail: {
+    backLabel: string
+    liveLabel: string
+    repositoryLabel: string
+    bodyTitle: string
+    technologiesTitle: string
+    emptyCover: string
+    emptyTechnologies: string
   }
 }
 
@@ -167,7 +261,7 @@ export type PortfolioContactMessage = {
 
 export type PortfolioCmsSnapshot = {
   configured: boolean
-  content: HomePageContent
+  content: WebsiteContent
   faqs: PortfolioFaq[]
   media: PortfolioMediaAsset[]
   messages: PortfolioContactMessage[]

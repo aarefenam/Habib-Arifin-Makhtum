@@ -5,16 +5,19 @@ import {
   saveTimelineEntry,
 } from "@/actions/admin-cms"
 import { AdminForm } from "@/components/private/admin/admin-form"
+import { AssetField } from "@/components/private/admin/asset-field"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import type {
+  PortfolioMediaAsset,
   PortfolioFaq,
   PortfolioService,
   PortfolioSkill,
   PortfolioTimelineEntry,
 } from "@/types/cms"
+import type { ContentCollectionKey } from "@/constants/content-editor"
 
 function VisibleField({ defaultChecked = true }: { defaultChecked?: boolean }) {
   return (
@@ -36,6 +39,7 @@ function DeleteButton({ label }: { label: string }) {
       type="submit"
       name="intent"
       value="delete"
+      formNoValidate
       className="mt-5 min-h-11 cursor-pointer rounded-lg border border-destructive/30 px-4 text-sm font-medium text-destructive transition-colors hover:bg-destructive/10"
     >
       {label}
@@ -65,7 +69,13 @@ function Section({
   )
 }
 
-function SkillFields({ skill }: { skill?: PortfolioSkill }) {
+function SkillFields({
+  skill,
+  media,
+}: {
+  skill?: PortfolioSkill
+  media: PortfolioMediaAsset[]
+}) {
   const key = skill?.id ?? "new"
 
   return (
@@ -103,15 +113,13 @@ function SkillFields({ skill }: { skill?: PortfolioSkill }) {
           className="h-11"
         />
       </div>
-      <div className="flex flex-col gap-2">
-        <Label htmlFor={`skill-icon-${key}`}>Storage key icon</Label>
-        <Input
-          id={`skill-icon-${key}`}
-          name="icon_key"
-          defaultValue={skill?.iconKey ?? ""}
-          className="h-11"
-        />
-      </div>
+      <AssetField
+        id={`skill-icon-${key}`}
+        name="icon_key"
+        label="Ikon skill"
+        value={skill?.iconKey ?? null}
+        assets={media}
+      />
       <div className="flex flex-col gap-2">
         <Label htmlFor={`skill-order-${key}`}>Urutan tampil</Label>
         <Input
@@ -322,11 +330,15 @@ function CollectionCard({
 }
 
 export function CollectionsEditor({
+  collection,
+  media,
   faqs,
   services,
   skills,
   timeline,
 }: {
+  collection: ContentCollectionKey
+  media: PortfolioMediaAsset[]
   faqs: PortfolioFaq[]
   services: PortfolioService[]
   skills: PortfolioSkill[]
@@ -334,92 +346,116 @@ export function CollectionsEditor({
 }) {
   return (
     <div className="mt-8 space-y-12">
-      <Section
-        title="Skills"
-        description="Kelola skill yang muncul pada section Skills di homepage."
-      >
-        <div className="space-y-4">
-          <CollectionCard title="Tambah skill">
-            <AdminForm action={saveSkill} submitLabel="Tambah skill">
-              <SkillFields />
-            </AdminForm>
-          </CollectionCard>
-          {skills.map((skill) => (
-            <CollectionCard key={skill.id} title={skill.name}>
-              <AdminForm action={saveSkill} submitLabel="Simpan skill">
-                <SkillFields skill={skill} />
-                <DeleteButton label="Hapus skill" />
+      {collection === "skills" ? (
+        <Section
+          title="Skills"
+          description="Kelola skill yang muncul pada section Skills di homepage."
+        >
+          <div className="space-y-4">
+            <CollectionCard title="Tambah skill">
+              <AdminForm
+                action={saveSkill}
+                resetOnSuccess
+                submitLabel="Tambah skill"
+              >
+                <SkillFields media={media} />
               </AdminForm>
             </CollectionCard>
-          ))}
-        </div>
-      </Section>
+            {skills.map((skill) => (
+              <CollectionCard key={skill.id} title={skill.name}>
+                <AdminForm action={saveSkill} submitLabel="Simpan skill">
+                  <SkillFields skill={skill} media={media} />
+                  <DeleteButton label="Hapus skill" />
+                </AdminForm>
+              </CollectionCard>
+            ))}
+          </div>
+        </Section>
+      ) : null}
 
-      <Section
-        title="Layanan"
-        description="Daftar layanan siap digunakan untuk halaman atau section layanan berikutnya."
-      >
-        <div className="space-y-4">
-          <CollectionCard title="Tambah layanan">
-            <AdminForm action={saveService} submitLabel="Tambah layanan">
-              <ServiceFields />
-            </AdminForm>
-          </CollectionCard>
-          {services.map((service) => (
-            <CollectionCard key={service.id} title={service.title}>
-              <AdminForm action={saveService} submitLabel="Simpan layanan">
-                <ServiceFields service={service} />
-                <DeleteButton label="Hapus layanan" />
+      {collection === "services" ? (
+        <Section
+          title="Layanan"
+          description="Layanan yang ditampilkan pada halaman About, sesuai urutan yang ditentukan."
+        >
+          <div className="space-y-4">
+            <CollectionCard title="Tambah layanan">
+              <AdminForm
+                action={saveService}
+                resetOnSuccess
+                submitLabel="Tambah layanan"
+              >
+                <ServiceFields />
               </AdminForm>
             </CollectionCard>
-          ))}
-        </div>
-      </Section>
+            {services.map((service) => (
+              <CollectionCard key={service.id} title={service.title}>
+                <AdminForm action={saveService} submitLabel="Simpan layanan">
+                  <ServiceFields service={service} />
+                  <DeleteButton label="Hapus layanan" />
+                </AdminForm>
+              </CollectionCard>
+            ))}
+          </div>
+        </Section>
+      ) : null}
 
-      <Section
-        title="FAQ"
-        description="Pertanyaan yang visible akan ditampilkan di homepage."
-      >
-        <div className="space-y-4">
-          <CollectionCard title="Tambah FAQ">
-            <AdminForm action={saveFaq} submitLabel="Tambah FAQ">
-              <FaqFields />
-            </AdminForm>
-          </CollectionCard>
-          {faqs.map((faq) => (
-            <CollectionCard key={faq.id} title={faq.question}>
-              <AdminForm action={saveFaq} submitLabel="Simpan FAQ">
-                <FaqFields faq={faq} />
-                <DeleteButton label="Hapus FAQ" />
+      {collection === "faqs" ? (
+        <Section
+          title="FAQ"
+          description="Pertanyaan yang visible akan ditampilkan di homepage."
+        >
+          <div className="space-y-4">
+            <CollectionCard title="Tambah FAQ">
+              <AdminForm
+                action={saveFaq}
+                resetOnSuccess
+                submitLabel="Tambah FAQ"
+              >
+                <FaqFields />
               </AdminForm>
             </CollectionCard>
-          ))}
-        </div>
-      </Section>
+            {faqs.map((faq) => (
+              <CollectionCard key={faq.id} title={faq.question}>
+                <AdminForm action={saveFaq} submitLabel="Simpan FAQ">
+                  <FaqFields faq={faq} />
+                  <DeleteButton label="Hapus FAQ" />
+                </AdminForm>
+              </CollectionCard>
+            ))}
+          </div>
+        </Section>
+      ) : null}
 
-      <Section
-        title="Riwayat"
-        description="Simpan pendidikan dan pengalaman kerja untuk ditampilkan pada halaman About berikutnya."
-      >
-        <div className="space-y-4">
-          <CollectionCard title="Tambah riwayat">
-            <AdminForm action={saveTimelineEntry} submitLabel="Tambah riwayat">
-              <TimelineFields />
-            </AdminForm>
-          </CollectionCard>
-          {timeline.map((entry) => (
-            <CollectionCard key={entry.id} title={entry.title}>
+      {collection === "timeline" ? (
+        <Section
+          title="Riwayat"
+          description="Pendidikan dan pengalaman ditampilkan lengkap pada halaman About. Matikan visibilitas untuk menyembunyikan riwayat."
+        >
+          <div className="space-y-4">
+            <CollectionCard title="Tambah riwayat">
               <AdminForm
                 action={saveTimelineEntry}
-                submitLabel="Simpan riwayat"
+                resetOnSuccess
+                submitLabel="Tambah riwayat"
               >
-                <TimelineFields entry={entry} />
-                <DeleteButton label="Hapus riwayat" />
+                <TimelineFields />
               </AdminForm>
             </CollectionCard>
-          ))}
-        </div>
-      </Section>
+            {timeline.map((entry) => (
+              <CollectionCard key={entry.id} title={entry.title}>
+                <AdminForm
+                  action={saveTimelineEntry}
+                  submitLabel="Simpan riwayat"
+                >
+                  <TimelineFields entry={entry} />
+                  <DeleteButton label="Hapus riwayat" />
+                </AdminForm>
+              </CollectionCard>
+            ))}
+          </div>
+        </Section>
+      ) : null}
     </div>
   )
 }

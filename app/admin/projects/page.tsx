@@ -14,9 +14,22 @@ export default async function AdminProjectsPage() {
       activePath="/admin/projects"
       session={session}
       title="Projects"
-      description="Buat, edit, urutkan, dan publikasi case study. Cover dapat dipilih menggunakan storage key dari Media library."
+      description="Buat, edit, urutkan, dan publikasi case study. Pilih cover langsung dari Media library."
     >
-      <ProjectEditor projects={snapshot.projects} />
+      {!snapshot.configured ? (
+        <p
+          role="alert"
+          className="mt-5 rounded-xl border border-destructive/30 p-4 text-sm text-destructive"
+        >
+          Data belum dapat dibaca. Periksa koneksi Supabase dan migration
+          sebelum mengedit.
+        </p>
+      ) : null}
+      <ProjectEditor
+        projects={snapshot.projects}
+        media={snapshot.media}
+        configured={snapshot.configured}
+      />
     </AdminShell>
   )
 }

@@ -1,464 +1,219 @@
-import { saveSiteContent } from "@/actions/admin-cms"
+import Link from "next/link"
+
+import { saveContentSection } from "@/actions/site-content"
 import { AdminForm } from "@/components/private/admin/admin-form"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { AssetField } from "@/components/private/admin/asset-field"
+import { ContentRepeater } from "@/components/private/admin/content-repeater"
+import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import type { HomePageContent, PortfolioSiteSettings } from "@/types/cms"
+import {
+  CONTENT_FIELD_LABELS,
+  SECTION_COLLECTION_LINKS,
+  SECTION_TITLES,
+} from "@/constants/content-editor"
+import type { EditorSectionKey } from "@/constants/content-editor"
+import type { PortfolioCmsSnapshot } from "@/types/cms"
 
-function Field({
-  hint,
-  label,
+function TextField({
   name,
+  label,
+  value,
+  long = false,
   type = "text",
-  value,
 }: {
-  hint?: string
-  label: string
   name: string
-  type?: "email" | "tel" | "text" | "url"
-  value: string | null
-}) {
-  return (
-    <div className="flex flex-col gap-2">
-      <Label htmlFor={name}>{label}</Label>
-      <Input id={name} name={name} type={type} defaultValue={value ?? ""} />
-      {hint ? (
-        <p className="text-xs leading-5 text-muted-foreground">{hint}</p>
-      ) : null}
-    </div>
-  )
-}
-
-function LongField({
-  hint,
-  label,
-  name,
-  value,
-}: {
-  hint?: string
   label: string
-  name: string
   value: string
+  long?: boolean
+  type?: "text" | "email" | "url" | "tel"
 }) {
   return (
-    <div className="flex flex-col gap-2">
+    <div
+      className={
+        long ? "flex flex-col gap-2 sm:col-span-2" : "flex flex-col gap-2"
+      }
+    >
       <Label htmlFor={name}>{label}</Label>
-      <Textarea
-        id={name}
-        name={name}
-        defaultValue={value}
-        className="min-h-24"
-      />
-      {hint ? (
-        <p className="text-xs leading-5 text-muted-foreground">{hint}</p>
-      ) : null}
+      {long ? (
+        <Textarea
+          id={name}
+          name={name}
+          defaultValue={value}
+          rows={4}
+          maxLength={10000}
+        />
+      ) : (
+        <Input
+          id={name}
+          name={name}
+          defaultValue={value}
+          type={type}
+          maxLength={10000}
+        />
+      )}
     </div>
-  )
-}
-
-function EditorSection({
-  children,
-  description,
-  title,
-}: {
-  children: React.ReactNode
-  description: string
-  title: string
-}) {
-  return (
-    <Card className="border border-border py-0 shadow-none">
-      <CardHeader className="border-b border-border px-5 py-5 sm:px-6">
-        <CardTitle className="text-lg">{title}</CardTitle>
-        <CardDescription className="mt-1 leading-6">
-          {description}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="grid gap-5 px-5 py-5 sm:grid-cols-2 sm:px-6 sm:py-6">
-        {children}
-      </CardContent>
-    </Card>
   )
 }
 
 export function SiteContentEditor({
-  content,
-  site,
+  section,
+  snapshot,
 }: {
-  content: HomePageContent
-  site: PortfolioSiteSettings
+  section: EditorSectionKey
+  snapshot: PortfolioCmsSnapshot
 }) {
-  const buildItems = content.hero.buildItems
-    .map((item) => `${item.label} | ${item.icon}`)
-    .join("\n")
-
-  return (
-    <AdminForm action={saveSiteContent} className="mt-8 space-y-6">
-      <EditorSection
-        title="Identitas & kontak"
-        description="Data ini dipakai untuk profil, kontak, metadata, dan footer website. Field bertanda wajib tidak boleh kosong."
-      >
-        <Field label="Nama lengkap *" name="site_name" value={site.name} />
-        <Field label="Nama pendek *" name="short_name" value={site.shortName} />
-        <Field label="Handle *" name="handle" value={site.handle} />
-        <Field label="Role utama *" name="role" value={site.role} />
-        <Field
-          label="Peran bisnis"
+  const { site, content, media } = snapshot
+  let fields: React.ReactNode
+  if (section === "identity") {
+    fields = (
+      <>
+        <TextField name="site_name" label="Nama lengkap" value={site.name} />
+        <TextField
+          name="short_name"
+          label="Nama pendek"
+          value={site.shortName}
+        />
+        <TextField name="handle" label="Handle" value={site.handle} />
+        <TextField name="role" label="Role utama" value={site.role} />
+        <TextField
           name="business_role"
+          label="Peran bisnis"
           value={site.businessRole}
         />
-        <Field label="Email *" name="email" type="email" value={site.email} />
-        <Field
-          label="Nomor telepon"
-          name="phone"
-          type="tel"
-          value={site.phone}
-        />
-        <Field
-          label="URL WhatsApp"
-          name="whatsapp_url"
-          type="url"
-          value={site.whatsappUrl}
-        />
-        <Field label="Domisili" name="location" value={site.location} />
-        <Field label="Asal" name="origin" value={site.origin} />
-        <LongField label="Bio singkat" name="bio" value={site.bio} />
-        <Field
-          label="Storage key foto profil"
+        <TextField name="location" label="Domisili" value={site.location} />
+        <TextField name="origin" label="Asal" value={site.origin} />
+        <AssetField
+          id="profile_image_key"
           name="profile_image_key"
+          label="Foto profil"
           value={site.profileImageKey}
-          hint="Unggah gambar melalui Media library, lalu salin storage key aset ke field ini."
+          assets={media}
         />
-      </EditorSection>
-
-      <EditorSection
-        title="Sosial media & SEO"
-        description="Gunakan URL lengkap. Perubahan SEO akan diperbarui pada metadata website setelah disimpan."
-      >
-        <Field
-          label="URL GitHub"
-          name="github_url"
+        <TextField name="bio" label="Bio singkat" value={site.bio} long />
+      </>
+    )
+  } else if (section === "social") {
+    fields = (
+      <>
+        <TextField name="email" label="Email" value={site.email} type="email" />
+        <TextField name="phone" label="Telepon" value={site.phone} type="tel" />
+        <TextField
+          name="whatsapp_url"
+          label="URL WhatsApp"
+          value={site.whatsappUrl}
           type="url"
-          value={site.socialLinks.github ?? ""}
         />
-        <Field
-          label="URL LinkedIn"
-          name="linkedin_url"
-          type="url"
-          value={site.socialLinks.linkedin ?? ""}
+        {["github", "linkedin", "instagram"].map((key) => (
+          <TextField
+            key={key}
+            name={key}
+            label={key}
+            value={site.socialLinks[key] ?? ""}
+            type="url"
+          />
+        ))}
+      </>
+    )
+  } else if (section === "seo") {
+    fields = (
+      <>
+        <TextField
+          name="title"
+          label="Judul SEO global"
+          value={site.seoTitle}
         />
-        <Field
-          label="URL Instagram"
-          name="instagram_url"
-          type="url"
-          value={site.socialLinks.instagram ?? ""}
-        />
-        <Field label="SEO title" name="seo_title" value={site.seoTitle} />
-        <LongField
-          label="SEO description"
-          name="seo_description"
+        <TextField
+          name="description"
+          label="Deskripsi SEO global"
           value={site.seoDescription}
+          long
         />
-      </EditorSection>
+      </>
+    )
+  } else {
+    fields = Object.entries(content[section]).map(([key, value]) => {
+      const label = CONTENT_FIELD_LABELS[key] ?? key
+      if (key === "logoKey")
+        return (
+          <AssetField
+            key={key}
+            id={key}
+            name={key}
+            label={label}
+            value={String(value)}
+            assets={media}
+          />
+        )
+      if (
+        Array.isArray(value) &&
+        (key === "links" || key === "legalLinks" || key === "buildItems")
+      )
+        return (
+          <ContentRepeater
+            key={key}
+            name={key}
+            label={label}
+            value={value}
+            kind={key === "buildItems" ? "buildItems" : "links"}
+          />
+        )
+      if (Array.isArray(value))
+        return (
+          <TextField
+            key={key}
+            name={key}
+            label={label}
+            value={value.join("\n")}
+            long
+          />
+        )
+      return (
+        <TextField
+          key={key}
+          name={key}
+          label={label}
+          value={String(value)}
+          long={/description|body|sideNote|lead|detail|cardSub|Note/i.test(key)}
+        />
+      )
+    })
+  }
 
-      <EditorSection
-        title="Hero"
-        description="Konten bagian pertama yang pengunjung lihat di homepage. Pisahkan chip dengan koma dan satu build item per baris."
-      >
-        <Field
-          label="Role badge"
-          name="hero_badge_role"
-          value={content.hero.badgeRole}
-        />
-        <Field
-          label="Status ketersediaan"
-          name="hero_availability"
-          value={content.hero.availability}
-        />
-        <Field
-          label="Judul utama"
-          name="hero_title"
-          value={content.hero.title}
-        />
-        <Field
-          label="Aksen judul"
-          name="hero_title_accent"
-          value={content.hero.titleAccent}
-        />
-        <LongField label="Lead" name="hero_lead" value={content.hero.lead} />
-        <LongField
-          label="Detail"
-          name="hero_detail"
-          value={content.hero.detail}
-        />
-        <Field
-          label="Label CTA kedua"
-          name="hero_secondary_cta"
-          value={content.hero.secondaryCtaLabel}
-        />
-        <Field
-          label="Chip keahlian"
-          name="hero_chips"
-          value={content.hero.chips.join(", ")}
-          hint="Contoh: Web Apps, ERP, API Integration"
-        />
-        <LongField
-          label="Daftar yang dibangun"
-          name="hero_build_items"
-          value={buildItems}
-          hint="Satu item per baris dengan format: Nama | icon. Pilihan icon: globe, shield, briefcase, store, smartphone, graduation, calendar."
-        />
-      </EditorSection>
-
-      <EditorSection
-        title="Tentang"
-        description="Seluruh teks pada section About di homepage dapat dikelola dari sini."
-      >
-        <Field
-          label="Judul baris pertama"
-          name="about_title_black"
-          value={content.about.titleBlack}
-        />
-        <Field
-          label="Judul aksen"
-          name="about_title_gray"
-          value={content.about.titleGray}
-        />
-        <LongField
-          label="Catatan samping"
-          name="about_side_note"
-          value={content.about.sideNote}
-        />
-        <Field
-          label="Badge profil"
-          name="about_who_badge"
-          value={content.about.whoBadge}
-        />
-        <Field
-          label="Judul profil"
-          name="about_who_heading"
-          value={content.about.whoHeading}
-        />
-        <LongField
-          label="Deskripsi profil"
-          name="about_who_body"
-          value={content.about.whoBody}
-        />
-        <Field
-          label="Badge fokus"
-          name="about_experience_badge"
-          value={content.about.experienceBadge}
-        />
-        <Field
-          label="Nilai fokus"
-          name="about_experience_value"
-          value={content.about.experienceValue}
-        />
-        <Field
-          label="Teks fokus"
-          name="about_experience_text"
-          value={content.about.experienceText}
-        />
-        <Field
-          label="Teks fokus sekunder"
-          name="about_experience_muted"
-          value={content.about.experienceMuted}
-        />
-        <Field
-          label="Badge peran"
-          name="about_work_badge"
-          value={content.about.workBadge}
-        />
-        <Field
-          label="Judul peran"
-          name="about_work_heading"
-          value={content.about.workHeading}
-        />
-        <LongField
-          label="Deskripsi peran"
-          name="about_work_body"
-          value={content.about.workBody}
-        />
-        <Field
-          label="Badge saat ini"
-          name="about_now_badge"
-          value={content.about.nowBadge}
-        />
-        <Field
-          label="Judul saat ini"
-          name="about_now_heading"
-          value={content.about.nowHeading}
-        />
-        <LongField
-          label="Deskripsi saat ini"
-          name="about_now_body"
-          value={content.about.nowBody}
-        />
-      </EditorSection>
-
-      <EditorSection
-        title="Skills & projects"
-        description="Judul dan deskripsi section. Data item skill serta project dikelola dari menu koleksi dan Projects."
-      >
-        <Field
-          label="Badge skill"
-          name="skills_badge"
-          value={content.skills.badge}
-        />
-        <Field
-          label="Judul skill"
-          name="skills_title_black"
-          value={content.skills.titleBlack}
-        />
-        <Field
-          label="Aksen judul skill"
-          name="skills_title_gray"
-          value={content.skills.titleGray}
-        />
-        <LongField
-          label="Catatan skill"
-          name="skills_side_note"
-          value={content.skills.sideNote}
-        />
-        <Field
-          label="Judul Core skills"
-          name="skills_core_title"
-          value={content.skills.coreTitle}
-        />
-        <LongField
-          label="Deskripsi Core skills"
-          name="skills_core_description"
-          value={content.skills.coreDescription}
-        />
-        <Field
-          label="Judul Toolkit"
-          name="skills_toolkit_title"
-          value={content.skills.toolkitTitle}
-        />
-        <LongField
-          label="Deskripsi Toolkit"
-          name="skills_toolkit_description"
-          value={content.skills.toolkitDescription}
-        />
-        <Field
-          label="Judul Additional"
-          name="skills_additional_title"
-          value={content.skills.additionalTitle}
-        />
-        <LongField
-          label="Deskripsi Additional"
-          name="skills_additional_description"
-          value={content.skills.additionalDescription}
-        />
-        <Field
-          label="Badge project"
-          name="projects_header_badge"
-          value={content.projects.headerBadge}
-        />
-        <Field
-          label="Judul project"
-          name="projects_header_title_black"
-          value={content.projects.headerTitleBlack}
-        />
-        <Field
-          label="Aksen judul project"
-          name="projects_header_title_gray"
-          value={content.projects.headerTitleGray}
-        />
-        <LongField
-          label="Catatan project"
-          name="projects_header_side_note"
-          value={content.projects.headerSideNote}
-        />
-        <Field
-          label="Judul empty project"
-          name="projects_empty_title"
-          value={content.projects.emptyTitle}
-        />
-        <LongField
-          label="Deskripsi empty project"
-          name="projects_empty_description"
-          value={content.projects.emptyDescription}
-        />
-      </EditorSection>
-
-      <EditorSection
-        title="FAQ & contact"
-        description="Header FAQ, header contact, serta CTA pada kartu pesan. Isi daftar FAQ dikelola dari menu Content."
-      >
-        <Field label="Badge FAQ" name="faq_badge" value={content.faq.badge} />
-        <Field
-          label="Judul FAQ"
-          name="faq_title_black"
-          value={content.faq.titleBlack}
-        />
-        <Field
-          label="Aksen judul FAQ"
-          name="faq_title_gray"
-          value={content.faq.titleGray}
-        />
-        <LongField
-          label="Catatan FAQ"
-          name="faq_side_note"
-          value={content.faq.sideNote}
-        />
-        <Field
-          label="Badge contact"
-          name="contact_header_badge"
-          value={content.contact.headerBadge}
-        />
-        <Field
-          label="Judul contact"
-          name="contact_header_title_black"
-          value={content.contact.headerTitleBlack}
-        />
-        <Field
-          label="Aksen judul contact"
-          name="contact_header_title_gray"
-          value={content.contact.headerTitleGray}
-        />
-        <LongField
-          label="Catatan contact"
-          name="contact_header_side_note"
-          value={content.contact.headerSideNote}
-        />
-        <Field
-          label="Eyebrow kartu"
-          name="contact_eyebrow"
-          value={content.contact.eyebrow}
-        />
-        <Field
-          label="Judul kartu"
-          name="contact_card_heading"
-          value={content.contact.cardHeading}
-        />
-        <Field
-          label="Aksen kartu"
-          name="contact_card_heading_accent"
-          value={content.contact.cardHeadingAccent}
-        />
-        <LongField
-          label="Deskripsi kartu"
-          name="contact_card_sub"
-          value={content.contact.cardSub}
-        />
-        <Field
-          label="Label CTA"
-          name="contact_cta_label"
-          value={content.contact.ctaLabel}
-        />
-        <Field
-          label="Kata latar kartu"
-          name="contact_giant_word"
-          value={content.contact.giantWord}
-        />
-      </EditorSection>
-    </AdminForm>
+  return (
+    <div className="space-y-5">
+      {!snapshot.configured ? (
+        <p
+          role="alert"
+          className="rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive"
+        >
+          Data Supabase belum dapat dibaca. Periksa koneksi dan migration
+          sebelum mengedit; isian berikut menampilkan konten bawaan.
+        </p>
+      ) : null}
+      <Card className="py-0 shadow-none">
+        <CardContent className="p-5 sm:p-6">
+          <AdminForm
+            key={section}
+            action={saveContentSection}
+            disabled={!snapshot.configured}
+            submitLabel={`Simpan ${SECTION_TITLES[section]}`}
+          >
+            <input type="hidden" name="section" value={section} />
+            <div className="grid gap-5 sm:grid-cols-2">{fields}</div>
+          </AdminForm>
+        </CardContent>
+      </Card>
+      {SECTION_COLLECTION_LINKS[section]?.map((link) => (
+        <Link
+          key={link.href}
+          href={link.href}
+          className="block rounded-xl border border-border bg-card p-4 text-sm font-medium underline underline-offset-4"
+        >
+          {link.label} →
+        </Link>
+      ))}
+    </div>
   )
 }

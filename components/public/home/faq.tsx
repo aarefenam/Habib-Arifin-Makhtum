@@ -9,7 +9,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { CtaPill } from "@/components/shared/cta-pill"
-import { scrollToSection } from "@/lib/scroll"
 
 import type { HomePageContent, PortfolioFaq } from "@/types/cms"
 
@@ -41,9 +40,9 @@ export function Faq({
           </p>
           <div className="mt-5">
             <CtaPill
-              label="Tanyakan langsung"
+              label={content.ctaLabel}
               variant="outline"
-              onClick={() => scrollToSection("#contact")}
+              href={content.ctaHref}
             />
           </div>
         </div>
@@ -72,7 +71,7 @@ export function Faq({
           ))}
           {visibleFaqs.length === 0 ? (
             <p className="py-8 text-sm text-muted-foreground">
-              Belum ada pertanyaan yang dipublikasikan.
+              {content.emptyText}
             </p>
           ) : null}
         </Accordion>
