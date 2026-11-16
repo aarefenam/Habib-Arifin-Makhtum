@@ -1,0 +1,464 @@
+{
+  "site_settings": [
+    {
+      "id": true,
+      "site_name": "Habib Arifin Makhtum",
+      "short_name": "Habib Arifin",
+      "handle": "Habib Arifin Makhtum",
+      "role": "Full-Stack Developer & IT Solver",
+      "business_role": "Co-Founder & Technology Director at PT Enova Cakra Digital",
+      "email": "habibarifin@enova.id",
+      "phone": "+201507049289",
+      "whatsapp_url": "https://wa.me/201507049289",
+      "location": "Kairo, Mesir",
+      "origin": "Bandung, Jawa Barat, Indonesia",
+      "bio": "Full-Stack Developer dan IT Solver yang membangun aplikasi web, ERP, integrasi API, dan sistem digital dari purwarupa hingga production.",
+      "profile_image_key": "portfolio/e9feeb5f-98cb-4ed0-8648-725babe0f8ed.png",
+      "social_links": {
+        "github": "https://github.com/aarefenam",
+        "linkedin": "https://www.linkedin.com/in/habib-arifin-makhtum",
+        "instagram": "https://www.instagram.com/sowlyy_/"
+      },
+      "seo": {
+        "title": "Habib Arifin Makhtum | Full-Stack Developer & IT Solver",
+        "description": "Aplikasi web, ERP, integrasi API, dan sistem digital dari purwarupa hingga production."
+      },
+      "updated_at": "2026-11-16T01:04:34.200012+00:00",
+      "content": {
+        "faq": {
+          "badge": "FAQ",
+          "ctaHref": "#contact",
+          "ctaLabel": "Ask directly",
+          "sideNote": "A summary of my services and how I work",
+          "emptyText": "No questions have been published yet",
+          "titleGray": "Frequently asked questions",
+          "titleBlack": "Questions"
+        },
+        "hero": {
+          "lead": "Web apps, ERP, API integration, and infrastructure.",
+          "chips": [
+            "Web Apps",
+            "ERP",
+            "API Integration",
+            "IoT"
+          ],
+          "title": "I craft digital",
+          "detail": "From prototype to production.",
+          "badgeRole": "Full-Stack Developer",
+          "buildItems": [
+            {
+              "icon": "globe",
+              "label": "Web applications"
+            },
+            {
+              "icon": "briefcase",
+              "label": "ERP systems"
+            },
+            {
+              "icon": "shield",
+              "label": "API integrations"
+            }
+          ],
+          "buildLabel": "The one I built",
+          "titleAccent": "experiences that last.",
+          "availability": "Menerima proyek freelance",
+          "terminalLines": [
+            "✓ Requirements   understood",
+            "✓ Features       planned",
+            "✓ UI design      ready",
+            "✓ App            built",
+            "✓ Deployment     live"
+          ],
+          "terminalResult": "→ Delivered to you 🎉",
+          "primaryCtaLabel": "Discuss",
+          "terminalCommand": "$ ship idea.md",
+          "secondaryCtaHref": "/about",
+          "secondaryCtaLabel": "Get to know how I work"
+        },
+        "about": {
+          "nowBody": "Open to remote collaborations and freelance projects.",
+          "whoBody": "I build maintainable web applications, ERPs, API integrations, and digital systems.",
+          "nowBadge": "Currently",
+          "sideNote": "Combining software engineering and problem-solving for real-world digital needs.",
+          "whoBadge": "About me",
+          "workBody": "Unifying product strategy, UI, backend, and infrastructure.",
+          "titleGray": "which is truly helpful.",
+          "workBadge": "Role",
+          "nowHeading": "Based in Cairo, Egypt",
+          "titleBlack": "Designing a system",
+          "whoHeading": "A solution-oriented developer.",
+          "workHeading": "Full-Stack Developer & IT Solver",
+          "experienceText": "From Idea",
+          "experienceBadge": "Fokus",
+          "experienceMuted": "until the system is running.",
+          "experienceValue": "End-to-end"
+        },
+        "header": {
+          "links": [
+            {
+              "href": "#about",
+              "label": "About"
+            },
+            {
+              "href": "#skills",
+              "label": "Skills"
+            },
+            {
+              "href": "#projects",
+              "label": "Projects"
+            },
+            {
+              "href": "#faq",
+              "label": "FAQs"
+            }
+          ],
+          "ctaHref": "#contact",
+          "logoKey": "portfolio/3c599772-b0d4-4d50-9240-546ca66f8bfe.png",
+          "ctaLabel": "Contact",
+          "initials": "HA",
+          "brandName": "Habib Arifin",
+          "homeLabel": "Kembali ke beranda",
+          "menuOpenLabel": "Buka menu",
+          "menuCloseLabel": "Tutup menu"
+        },
+        "skills": {
+          "badge": "Skills",
+          "sideNote": "A stack for building, running, and scaling digital products.",
+          "coreTitle": "Core skills",
+          "titleGray": "every solution that is built.",
+          "countLabel": "tools",
+          "titleBlack": "The technology behind",
+          "toolkitTitle": "Toolkit",
+          "additionalTitle": "Additional",
+          "coreDescription": "The stack I build products with.",
+          "toolkitDescription": "The tools I work in every day.",
+          "additionalDescription": "Beyond the code."
+        },
+        "contact": {
+          "cardSub": "Jelaskan kebutuhan Anda, lalu saya akan menyiapkan langkah awalnya.",
+          "eyebrow": "Kirim pesan",
+          "ctaLabel": "Kirim pesan",
+          "giantWord": "ide",
+          "cardHeading": "Lebih nyaman berdiskusi lewat pesan?",
+          "headerBadge": "Contact",
+          "headerSideNote": "Ceritakan kebutuhan Anda. Saya akan membalas secepatnya.",
+          "headerTitleGray": "Mari wujudkan.",
+          "headerTitleBlack": "Punya ide?",
+          "cardHeadingAccent": "pesan"
+        },
+        "projects": {
+          "emptyTitle": "Portfolio sedang diperbarui.",
+          "headerBadge": "Projects",
+          "headerSideNote": "Pilihan sistem dan produk digital yang sedang dikembangkan.",
+          "headerTitleGray": "dibangun untuk berdampak.",
+          "emptyDescription": "Case study akan hadir setelah melalui proses kurasi dan dokumentasi.",
+          "headerTitleBlack": "Karya yang"
+        },
+        "projectsPage": {
+          "seoTitle": "Portfolio",
+          "emptyTitle": "The portfolio is being updated.",
+          "headerBadge": "Projects",
+          "headerSideNote": "A selection of systems and digital products currently under development.",
+          "seoDescription": "Case studies on web applications, ERP, system integration, and digital solutions by Habib Arifin Makhtum",
+          "headerTitleGray": "to make an impact.",
+          "emptyDescription": "Case studies will be made available following a curation and documentation process",
+          "headerTitleBlack": "Work built"
+        },
+        "projectDetail": {
+          "backLabel": "Back to projects",
+          "bodyTitle": "About project",
+          "liveLabel": "Visit the website",
+          "emptyCover": "Project cover has not been added",
+          "repositoryLabel": "Repository",
+          "emptyTechnologies": "Not yet added",
+          "technologiesTitle": "Technology"
+        }
+      }
+    }
+  ],
+  "projects": [],
+  "skills": [
+    {
+      "id": "42464243-20d6-41bb-8d5a-64dc335b34f3",
+      "name": "Next.js",
+      "category": "core",
+      "description": "Framework",
+      "icon_key": null,
+      "sort_order": 0,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "31212d60-b708-4626-a23c-7710a5cf2e61",
+      "name": "React",
+      "category": "core",
+      "description": "UI library",
+      "icon_key": null,
+      "sort_order": 1,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "11db1486-cce4-4e00-8ec3-8182bcdfd39d",
+      "name": "Tailwind CSS",
+      "category": "core",
+      "description": "Styling",
+      "icon_key": null,
+      "sort_order": 2,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "0b3b49dc-b3b0-4369-b067-e9ba3927d30c",
+      "name": "JavaScript",
+      "category": "core",
+      "description": "Language",
+      "icon_key": null,
+      "sort_order": 3,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "687461ba-a250-409c-b8fb-0eec69c82c2c",
+      "name": "PostgreSQL",
+      "category": "core",
+      "description": "Database",
+      "icon_key": null,
+      "sort_order": 4,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "706163cb-ffe7-4e7c-af37-448b3a49e95e",
+      "name": "Supabase",
+      "category": "core",
+      "description": "Backend platform",
+      "icon_key": null,
+      "sort_order": 5,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "05aafdd1-acb7-442f-b5f0-1466f23e7772",
+      "name": "MongoDB Atlas",
+      "category": "core",
+      "description": "Database",
+      "icon_key": null,
+      "sort_order": 6,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "e22ae5b5-422c-4aec-9723-83a77f99f285",
+      "name": "Payload CMS",
+      "category": "core",
+      "description": "CMS",
+      "icon_key": null,
+      "sort_order": 7,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "f0e96931-a8b6-4e0c-a493-460d325e3ef9",
+      "name": "API Integration",
+      "category": "core",
+      "description": "Systems",
+      "icon_key": null,
+      "sort_order": 8,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "d1e9b0f7-3ac0-4c5f-9f53-410c6144c241",
+      "name": "Vercel",
+      "category": "toolkit",
+      "description": "Deployment",
+      "icon_key": null,
+      "sort_order": 0,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "eebcddfe-9661-4076-ab3b-1be4f25d65b7",
+      "name": "Git",
+      "category": "toolkit",
+      "description": "Version control",
+      "icon_key": null,
+      "sort_order": 1,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "0b2eb196-8996-4372-9588-a1cf1b143c8a",
+      "name": "Docker",
+      "category": "toolkit",
+      "description": "Container",
+      "icon_key": null,
+      "sort_order": 2,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "50b70615-040a-462a-be78-677160336177",
+      "name": "Linux VPS",
+      "category": "toolkit",
+      "description": "Infrastructure",
+      "icon_key": null,
+      "sort_order": 3,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "8be9a8f3-0768-4e0d-9f77-6a1340809693",
+      "name": "Cloudflare R2",
+      "category": "toolkit",
+      "description": "Object storage",
+      "icon_key": null,
+      "sort_order": 4,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "13cd63c3-df8b-46e5-8969-b1eb26f048bd",
+      "name": "SSH",
+      "category": "toolkit",
+      "description": "Server access",
+      "icon_key": null,
+      "sort_order": 5,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "44cbb43e-c1c2-4c4e-b751-82bddbf9866e",
+      "name": "ERP Systems",
+      "category": "additional",
+      "description": null,
+      "icon_key": null,
+      "sort_order": 0,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "3832698c-5064-4c0a-8edd-85ce9a1a103a",
+      "name": "UI Design",
+      "category": "additional",
+      "description": null,
+      "icon_key": null,
+      "sort_order": 1,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "29792a5b-fb8c-4c9e-9441-fa07d21bbfbd",
+      "name": "Rapid prototyping",
+      "category": "additional",
+      "description": null,
+      "icon_key": null,
+      "sort_order": 2,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "49996990-e60b-42d0-8a8a-f87b3b54c830",
+      "name": "IoT integration",
+      "category": "additional",
+      "description": null,
+      "icon_key": null,
+      "sort_order": 3,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    }
+  ],
+  "services": [],
+  "faqs": [
+    {
+      "id": "0a8e1eae-8721-450d-bf50-d11922def26b",
+      "question": "Layanan apa yang Anda kerjakan?",
+      "answer": "Saya membangun aplikasi web dan SPA, sistem ERP dan CMS dashboard, integrasi API, purwarupa cepat, serta setup infrastruktur server.",
+      "sort_order": 0,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "7e5842d4-2606-4d0c-be50-38f5d906d196",
+      "question": "Apakah Anda menerima proyek freelance?",
+      "answer": "Ya. Saya aktif menerima proyek freelance dan menjalankan agensi IT. Hubungi saya untuk mendiskusikan kebutuhan Anda.",
+      "sort_order": 1,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "81b031df-7701-4bd1-99e5-1c9470a5c9fe",
+      "question": "Teknologi apa yang digunakan?",
+      "answer": "Stack utama saya mencakup Next.js, React, Tailwind CSS, PostgreSQL via Supabase, MongoDB Atlas, Payload CMS, Docker, Linux VPS, dan Cloudflare R2.",
+      "sort_order": 2,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "4de2331d-df61-4c63-874d-d3fb4e9badc9",
+      "question": "Apakah Anda dapat mengintegrasikan sistem pihak ketiga?",
+      "answer": "Ya. Saya menangani integrasi API, webhook WhatsApp, layanan B2B, dan koneksi perangkat IoT sesuai kebutuhan sistem.",
+      "sort_order": 3,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    },
+    {
+      "id": "1d9f9744-358c-4f19-b286-fdc7a209c8a3",
+      "question": "Di mana Anda berbasis?",
+      "answer": "Saya berasal dari Bandung, Jawa Barat, Indonesia dan saat ini berdomisili di Kairo, Mesir. Kolaborasi jarak jauh tersedia.",
+      "sort_order": 4,
+      "visible": true,
+      "created_at": "2026-11-15T02:05:29.45755+00:00",
+      "updated_at": "2026-11-15T02:05:29.45755+00:00"
+    }
+  ],
+  "timeline_entries": [],
+  "media_assets": [
+    {
+      "id": "25f09ee0-0d43-459f-bc6d-75336703e033",
+      "storage_key": "portfolio/3c599772-b0d4-4d50-9240-546ca66f8bfe.png",
+      "public_url": "https://pub-f492b395a12b49528c03e51c1ccd58ae.r2.dev/portfolio/3c599772-b0d4-4d50-9240-546ca66f8bfe.png",
+      "alt_text": "arifin",
+      "mime_type": "image/png",
+      "file_size": 1705081,
+      "width": null,
+      "height": null,
+      "created_at": "2026-11-15T04:39:34.261696+00:00"
+    },
+    {
+      "id": "82a957d4-306a-4ad1-bf54-23627dde7cc0",
+      "storage_key": "portfolio/e9feeb5f-98cb-4ed0-8648-725babe0f8ed.png",
+      "public_url": "/media/portfolio/e9feeb5f-98cb-4ed0-8648-725babe0f8ed.png",
+      "alt_text": "bibub",
+      "mime_type": "image/png",
+      "file_size": 656286,
+      "width": null,
+      "height": null,
+      "created_at": "2026-11-16T00:38:23.305523+00:00"
+    }
+  ]
+}

@@ -23,7 +23,7 @@ export async function sendContactMessage(
   if (!parsed.success) {
     return {
       success: false,
-      message: "Lengkapi nama, email valid, dan pesan minimal 10 karakter.",
+      message: "Please enter your name, a valid email, and a message of at least 10 characters.",
     }
   }
 
@@ -31,7 +31,7 @@ export async function sendContactMessage(
     return {
       success: false,
       message:
-        "Formulir kontak belum dikonfigurasi. Silakan hubungi melalui WhatsApp.",
+        "The contact form is not set up yet. Please reach out via WhatsApp.",
     }
   }
 
@@ -41,12 +41,12 @@ export async function sendContactMessage(
     return {
       success: false,
       message:
-        "Pesan belum dapat dikirim. Silakan coba lagi atau hubungi melalui WhatsApp.",
+        "Your message could not be sent. Please try again or reach out via WhatsApp.",
     }
   }
 
   return {
     success: true,
-    message: `Terima kasih ${parsed.data.name}, pesan Anda sudah diterima.`,
+    message: `Thank you ${parsed.data.name}, your message has been received.`,
   }
 }

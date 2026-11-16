@@ -7,7 +7,7 @@ function monthYear(value: string | null) {
   const date = new Date(`${value}T00:00:00Z`)
   return Number.isNaN(date.getTime())
     ? ""
-    : new Intl.DateTimeFormat("id-ID", {
+    : new Intl.DateTimeFormat("en-US", {
         month: "short",
         year: "numeric",
         timeZone: "UTC",

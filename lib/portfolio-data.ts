@@ -5,9 +5,9 @@ export const hero_profile = {
   handle: SITE.handle,
   role: SITE.role,
   tagline:
-    "Membangun aplikasi web, ERP, dan integrasi sistem yang siap digunakan - dari purwarupa sampai production.",
+    "Building ready-to-use web apps, ERPs, and system integrations - from prototype to production.",
   email: SITE.email,
   location: SITE.location,
-  status: "Menerima proyek freelance",
+  status: "Available for freelance",
   whatsapp: SITE.whatsapp,
 }

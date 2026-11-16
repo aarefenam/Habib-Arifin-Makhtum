@@ -1,39 +1,39 @@
 export const FAQ_HEADER = {
   badge: "FAQ",
-  titleBlack: "Pertanyaan",
-  titleGray: "yang sering ditanyakan.",
-  sideNote: "Ringkasan layanan dan cara saya bekerja.",
+  titleBlack: "Questions",
+  titleGray: "people often ask.",
+  sideNote: "A summary of my services and how I work.",
 }
 
 export const FAQ_CTA = {
-  label: "Tanyakan langsung",
+  label: "Ask directly",
   href: "#contact",
 }
 
 export const FAQS = [
   {
-    question: "Layanan apa yang Anda kerjakan?",
+    question: "What services do you offer?",
     answer:
-      "Saya membangun aplikasi web dan SPA, sistem ERP dan CMS dashboard, integrasi API, purwarupa cepat, serta setup infrastruktur server.",
+      "I build web apps and SPAs, ERP systems and CMS dashboards, API integrations, rapid prototypes, and server infrastructure setups.",
   },
   {
-    question: "Apakah Anda menerima proyek freelance?",
+    question: "Do you take freelance projects?",
     answer:
-      "Ya. Saya aktif menerima proyek freelance dan menjalankan agensi IT. Hubungi saya untuk mendiskusikan kebutuhan Anda.",
+      "Yes. I actively take on freelance projects and run an IT agency. Get in touch to discuss what you need.",
   },
   {
-    question: "Teknologi apa yang digunakan?",
+    question: "What technologies do you use?",
     answer:
-      "Stack utama saya mencakup Next.js, React, Tailwind CSS, PostgreSQL via Supabase, MongoDB Atlas, Payload CMS, Docker, Linux VPS, dan Cloudflare R2.",
+      "My main stack includes Next.js, React, Tailwind CSS, PostgreSQL via Supabase, MongoDB Atlas, Payload CMS, Docker, Linux VPS, and Cloudflare R2.",
   },
   {
-    question: "Apakah Anda dapat mengintegrasikan sistem pihak ketiga?",
+    question: "Can you integrate third-party systems?",
     answer:
-      "Ya. Saya menangani integrasi API, webhook WhatsApp, layanan B2B, dan koneksi perangkat IoT sesuai kebutuhan sistem.",
+      "Yes. I handle API integrations, WhatsApp webhooks, B2B services, and IoT device connections based on what the system needs.",
   },
   {
-    question: "Di mana Anda berbasis?",
+    question: "Where are you based?",
     answer:
-      "Saya berasal dari Bandung, Jawa Barat, Indonesia dan saat ini berdomisili di Kairo, Mesir. Kolaborasi jarak jauh tersedia.",
+      "I am originally from Bandung, West Java, Indonesia, and currently live in Cairo, Egypt. Remote collaboration is available.",
   },
 ] as const

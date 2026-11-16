@@ -53,16 +53,16 @@ export async function generateMetadata(): Promise<Metadata> {
       "full-stack developer",
       "IT solver",
       "ERP developer",
-      "web developer Indonesia",
+      "web developer",
       "Next.js developer",
-      "integrasi API",
+      "API integration",
       "Cloudflare R2",
     ],
     authors: [{ name: site.name }],
     creator: site.name,
     openGraph: {
       type: "website",
-      locale: "id_ID",
+      locale: "en_US",
       url: SITE.siteUrl,
       title: site.seoTitle || `${site.name} | ${site.role}`,
       description: site.seoDescription || SITE_DESCRIPTION,
@@ -95,7 +95,7 @@ export default async function RootLayout({
 
   return (
     <html
-      lang="id"
+      lang="en"
       suppressHydrationWarning
       className={cn("antialiased", "font-sans", switzer.variable)}
     >

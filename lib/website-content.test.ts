@@ -98,6 +98,7 @@ test("all editable sections and collection links have a registered page", () => 
     for (const link of links) {
       assert.ok(
         link.href === "/admin/projects" ||
+          link.href === "/admin/content/global/identity" ||
           CONTENT_COLLECTIONS.some(
             (collection) => link.href === `/admin/collections/${collection.id}`
           ),

@@ -11,7 +11,8 @@ export function PageShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="max-body">
-      <div className="page-inset border-foreground/15 pt-24 sm:border-x dark:border-foreground/10">
+      {/* Side rails only on tablet; PC stays clean without vertical lines */}
+      <div className="page-inset border-foreground/15 pt-24 sm:border-x lg:border-x-0 dark:border-foreground/10">
         {children}
       </div>
     </div>

@@ -1,25 +1,25 @@
 export const HERO_BADGE = {
   role: "Full-Stack Developer & IT Solver",
-  availability: "Menerima proyek freelance",
+  availability: "Available for freelance",
 }
 
 export const HERO_COPY = {
-  title: "Membangun sistem digital",
-  titleAccent: "yang siap dipakai.",
-  lead: "Aplikasi web, ERP, dan integrasi sistem untuk bisnis yang ingin bergerak lebih cepat.",
+  title: "Building digital systems",
+  titleAccent: "ready for real use.",
+  lead: "Web apps, ERP, and system integrations for businesses that want to move faster.",
   detail:
-    "Dari arsitektur dan UI sampai deployment, saya mengubah kebutuhan operasional menjadi produk yang fungsional.",
-  projectsLabel: "Tentang layanan",
+    "From architecture and UI to deployment, I turn operational needs into working products.",
+  projectsLabel: "About my services",
 }
 
 export const HERO_CHIPS = ["Web Apps", "ERP", "API Integration", "IoT"]
 
 export const HERO_BUILD_ITEMS = [
-  { label: "Aplikasi web", icon: "globe" },
-  { label: "Sistem ERP", icon: "shield" },
+  { label: "Web applications", icon: "globe" },
+  { label: "ERP systems", icon: "shield" },
   { label: "CMS Dashboard", icon: "briefcase" },
-  { label: "Integrasi API", icon: "store" },
-  { label: "Integrasi IoT", icon: "smartphone" },
-  { label: "Platform pembelajaran", icon: "graduation" },
-  { label: "Sistem booking", icon: "calendar" },
+  { label: "API integrations", icon: "store" },
+  { label: "IoT integrations", icon: "smartphone" },
+  { label: "Learning platforms", icon: "graduation" },
+  { label: "Booking systems", icon: "calendar" },
 ] as const

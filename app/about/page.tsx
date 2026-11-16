@@ -39,7 +39,7 @@ export default async function AboutPage() {
       </section>
 
       <section
-        aria-label="Fokus dan latar belakang"
+        aria-label="Focus and background"
         className="grid gap-4 md:grid-cols-2"
       >
         <article className="rounded-2xl border border-border bg-card p-6 sm:p-8">

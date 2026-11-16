@@ -1,9 +1,8 @@
 export const PROJECTS_HEADER = {
   badge: "Portfolio",
-  titleBlack: "Case study sedang",
-  titleGray: "disiapkan.",
-  sideNote:
-    "Proyek akan ditambahkan melalui dashboard portfolio setelah kontennya siap.",
+  titleBlack: "Work built",
+  titleGray: "to make an impact.",
+  sideNote: "A selection of systems and digital products I have built.",
 }
 
 export type ProjectType =

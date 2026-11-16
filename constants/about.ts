@@ -1,20 +1,20 @@
 export const ABOUT_HEADER = {
-  badge: "Tentang saya",
-  titleBlack: "Kenal lebih dekat",
-  titleGray: "dengan Habib.",
+  badge: "About me",
+  titleBlack: "Get to know",
+  titleGray: "Habib.",
   sideNote:
-    "Membangun solusi teknologi yang jelas, fungsional, dan siap berkembang.",
+    "Building technology solutions that are clear, functional, and ready to grow.",
 }
 
 export const ABOUT_WHO = {
-  badge: "Siapa saya",
+  badge: "Who I am",
   heading:
-    "Full-Stack Developer dan IT Solver yang mengubah kebutuhan operasional menjadi sistem digital.",
+    "A Full-Stack Developer and IT Solver who turns operational needs into digital systems.",
   para1:
-    "Saya berbasis di Kairo, Mesir dan berasal dari Bandung, Indonesia. Fokus saya mencakup arsitektur sistem, aplikasi web berkinerja tinggi, ERP fungsional, dashboard CMS, serta integrasi API dan IoT.",
+    "I am based in Cairo, Egypt, and originally from Bandung, Indonesia. My focus covers system architecture, high-performance web apps, functional ERPs, CMS dashboards, and API and IoT integrations.",
   para2:
-    "Sebagai Co-Founder dan Technology Director di PT Enova Cakra Digital, saya membantu membawa produk dari purwarupa ke production dengan fondasi teknis yang terukur.",
-  links: [{ label: "Selengkapnya", href: "/about", icon: "user" }],
+    "As Co-Founder and Technology Director at PT Enova Cakra Digital, I help take products from prototype to production on a solid technical foundation.",
+  links: [{ label: "Read more", href: "/about", icon: "user" }],
 }
 
 export const ABOUT_PROFILE = {
@@ -24,22 +24,22 @@ export const ABOUT_PROFILE = {
 }
 
 export const ABOUT_NOW = {
-  badge: "Saat ini",
-  heading: "Membangun sistem yang berdampak.",
-  body: "Menerima proyek freelance dan mengembangkan solusi digital melalui agensi IT.",
+  badge: "Currently",
+  heading: "Building systems that make an impact.",
+  body: "Taking on freelance projects and building digital solutions through my IT agency.",
 }
 
 export const ABOUT_EXPERIENCE = {
-  badge: "FOKUS",
+  badge: "Focus",
   value: "ERP",
-  text: "Dari ide ke sistem.",
-  muted: "Web, dashboard, dan integrasi.",
+  text: "From idea to system.",
+  muted: "Web, dashboards, and integrations.",
 }
 
 export const ABOUT_WORK = {
-  badge: "Yang saya kerjakan",
-  heading: "Software yang memecahkan masalah.",
-  sub: "Mulai dari UI dan database hingga API, server, deployment, dan operasi sistem.",
+  badge: "What I do",
+  heading: "Software that solves problems.",
+  sub: "From UI and databases to APIs, servers, deployment, and system operations.",
 }
 
 export const ABOUT_PAGE = {

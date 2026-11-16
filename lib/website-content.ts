@@ -51,7 +51,7 @@ export function mergeWebsiteContent(
     ...source,
     hero: { primaryCtaLabel: contact.ctaLabel, ...hero },
     aboutIntro: source.aboutIntro ?? {
-      badge: "Tentang",
+      badge: "About",
       title: about.titleBlack,
       titleAccent: about.titleGray,
       description: site?.bio,

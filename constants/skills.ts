@@ -1,9 +1,8 @@
 export const SKILLS_HEADER = {
   badge: "Skills",
-  titleBlack: "Teknologi di balik",
-  titleGray: "setiap solusi yang dibangun.",
-  sideNote:
-    "Stack untuk membangun, menjalankan, dan mengembangkan produk digital.",
+  titleBlack: "The technology behind",
+  titleGray: "every solution I build.",
+  sideNote: "A stack for building, running, and scaling digital products.",
 }
 
 export const CS_CARD = {
