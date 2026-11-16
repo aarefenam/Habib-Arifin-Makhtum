@@ -50,7 +50,7 @@ export function About({
         {/* Who I am */}
         <div className="grid items-center gap-8 md:grid-cols-2">
           {/* Profile photo: fixed ratio so any upload crops cleanly */}
-          <div className="relative flex-center aspect-[4/3] w-full justify-center overflow-hidden rounded-2xl bg-blue-600/10 select-none sm:aspect-[3/2]">
+          <div className="relative flex-center aspect-[4/5] w-full justify-center overflow-hidden rounded-2xl bg-blue-600/10 select-none sm:aspect-[3/2]">
             {profileImageUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
