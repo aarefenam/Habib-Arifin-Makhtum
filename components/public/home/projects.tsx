@@ -35,7 +35,7 @@ export function Projects({
         />
 
         {publishedProjects.length ? (
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {publishedProjects.map((project) => {
               const cover = project.coverKey
                 ? media.find((asset) => asset.storageKey === project.coverKey)

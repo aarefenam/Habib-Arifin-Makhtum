@@ -34,7 +34,7 @@ export default async function ProjectsPage() {
           />
 
           {projects.length ? (
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {projects.map((project) => {
                 const cover = project.coverKey
                   ? snapshot.media.find(

@@ -90,7 +90,8 @@ export default async function ProjectDetailsPage({
           </div>
         </div>
 
-        <div className="mt-10 overflow-hidden rounded-2xl border border-border bg-muted">
+        {/* Cover capped at 1024px wide so it never fills a full-width desktop screen */}
+        <div className="mt-10 max-w-5xl overflow-hidden rounded-2xl border border-border bg-muted">
           {cover ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
