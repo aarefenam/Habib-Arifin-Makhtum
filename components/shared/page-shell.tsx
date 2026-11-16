@@ -11,7 +11,7 @@ export function PageShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="max-body">
-      <div className="border-foreground/15 px-2 pt-24 sm:border-x sm:px-6 dark:border-foreground/10">
+      <div className="page-inset border-foreground/15 pt-24 sm:border-x dark:border-foreground/10">
         {children}
       </div>
     </div>

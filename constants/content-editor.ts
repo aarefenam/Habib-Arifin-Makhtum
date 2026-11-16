@@ -201,6 +201,9 @@ export const CONTENT_FIELD_LABELS: Record<string, string> = {
 export const SECTION_COLLECTION_LINKS: Partial<
   Record<EditorSectionKey, { label: string; href: string }[]>
 > = {
+  about: [
+    { label: "Ganti foto profil", href: "/admin/content/global/identity" },
+  ],
   skills: [
     { label: "Kelola daftar skill & ikon", href: "/admin/collections/skills" },
   ],

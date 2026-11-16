@@ -239,8 +239,14 @@
 }
 
 @layer components {
+  /* Full-width page gutter, shared by the main shell and the footer */
   .max-body {
-    @apply mx-auto max-w-[1150px] px-2 leading-6 tracking-wide sm:px-4 lg:px-6;
+    @apply mx-auto w-full px-4 leading-6 tracking-wide sm:px-6 lg:px-10 2xl:px-16;
+  }
+
+  /* Inner padding inside the gutter, keeps main content and footer aligned */
+  .page-inset {
+    @apply sm:px-6 lg:px-8;
   }
 }
 

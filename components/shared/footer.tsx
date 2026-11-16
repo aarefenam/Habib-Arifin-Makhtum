@@ -50,116 +50,121 @@ export function Footer({
 
   return (
     <footer className="overflow-hidden bg-black text-white">
-      <div className="max-body mx-auto px-6 pt-16 md:pt-24">
-        {/* Headline */}
-        <h2 className="text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.05] font-bold tracking-tight">
-          {content.title}
-          <br />
-          <span className="text-white/50">{content.titleAccent}</span>
-          <span
-            aria-hidden
-            className="ml-4 inline-block size-[0.18em] rounded-full bg-white/70 align-baseline"
-          />
-        </h2>
+      <div className="max-body pt-16 md:pt-24">
+        <div className="page-inset">
+          {/* Headline */}
+          <h2 className="text-[clamp(2.5rem,6vw,4.5rem)] leading-[1.05] font-bold tracking-tight">
+            {content.title}
+            <br />
+            <span className="text-white/50">{content.titleAccent}</span>
+            <span
+              aria-hidden
+              className="ml-4 inline-block size-[0.18em] rounded-full bg-white/70 align-baseline"
+            />
+          </h2>
 
-        {/* Contact row */}
-        <div className="mt-12 grid gap-8 md:grid-cols-3">
-          <div>
-            <p className="text-sm text-white/50">{content.emailLabel}</p>
-            <a
-              href={`mailto:${site.email}`}
-              className="mt-2 inline-block text-lg font-semibold break-all hover:text-white/70"
-            >
-              {site.email}
-            </a>
-          </div>
-          {site.whatsappUrl ? (
+          {/* Contact row */}
+          <div className="mt-12 grid gap-8 md:grid-cols-3">
             <div>
-              <p className="text-sm text-white/50">{content.whatsappLabel}</p>
+              <p className="text-sm text-white/50">{content.emailLabel}</p>
               <a
-                href={site.whatsappUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-2 inline-block text-lg font-semibold hover:text-white/70"
+                href={`mailto:${site.email}`}
+                className="mt-2 inline-block text-lg font-semibold break-all hover:text-white/70"
               >
-                {content.whatsappCta}
+                {site.email}
               </a>
             </div>
-          ) : null}
-          <div>
-            <p className="text-sm text-white/50">{content.socialLabel}</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {featuredSocial ? (
+            {site.whatsappUrl ? (
+              <div>
+                <p className="text-sm text-white/50">{content.whatsappLabel}</p>
                 <a
-                  href={featuredSocial.href}
+                  href={site.whatsappUrl}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label={`${featuredSocial.label} - ${featuredSocial.handle}`}
-                  className="flex h-9 items-center gap-1.5 rounded-full bg-white px-3.5 text-sm font-bold text-black"
+                  className="mt-2 inline-block text-lg font-semibold hover:text-white/70"
                 >
-                  <SocialIcon brand={featuredSocial.brand} className="size-4" />
-                  <span>{featuredSocial.handle}</span>
+                  {content.whatsappCta}
                 </a>
-              ) : null}
-              {iconSocials.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={`${social.label} - ${social.handle}`}
-                  className="flex size-9 items-center justify-center rounded-full bg-white text-black"
-                >
-                  <SocialIcon brand={social.brand} className="size-4" />
-                  <span className="sr-only">{social.handle}</span>
-                </a>
-              ))}
+              </div>
+            ) : null}
+            <div>
+              <p className="text-sm text-white/50">{content.socialLabel}</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {featuredSocial ? (
+                  <a
+                    href={featuredSocial.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`${featuredSocial.label} - ${featuredSocial.handle}`}
+                    className="flex h-9 items-center gap-1.5 rounded-full bg-white px-3.5 text-sm font-bold text-black"
+                  >
+                    <SocialIcon
+                      brand={featuredSocial.brand}
+                      className="size-4"
+                    />
+                    <span>{featuredSocial.handle}</span>
+                  </a>
+                ) : null}
+                {iconSocials.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`${social.label} - ${social.handle}`}
+                    className="flex size-9 items-center justify-center rounded-full bg-white text-black"
+                  >
+                    <SocialIcon brand={social.brand} className="size-4" />
+                    <span className="sr-only">{social.handle}</span>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
 
-        <hr className="mt-12 border-white/15" />
+          <hr className="mt-12 border-white/15" />
 
-        {/* Links row */}
-        <div className="grid gap-8 py-8 md:grid-cols-3">
-          <nav aria-label="Footer">
-            <p className="text-sm text-white/50">{content.menuLabel}</p>
-            <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2">
-              {content.links.map((link, index) => (
-                <li key={`${index}-${link.href}`}>
-                  <ContentLink
-                    href={link.href}
-                    className="cursor-pointer text-sm font-semibold hover:text-white/70"
-                  >
-                    {link.label}
-                  </ContentLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          {content.legalLinks.length ? (
-            <div>
-              <p className="text-sm text-white/50">{content.legalLabel}</p>
-              <ul className="mt-3 flex flex-col gap-2">
-                {content.legalLinks.map((link, index) => (
+          {/* Links row */}
+          <div className="grid gap-8 py-8 md:grid-cols-3">
+            <nav aria-label="Footer">
+              <p className="text-sm text-white/50">{content.menuLabel}</p>
+              <ul className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2">
+                {content.links.map((link, index) => (
                   <li key={`${index}-${link.href}`}>
                     <ContentLink
                       href={link.href}
-                      className="text-sm font-semibold hover:text-white/70"
+                      className="cursor-pointer text-sm font-semibold hover:text-white/70"
                     >
                       {link.label}
                     </ContentLink>
                   </li>
                 ))}
               </ul>
-            </div>
-          ) : null}
-          <p className="text-sm text-white/70 md:self-end">
-            &copy;{" "}
-            {content.copyright.replace(/\{year\}|\{name\}/g, (token) =>
-              token === "{year}" ? String(year) : site.name
-            )}
-          </p>
+            </nav>
+            {content.legalLinks.length ? (
+              <div>
+                <p className="text-sm text-white/50">{content.legalLabel}</p>
+                <ul className="mt-3 flex flex-col gap-2">
+                  {content.legalLinks.map((link, index) => (
+                    <li key={`${index}-${link.href}`}>
+                      <ContentLink
+                        href={link.href}
+                        className="text-sm font-semibold hover:text-white/70"
+                      >
+                        {link.label}
+                      </ContentLink>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+            <p className="text-sm text-white/70 md:self-end">
+              &copy;{" "}
+              {content.copyright.replace(/\{year\}|\{name\}/g, (token) =>
+                token === "{year}" ? String(year) : site.name
+              )}
+            </p>
+          </div>
         </div>
       </div>
 

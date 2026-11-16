@@ -49,13 +49,14 @@ export function About({
 
         {/* Who I am */}
         <div className="grid items-center gap-8 md:grid-cols-2">
-          <div className="flex-center min-h-56 justify-center overflow-hidden rounded-2xl bg-blue-600/10 select-none">
+          {/* Profile photo: fixed ratio so any upload crops cleanly */}
+          <div className="relative flex-center aspect-[4/5] w-full justify-center overflow-hidden rounded-2xl bg-blue-600/10 select-none sm:aspect-[4/3]">
             {profileImageUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={profileImageUrl}
                 alt={`Foto ${site.name}`}
-                className="size-full object-cover"
+                className="absolute inset-0 size-full object-cover object-[center_25%]"
               />
             ) : (
               <span className="text-[8rem] leading-none font-extrabold tracking-tight text-blue-600/30">
