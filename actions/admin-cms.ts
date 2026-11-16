@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache"
 
 import { getPublishedStatus } from "@/lib/cms"
+import { countryName } from "@/lib/countries"
 import { requireAdminSession } from "@/lib/auth/guard"
 import { getSupabaseAdmin } from "@/lib/supabase"
 import type { CmsActionState } from "@/types/cms"
@@ -83,11 +84,14 @@ export async function saveProject(
     }
 
     const status = getPublishedStatus(requiredText(formData, "status"))
+    const clientCountry = requiredText(formData, "client_country")
     const payload = {
       // Detail page copy lives in the JSON content column (no migration needed)
       content: {
         body: optionalText(formData, "content") ?? "",
         headline: optionalText(formData, "headline") ?? "",
+        client: optionalText(formData, "client") ?? "",
+        clientCountry: countryName(clientCountry) ? clientCountry : "",
         timeline: optionalText(formData, "timeline") ?? "",
         features: optionalText(formData, "features") ?? "",
         problem: optionalText(formData, "problem") ?? "",

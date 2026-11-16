@@ -11,6 +11,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { COUNTRIES } from "@/lib/countries"
+import { cn } from "@/lib/utils"
 import type { PortfolioMediaAsset, PortfolioProject } from "@/types/cms"
 
 function CheckboxField({
@@ -42,19 +44,21 @@ function ContentField({
   label,
   hint,
   long = false,
+  half = false,
 }: {
   project?: PortfolioProject
   name: string
   label: string
   hint?: string
   long?: boolean
+  half?: boolean
 }) {
   const id = `project-${name}-${project?.id ?? "new"}`
   const value = project?.content[name]
   const defaultValue = typeof value === "string" ? value : ""
 
   return (
-    <div className="flex flex-col gap-2 md:col-span-2">
+    <div className={cn("flex flex-col gap-2", !half && "md:col-span-2")}>
       <Label htmlFor={id}>{label}</Label>
       {long ? (
         <Textarea
@@ -163,6 +167,35 @@ function ProjectFields({
         label="Headline (kalimat besar di bawah judul)"
         hint="A modern ERP for travel agencies."
       />
+      <ContentField
+        project={project}
+        name="client"
+        label="Nama client"
+        hint="Egypt Malaya Tours"
+        half
+      />
+      <div className="flex flex-col gap-2">
+        <Label htmlFor={`project-country-${project?.id ?? "new"}`}>
+          Negara client
+        </Label>
+        <select
+          id={`project-country-${project?.id ?? "new"}`}
+          name="client_country"
+          defaultValue={
+            typeof project?.content.clientCountry === "string"
+              ? project.content.clientCountry
+              : ""
+          }
+          className="h-11 rounded-lg border border-input bg-transparent px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+        >
+          <option value="">- Tanpa negara -</option>
+          {COUNTRIES.map((country) => (
+            <option key={country.code} value={country.code}>
+              {country.name}
+            </option>
+          ))}
+        </select>
+      </div>
       <ContentField
         project={project}
         name="timeline"

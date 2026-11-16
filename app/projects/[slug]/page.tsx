@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react"
 import { ProjectCover } from "@/components/shared/project-cover"
 import { SocialIcon } from "@/components/shared/social-icons"
 import { getPortfolioCmsSnapshot } from "@/lib/cms"
+import { countryFlagUrl, countryName } from "@/lib/countries"
 
 type ProjectDetailsPageProps = {
   params: Promise<{ slug: string }>
@@ -88,6 +89,9 @@ export default async function ProjectDetailsPage({
 
   const headline = contentText(project.content, "headline")
   const timeline = contentText(project.content, "timeline")
+  const client = contentText(project.content, "client")
+  const clientCountry = contentText(project.content, "clientCountry")
+  const country = countryName(clientCountry)
   const body = contentText(project.content, "body")
   const features = parseFeatures(contentText(project.content, "features"))
   const deepDive = [
@@ -161,6 +165,27 @@ export default async function ProjectDetailsPage({
 
         {/* Meta rows */}
         <dl className="mt-8 grid grid-cols-1 gap-3 border-t border-dashed border-border pt-6 sm:grid-cols-[120px_1fr]">
+          {client || country ? (
+            <>
+              <dt className="text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
+                Client
+              </dt>
+              <dd className="flex-center flex-wrap gap-x-3 gap-y-1 text-sm font-medium">
+                {client}
+                {country ? (
+                  <span className="flex-center gap-1.5 text-muted-foreground">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={countryFlagUrl(clientCountry)}
+                      alt=""
+                      className="h-3.5 w-5 rounded-[3px] object-cover ring-1 ring-border"
+                    />
+                    {country}
+                  </span>
+                ) : null}
+              </dd>
+            </>
+          ) : null}
           {timeline ? (
             <>
               <dt className="text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
