@@ -135,7 +135,7 @@ export function SiteContentEditor({
   } else {
     fields = Object.entries(content[section]).map(([key, value]) => {
       const label = CONTENT_FIELD_LABELS[key] ?? key
-      if (key === "logoKey")
+      if (key === "logoKey" || key === "avatarKey")
         return (
           <AssetField
             key={key}

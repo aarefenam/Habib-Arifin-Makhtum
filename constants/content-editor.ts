@@ -107,6 +107,7 @@ export const CONTENT_FIELD_LABELS: Record<string, string> = {
   brandName: "Nama pada header",
   initials: "Inisial logo",
   logoKey: "Logo header",
+  avatarKey: "Foto avatar kartu kontak",
   homeLabel: "Label akses beranda",
   menuOpenLabel: "Label buka menu",
   menuCloseLabel: "Label tutup menu",

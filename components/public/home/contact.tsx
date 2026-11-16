@@ -19,9 +19,11 @@ const METHOD_ICONS = {
 export function Contact({
   content,
   site,
+  avatarUrl,
 }: {
   content: HomePageContent["contact"]
   site: PortfolioSiteSettings
+  avatarUrl?: string
 }) {
   const open = useContactStore((s) => s.open)
   const socialLinks = [
@@ -193,13 +195,23 @@ export function Contact({
               <div className="mt-8 flex-center gap-3">
                 <span
                   aria-hidden
-                  className="flex-center size-12 shrink-0 justify-center rounded-full bg-blue-600 text-lg font-bold text-white"
+                  className="flex-center size-12 shrink-0 justify-center overflow-hidden rounded-full bg-blue-600 text-lg font-bold text-white"
                 >
-                  {site.name
-                    .split(" ")
-                    .map((part) => part.slice(0, 1))
-                    .slice(0, 2)
-                    .join("")}
+                  {/* Avatar photo from CMS, falls back to initials */}
+                  {avatarUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={avatarUrl}
+                      alt=""
+                      className="size-full object-cover object-top"
+                    />
+                  ) : (
+                    site.name
+                      .split(" ")
+                      .map((part) => part.slice(0, 1))
+                      .slice(0, 2)
+                      .join("")
+                  )}
                 </span>
                 <span>
                   <span className="block font-bold">{site.name}</span>

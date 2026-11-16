@@ -8,11 +8,12 @@ import { getPortfolioCmsSnapshot } from "@/lib/cms"
 
 export default async function Home() {
   const snapshot = await getPortfolioCmsSnapshot()
-  const profileImageUrl = snapshot.site.profileImageKey
-    ? snapshot.media.find(
-        (asset) => asset.storageKey === snapshot.site.profileImageKey
-      )?.publicUrl
-    : undefined
+  // Resolve a media storage key (picked in the CMS) to its public URL
+  const mediaUrl = (key: string | null) =>
+    key
+      ? snapshot.media.find((asset) => asset.storageKey === key)?.publicUrl
+      : undefined
+  const profileImageUrl = mediaUrl(snapshot.site.profileImageKey)
 
   return (
     <main id="top" className="flex flex-col gap-4 pb-24">
@@ -33,7 +34,11 @@ export default async function Home() {
         media={snapshot.media}
       />
       <Faq content={snapshot.content.faq} faqs={snapshot.faqs} />
-      <Contact content={snapshot.content.contact} site={snapshot.site} />
+      <Contact
+        content={snapshot.content.contact}
+        site={snapshot.site}
+        avatarUrl={mediaUrl(snapshot.content.contact.avatarKey)}
+      />
     </main>
   )
 }

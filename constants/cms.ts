@@ -132,6 +132,7 @@ export const DEFAULT_HOME_CONTENT: HomePageContent = {
     cardSub: CONTACT_CARD.sub,
     ctaLabel: CONTACT_CARD.ctaLabel,
     giantWord: CONTACT_CARD.giantWord,
+    avatarKey: "",
   },
 }
 

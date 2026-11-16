@@ -20,6 +20,7 @@ export type HomePageContent = {
     workHeading: string
   }
   contact: {
+    avatarKey: string
     emailLabel: string
     whatsappLabel: string
     phoneLabel: string
