@@ -35,6 +35,48 @@ function CheckboxField({
   )
 }
 
+// Optional detail-page field stored in project.content
+function ContentField({
+  project,
+  name,
+  label,
+  hint,
+  long = false,
+}: {
+  project?: PortfolioProject
+  name: string
+  label: string
+  hint?: string
+  long?: boolean
+}) {
+  const id = `project-${name}-${project?.id ?? "new"}`
+  const value = project?.content[name]
+  const defaultValue = typeof value === "string" ? value : ""
+
+  return (
+    <div className="flex flex-col gap-2 md:col-span-2">
+      <Label htmlFor={id}>{label}</Label>
+      {long ? (
+        <Textarea
+          id={id}
+          name={name}
+          defaultValue={defaultValue}
+          placeholder={hint}
+          className="min-h-28"
+        />
+      ) : (
+        <Input
+          id={id}
+          name={name}
+          defaultValue={defaultValue}
+          placeholder={hint}
+          className="h-11"
+        />
+      )}
+    </div>
+  )
+}
+
 function ProjectFields({
   project,
   media,
@@ -114,6 +156,46 @@ function ProjectFields({
           className="min-h-36"
         />
       </div>
+      {/* Optional detail page sections - empty fields are hidden on the site */}
+      <ContentField
+        project={project}
+        name="headline"
+        label="Headline (kalimat besar di bawah judul)"
+        hint="A modern ERP for travel agencies."
+      />
+      <ContentField
+        project={project}
+        name="timeline"
+        label="Timeline"
+        hint="May 2026 to Sep 2026"
+      />
+      <ContentField
+        project={project}
+        name="features"
+        label="Fitur utama (satu per baris: Judul | Deskripsi)"
+        hint={
+          "Booking engine | Real-time availability and pricing\nInvoicing | Automatic invoices and payment tracking"
+        }
+        long
+      />
+      <ContentField
+        project={project}
+        name="problem"
+        label="Deep dive - Problem"
+        long
+      />
+      <ContentField
+        project={project}
+        name="solution"
+        label="Deep dive - Solution"
+        long
+      />
+      <ContentField
+        project={project}
+        name="insight"
+        label="Deep dive - Insight"
+        long
+      />
       <div className="flex flex-col gap-2">
         <Label htmlFor={`project-tech-${project?.id ?? "new"}`}>
           Teknologi

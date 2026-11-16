@@ -1,24 +1,76 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { ArrowLeft, ArrowUpRight } from "lucide-react"
 
-import { ArrowLeft, ExternalLink, GitFork } from "lucide-react"
-
+import { ProjectCover } from "@/components/shared/project-cover"
+import { SocialIcon } from "@/components/shared/social-icons"
 import { getPortfolioCmsSnapshot } from "@/lib/cms"
 
 type ProjectDetailsPageProps = {
   params: Promise<{ slug: string }>
 }
 
-export async function generateMetadata({
-  params,
-}: ProjectDetailsPageProps): Promise<Metadata> {
-  const [{ slug }, snapshot] = await Promise.all([
-    params,
-    getPortfolioCmsSnapshot(),
-  ])
+// Read an optional string field from the project's JSON content
+function contentText(content: Record<string, unknown>, key: string) {
+  const value = content[key]
+  return typeof value === "string" ? value.trim() : ""
+}
+
+// Features are stored one per line as "Title | Description"
+function parseFeatures(raw: string) {
+  return raw
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => {
+      const [title, ...rest] = line.split("|")
+      return { title: title.trim(), desc: rest.join("|").trim() }
+    })
+}
+
+function Eyebrow({ label }: { label: string }) {
+  return (
+    <p className="flex-center gap-2 text-xs font-semibold tracking-[0.2em] text-blue-600 uppercase">
+      <span aria-hidden className="h-px w-5 bg-blue-600" />
+      {label}
+    </p>
+  )
+}
+
+// Two-column section: eyebrow + title on the left, content on the right
+function DetailSection({
+  eyebrow,
+  title,
+  children,
+}: {
+  eyebrow: string
+  title: string
+  children: React.ReactNode
+}) {
+  return (
+    <section className="grid grid-cols-1 gap-4 md:grid-cols-[220px_1fr]">
+      <div>
+        <Eyebrow label={eyebrow} />
+        <h2 className="heading-3 mt-2">{title}</h2>
+      </div>
+      {children}
+    </section>
+  )
+}
+
+async function getProject(slug: string) {
+  const snapshot = await getPortfolioCmsSnapshot()
   const project = snapshot.projects.find(
     (item) => item.slug === slug && item.status === "published"
   )
+  return { snapshot, project }
+}
+
+export async function generateMetadata({
+  params,
+}: ProjectDetailsPageProps): Promise<Metadata> {
+  const { project } = await getProject((await params).slug)
   if (!project) notFound()
   return { title: project.title, description: project.shortDescription }
 }
@@ -26,115 +78,184 @@ export async function generateMetadata({
 export default async function ProjectDetailsPage({
   params,
 }: ProjectDetailsPageProps) {
-  const [{ slug }, snapshot] = await Promise.all([
-    params,
-    getPortfolioCmsSnapshot(),
-  ])
-  const project = snapshot.projects.find(
-    (item) => item.slug === slug && item.status === "published"
-  )
-
+  const { snapshot, project } = await getProject((await params).slug)
   if (!project) notFound()
-  const labels = snapshot.content.projectDetail
 
+  const labels = snapshot.content.projectDetail
   const cover = project.coverKey
     ? snapshot.media.find((asset) => asset.storageKey === project.coverKey)
     : undefined
-  const body =
-    typeof project.content.body === "string" ? project.content.body : ""
+
+  const headline = contentText(project.content, "headline")
+  const timeline = contentText(project.content, "timeline")
+  const body = contentText(project.content, "body")
+  const features = parseFeatures(contentText(project.content, "features"))
+  const deepDive = [
+    { label: "Problem", text: contentText(project.content, "problem") },
+    { label: "Solution", text: contentText(project.content, "solution") },
+    { label: "Insight", text: contentText(project.content, "insight") },
+  ].filter((row) => row.text)
 
   return (
-    <main className="pb-24">
-      <section className="py-6 sm:py-12">
-        <Link
-          href="/projects"
-          className="flex-center min-h-11 w-fit gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-        >
-          <ArrowLeft aria-hidden className="size-4" />
-          {labels.backLabel}
-        </Link>
-
-        <div className="mt-10 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-          <div>
-            <p className="text-sm font-medium text-blue-600">
-              {project.projectType}
+    <main className="mx-auto flex max-w-5xl flex-col gap-12 pb-24 sm:gap-16">
+      {/* ===== Hero: back link, status, title, links, meta ===== */}
+      <section aria-label={`${project.title} overview`} className="pt-6">
+        <div className="flex-center justify-between gap-4">
+          <Link
+            href="/projects"
+            className="flex-center h-8 gap-1 rounded-full border border-border bg-background px-3 text-[0.8rem] font-medium transition-colors hover:bg-muted"
+          >
+            <ArrowLeft className="size-3.5" aria-hidden />
+            {labels.backLabel}
+          </Link>
+          {project.liveUrl ? (
+            <p className="flex-center gap-1.5 text-sm font-medium text-muted-foreground">
+              <span className="relative flex size-2">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-green-500 opacity-60" />
+                <span className="relative inline-flex size-2 rounded-full bg-green-500" />
+              </span>
+              Live
             </p>
-            <h1 className="heading-1 mt-3 text-balance">{project.title}</h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
-              {project.shortDescription}
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2 lg:justify-end">
-            {project.liveUrl ? (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="flex-center min-h-11 gap-2 rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-85"
-              >
-                {labels.liveLabel}
-                <ExternalLink aria-hidden className="size-4" />
-              </a>
-            ) : null}
-            {project.repositoryUrl ? (
-              <a
-                href={project.repositoryUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="flex-center min-h-11 gap-2 rounded-lg border border-border bg-card px-4 text-sm font-medium transition-colors hover:bg-muted"
-              >
-                <GitFork aria-hidden className="size-4" />
-                {labels.repositoryLabel}
-              </a>
-            ) : null}
-          </div>
+          ) : null}
         </div>
 
-        {/* Cover capped at 1024px wide so it never fills a full-width desktop screen */}
-        <div className="mt-10 max-w-5xl overflow-hidden rounded-2xl border border-border bg-muted">
-          {cover ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={cover.publicUrl}
-              alt={cover.altText ?? project.title}
-              className="aspect-video w-full object-cover"
-            />
-          ) : (
-            <div className="flex-center aspect-video justify-center text-sm text-muted-foreground">
-              {labels.emptyCover}
+        <div className="mt-10 flex flex-col gap-5">
+          <Eyebrow label={project.projectType} />
+          <h1 className="heading-1 text-balance">
+            {project.title}
+            <span className="text-blue-600">.</span>
+          </h1>
+          {headline ? <p className="heading-5 max-w-2xl">{headline}</p> : null}
+          <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
+            {project.shortDescription}
+          </p>
+
+          {/* Links: glowing blue pill, inverted repo pill */}
+          {project.liveUrl || project.repositoryUrl ? (
+            <div className="flex-center flex-wrap gap-3">
+              {project.liveUrl ? (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-center h-12 gap-2 rounded-full bg-blue-600 px-7 text-[15px] font-semibold text-white shadow-[0_10px_36px_-6px_var(--color-blue-600)] transition-transform hover:scale-[1.02]"
+                >
+                  {labels.liveLabel}
+                  <ArrowUpRight className="size-4" aria-hidden />
+                </a>
+              ) : null}
+              {project.repositoryUrl ? (
+                <a
+                  href={project.repositoryUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-center h-12 gap-2 rounded-full border border-foreground/10 bg-foreground px-7 text-[15px] font-semibold text-background transition-transform hover:scale-[1.02]"
+                >
+                  <SocialIcon brand="github" className="size-5" />
+                  {labels.repositoryLabel}
+                </a>
+              ) : null}
             </div>
-          )}
+          ) : null}
         </div>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_18rem]">
-          <article>
-            <h2 className="heading-4">{labels.bodyTitle}</h2>
-            <div className="mt-4 leading-8 whitespace-pre-wrap text-muted-foreground">
-              {body || project.shortDescription}
-            </div>
-          </article>
-          <aside className="rounded-2xl border border-border bg-card p-5">
-            <h2 className="text-sm font-medium">{labels.technologiesTitle}</h2>
+        {/* Meta rows */}
+        <dl className="mt-8 grid grid-cols-1 gap-3 border-t border-dashed border-border pt-6 sm:grid-cols-[120px_1fr]">
+          {timeline ? (
+            <>
+              <dt className="text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
+                Timeline
+              </dt>
+              <dd className="text-sm font-medium">{timeline}</dd>
+            </>
+          ) : null}
+          <dt className="text-xs font-semibold tracking-[0.2em] text-muted-foreground uppercase">
+            {labels.technologiesTitle}
+          </dt>
+          <dd className="flex flex-wrap gap-2">
             {project.technologies.length ? (
-              <ul className="mt-4 flex flex-wrap gap-2">
-                {project.technologies.map((technology) => (
-                  <li
-                    key={technology}
-                    className="rounded-full bg-muted px-3 py-1 text-sm text-muted-foreground"
-                  >
-                    {technology}
-                  </li>
-                ))}
-              </ul>
+              project.technologies.map((technology) => (
+                <span
+                  key={technology}
+                  className="rounded-full border border-border bg-card px-3 py-1 text-xs font-medium shadow-sm"
+                >
+                  {technology}
+                </span>
+              ))
             ) : (
-              <p className="mt-3 text-sm text-muted-foreground">
+              <span className="text-sm text-muted-foreground">
                 {labels.emptyTechnologies}
-              </p>
+              </span>
             )}
-          </aside>
-        </div>
+          </dd>
+        </dl>
       </section>
+
+      {/* ===== Cover: framed card ===== */}
+      <section aria-label={`${project.title} preview`}>
+        {cover ? (
+          <ProjectCover
+            cover={cover.publicUrl}
+            name={project.title}
+            innerClassName="aspect-video"
+            imgClassName="object-top"
+          />
+        ) : (
+          <div className="flex-center aspect-video justify-center rounded-[20px] border border-border bg-muted text-sm text-muted-foreground">
+            {labels.emptyCover}
+          </div>
+        )}
+      </section>
+
+      {/* ===== About the project ===== */}
+      <DetailSection eyebrow="Overview" title={labels.bodyTitle}>
+        <p className="leading-7 whitespace-pre-wrap text-muted-foreground sm:text-lg sm:leading-8">
+          {body || project.shortDescription}
+        </p>
+      </DetailSection>
+
+      {/* ===== Core features (optional) ===== */}
+      {features.length ? (
+        <DetailSection eyebrow="Features" title="Core features">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {features.map((feature, index) => (
+              <article
+                key={`${index}-${feature.title}`}
+                className="flex flex-col gap-2 rounded-2xl border border-border bg-card p-5 transition hover:ring-2 hover:ring-blue-600/50"
+              >
+                <span className="flex-center size-8 justify-center rounded-lg bg-blue-600/10 font-mono text-xs font-semibold text-blue-600">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3 className="text-lg font-semibold">{feature.title}</h3>
+                {feature.desc ? (
+                  <p className="leading-6 text-muted-foreground">
+                    {feature.desc}
+                  </p>
+                ) : null}
+              </article>
+            ))}
+          </div>
+        </DetailSection>
+      ) : null}
+
+      {/* ===== Deep dive (optional) ===== */}
+      {deepDive.length ? (
+        <DetailSection eyebrow="Deep dive" title="A closer look">
+          <div className="divide-y divide-dashed divide-border overflow-hidden rounded-2xl border border-border bg-card">
+            {deepDive.map((row) => (
+              <div
+                key={row.label}
+                className="grid grid-cols-1 gap-1 px-5 py-4 sm:grid-cols-[140px_1fr] sm:gap-4"
+              >
+                <p className="pt-0.5 text-sm font-semibold tracking-[0.2em] text-blue-600 uppercase">
+                  {row.label}
+                </p>
+                <p className="leading-6">{row.text}</p>
+              </div>
+            ))}
+          </div>
+        </DetailSection>
+      ) : null}
     </main>
   )
 }
-import type { Metadata } from "next"

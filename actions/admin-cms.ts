@@ -84,7 +84,16 @@ export async function saveProject(
 
     const status = getPublishedStatus(requiredText(formData, "status"))
     const payload = {
-      content: { body: optionalText(formData, "content") ?? "" },
+      // Detail page copy lives in the JSON content column (no migration needed)
+      content: {
+        body: optionalText(formData, "content") ?? "",
+        headline: optionalText(formData, "headline") ?? "",
+        timeline: optionalText(formData, "timeline") ?? "",
+        features: optionalText(formData, "features") ?? "",
+        problem: optionalText(formData, "problem") ?? "",
+        solution: optionalText(formData, "solution") ?? "",
+        insight: optionalText(formData, "insight") ?? "",
+      },
       cover_key: optionalText(formData, "cover_key"),
       featured: checked(formData, "featured"),
       live_url: optionalText(formData, "live_url"),
