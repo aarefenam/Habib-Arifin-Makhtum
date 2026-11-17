@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { ArrowUpRight } from "lucide-react"
+import { ArrowRight, ArrowUpRight } from "lucide-react"
 
 import { SectionHeader } from "@/components/shared/section-header"
 import type {
@@ -8,6 +8,9 @@ import type {
   PortfolioMediaAsset,
   PortfolioProject,
 } from "@/types/cms"
+
+// 2 rows on desktop (3 columns), 3 rows on tablet (2 columns)
+const HOME_PROJECT_LIMIT = 6
 
 export function Projects({
   content,
@@ -18,9 +21,14 @@ export function Projects({
   media: PortfolioMediaAsset[]
   projects: PortfolioProject[]
 }) {
-  const publishedProjects = projects.filter(
-    (project) => project.status === "published"
+  // Homepage shows featured projects only (fallback: latest published), capped
+  const published = projects.filter((project) => project.status === "published")
+  const featured = published.filter((project) => project.featured)
+  const publishedProjects = (featured.length ? featured : published).slice(
+    0,
+    HOME_PROJECT_LIMIT
   )
+  const hasMore = published.length > publishedProjects.length
 
   return (
     <section id="projects" aria-label="Projects" className="mt-6 sm:mt-10">
@@ -85,6 +93,20 @@ export function Projects({
             </p>
           </div>
         )}
+
+        {/* Link to the full list when the homepage shows only a selection */}
+        {hasMore ? (
+          <Link
+            href="/projects"
+            className="group mx-auto flex-center h-11 gap-2 rounded-full border border-border bg-card px-6 text-sm font-semibold transition-colors hover:bg-muted"
+          >
+            View all {published.length} projects
+            <ArrowRight
+              aria-hidden
+              className="size-4 transition-transform group-hover:translate-x-0.5"
+            />
+          </Link>
+        ) : null}
       </div>
     </section>
   )

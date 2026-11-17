@@ -285,7 +285,7 @@ function ProjectFields({
       <div className="grid gap-3 sm:grid-cols-2">
         <CheckboxField
           name="featured"
-          label="Tampilkan unggulan"
+          label="Tampilkan di homepage"
           defaultChecked={project?.featured ?? false}
         />
       </div>
