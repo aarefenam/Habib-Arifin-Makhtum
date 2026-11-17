@@ -94,13 +94,13 @@ export function Projects({
           </div>
         )}
 
-        {/* Link to the full list when the homepage shows only a selection */}
-        {hasMore ? (
+        {/* Read more: always leads to the full projects page */}
+        {published.length ? (
           <Link
             href="/projects"
             className="group mx-auto flex-center h-11 gap-2 rounded-full border border-border bg-card px-6 text-sm font-semibold transition-colors hover:bg-muted"
           >
-            View all {published.length} projects
+            {hasMore ? `Read more (${published.length} projects)` : "Read more"}
             <ArrowRight
               aria-hidden
               className="size-4 transition-transform group-hover:translate-x-0.5"
