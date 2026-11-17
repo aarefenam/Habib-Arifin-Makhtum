@@ -307,6 +307,41 @@ export async function saveTimelineEntry(
   return success(id ? "Riwayat diperbarui." : "Riwayat baru ditambahkan.")
 }
 
+// Approve/hide a client rating, change its order, or delete it
+export async function saveTestimonial(
+  _previousState: CmsActionState,
+  formData: FormData
+): Promise<CmsActionState> {
+  await requireAdminSession()
+
+  const id = requiredText(formData, "id")
+  if (!id) return failure("Testimoni tidak ditemukan.")
+
+  try {
+    const table = getSupabaseAdmin().from("testimonials")
+    const { error } =
+      requiredText(formData, "intent") === "delete"
+        ? await table.delete().eq("id", id)
+        : await table
+            .update({
+              sort_order: numberValue(formData, "sort_order"),
+              visible: checked(formData, "visible"),
+            })
+            .eq("id", id)
+    if (error) return failure()
+  } catch {
+    return failure()
+  }
+
+  refreshPublicContent()
+  revalidatePath("/admin/testimonials")
+  return success(
+    requiredText(formData, "intent") === "delete"
+      ? "Testimoni dihapus."
+      : "Testimoni diperbarui."
+  )
+}
+
 export async function updateMessageStatus(
   _previousState: CmsActionState,
   formData: FormData

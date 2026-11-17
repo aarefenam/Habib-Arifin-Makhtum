@@ -4,6 +4,7 @@ import {
   Inbox,
   Settings2,
   Sparkles,
+  Star,
 } from "lucide-react"
 
 export const ADMIN_CONTENT_AREAS = [
@@ -46,5 +47,13 @@ export const ADMIN_CONTENT_AREAS = [
     icon: Inbox,
     priority: "Komunikasi masuk",
     title: "Inbox",
+  },
+  {
+    description: "Rating dari client. Pilih mana yang tampil di website.",
+    href: "/admin/testimonials",
+    id: "testimonials",
+    icon: Star,
+    priority: "Bukti sosial",
+    title: "Testimoni",
   },
 ] as const

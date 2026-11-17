@@ -4,10 +4,15 @@ import { Faq } from "@/components/public/home/faq"
 import { Hero } from "@/components/public/home/hero"
 import { Projects } from "@/components/public/home/projects"
 import { Skills } from "@/components/public/home/skills"
+import { Testimonials } from "@/components/public/home/testimonials"
 import { getPortfolioCmsSnapshot } from "@/lib/cms"
+import { getTestimonials } from "@/lib/testimonials"
 
 export default async function Home() {
-  const snapshot = await getPortfolioCmsSnapshot()
+  const [snapshot, testimonials] = await Promise.all([
+    getPortfolioCmsSnapshot(),
+    getTestimonials({ visibleOnly: true }),
+  ])
   // Resolve a media storage key (picked in the CMS) to its public URL
   const mediaUrl = (key: string | null) =>
     key
@@ -33,6 +38,7 @@ export default async function Home() {
         projects={snapshot.projects}
         media={snapshot.media}
       />
+      <Testimonials testimonials={testimonials} />
       <Faq content={snapshot.content.faq} faqs={snapshot.faqs} />
       <Contact
         content={snapshot.content.contact}

@@ -260,6 +260,18 @@ export type PortfolioContactMessage = {
   status: "unread" | "read" | "archived"
 }
 
+export type PortfolioTestimonial = {
+  clientName: string
+  clientRole: string | null
+  createdAt: string
+  id: string
+  message: string
+  projectName: string | null
+  rating: number
+  sortOrder: number
+  visible: boolean
+}
+
 export type PortfolioCmsSnapshot = {
   configured: boolean
   content: WebsiteContent
